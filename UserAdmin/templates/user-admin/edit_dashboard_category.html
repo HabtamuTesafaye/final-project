@@ -1,0 +1,87 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>DPMEs</title>
+  <link>
+  {% include 'user-admin/include/head.html' %}
+</head>
+
+<body class="hold-transition sidebar-mini layout-fixed">
+  <!--User Registration Modal Start-->
+
+  {% include 'user-admin/include/navbar.html'%}
+
+  {% include 'user-admin/include/sidebar.html'%}
+
+  <!--Body Start-->
+  <div class="content-wrapper">
+    {% if messages %}
+    {% include 'user-admin/include/messages.html'%}
+    {% endif %}
+    <!-- TItle Start-->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--Title End-->
+
+    <section class="content">
+      <div class="container-fluid">
+       
+        <div class="main-content">
+
+          <div class="page-content">
+              <div class="container-fluid">
+                  <form method="post" enctype="multipart/form-data"enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="row justify-content-center">
+                      <div class="col-8 card p-3">
+                          
+                         <h2> Edit Category</h2>
+                         <hr>
+                          {{ form.as_p }}
+                         <div class="btn-group gap-2">
+                          <a href="{% url 'topic_category' topic %}" class="btn btn-secondary"  type="submit">Cancel</a>
+                          <button class="btn btn-primary" type="submit">Save</button>
+                         </div>
+                      </div>
+                    </div>
+                  </form>
+              </div>
+              <!-- container-fluid -->
+          </div>
+         
+      </div>
+      </div>
+    </section>
+  </div>
+  <!--Body End-->
+
+  {% include 'user-admin/include/footer.html'%}
+
+
+  <!--Chart -->
+  <script src="{% static 'assets/plugins/jquery-ui/jquery-ui.min.js' %}"></script>
+  <script src="{% static 'assets/plugins/chart.js/Chart.min.js' %}"></script>
+  <script src="{% static 'assets/plugins/jquery-knob/jquery.knob.min.js' %}"></script>
+  <script src="{% static 'assets/plugins/moment/moment.min.js' %}"></script>
+  <script src="{% static 'assets/plugins/daterangepicker/daterangepicker.js' %}"></script>
+  <script src="{% static 'assets/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js' %}"></script>
+  <script src="{% static 'assets/plugins/summernote/summernote-bs4.min.js' %}"></script>
+  <script src="{% static 'assets/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js' %}"></script>
+
+  {% include 'user-admin/include/footer_js.html'%}
+
+</body>
+<script src="{% static 'assets/js/updatedata.js' %}"></script>
+
+</html>

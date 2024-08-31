@@ -1,0 +1,177 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>DPMEs</title>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.min.css">
+    {% include 'user-admin/include/head.html'%}
+    
+  </head>
+
+  <body class="hold-transition sidebar-mini layout-fixed">
+<!-- Restore trash modal -->
+<div class="modal fade" id="restoreModaltrash" tabindex="-1" aria-labelledby="restoreModaltrashLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="restoreModaltrashLabel">Restore Topic</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form name="restoretrash" method="post">
+        {% csrf_token %}
+        <div class="modal-body text-center fs-4">
+          <p>Are you sure you want to restore this topic?</p>
+        </div>
+        <div class="modal-footer">
+          <input type="hidden" name="source_id" id="topic_id_input">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+          <button type="submit" class="btn btn-danger" id="confirmRestore">Yes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+
+    {% include 'user-admin/include/navbar.html'%} 
+    {% include 'user-admin/include/sidebar.html'%}
+    <!--Body Start-->
+    <div class="content-wrapper">
+  <section class="content pt-2">
+    <div class="container-fluid">
+      <div class="card">
+        <ul class="nav nav-pills ps-5 pt-3 pb-3">
+          <li class="nav-item ">
+            <a class="nav-link ml-5 " href="{% url 'trash-topic' %}" ><span id="boot-icon" class="bi bi-trash" style="font-size:1rem"></span>Topics</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link ml-5 " href="{% url 'trash-indicator'%}"><span id="boot-icon" class="bi bi-trash" style="font-size:1rem"></span>Indicators</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link ml-5 " href="{% url 'trash-category' %}"><span id="boot-icon" class="bi bi-trash" style="font-size:1rem"></span>Categories</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link ml-5 active" href="{% url 'trash-source' %}" ><span id="boot-icon" class="bi bi-trash" style="font-size:1rem"></span>Sources</a>
+          </li>
+        </ul>
+        <hr>
+        {% include "user-admin/include/messages.html" %}
+        <div class="card-body">
+
+          <div class="tab-content">
+
+
+
+            <!--deleted deleteSource-->
+          
+            <div class="" id="deleteSource">
+              <div class="content-header">
+                  <div class="container-fluid">
+                    <div class="row mb-2">
+                      <div class="col-sm-6">
+                       
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!--Title End-->
+          
+                <section class="content">
+                  <div class="container-fluid">
+                    <!--Add Topic Button Start-->
+                    <div class="text-end">
+                    
+                    </div>
+                    <!--Add Topic Button End-->
+
+                    <!--Topic Table List Start-->
+                    <div class="row justify-content-center">
+                      <div class="col-md-12">
+                        <div class="table-responsive border p-3 shadow">
+                          <table id="deletdSourceTable" class="table table-striped table-hover table-sm"  style="width: 100%;">
+                            <thead >
+                              <tr>
+                                <th>Name English</th>
+                                <th>Name Amharic</th>
+                                <th>Created Date</th>
+                                <th>Action</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {% for source in recycled_sources %}
+                              <tr>
+                                <td>{{ source.title_ENG }}</td>
+                                <td>{{ source.title_AMH }}</td>
+                                <td>{{ source.created|date:'F d, Y' }}</td>
+                                <td>
+                                  <div class="d-flex justify-content-around text-center">
+                                    <button type="button" name="trashRestore" data-item-id="{{ source.id }}" class="btn btn-outline-warning border-0 pt-1 pb-1" data-bs-toggle="modal" data-bs-target="#restoreModaltrash" title="Restore trash">
+                                      <i class="fas fa-trash-restore"></i>
+                                    </button>
+                                  </div>
+                                </td>
+                              </tr>
+                            {% endfor %}
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                    <!--Topic Table List End-->
+                  </div>
+                </section>
+           </div>
+          </div>
+
+        </div>
+        
+      </div>
+
+      {%include 'includes/footer_js.html'%}
+    
+          </section>
+        </div>
+        <!--Body End-->
+        {% include 'user-admin/include/footer.html'%} 
+        {% include 'user-admin/include/footer_js.html'%}
+        <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/2.0.1/js/dataTables.buttons.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.0.1/css/buttons.dataTables.min.css">
+        <script src="https://cdn.datatables.net/buttons/2.0.1/js/buttons.html5.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/2.0.1/js/buttons.print.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/pdfmake.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/vfs_fonts.js"></script>
+
+        <script>
+          $(document).ready(function() {
+            // Listen for button click and set topic_id value in the modal form
+            $('.btn-outline-warning').on('click', function() {
+              var sourceId = $(this).data('item-id');
+              $('#restoreModaltrash form').attr('action', '{% url "trash-source" %}');
+              $('#restoreModaltrash form input[name="source_id"]').val(sourceId);
+            });
+          });
+        </script>
+
+        <script>
+          $(document).ready(function () {
+    $("#deletdSourceTable")
+      .DataTable({
+        responsive: true,
+        lengthChange: true,
+        autoWidth: false,
+        buttons: ["copy", "csv", "excel", "pdf", "print", "colvis"],
+      })
+      .buttons()
+      .container()
+      .appendTo("#deletdSourceTable_wrapper .col-md-6:eq(0)")
+  });
+</script>
+        
+        
+  </body>
+</html>

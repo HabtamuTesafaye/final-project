@@ -1,0 +1,146 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>DPMEs</title>
+
+    {% include 'user-admin/include/head.html'%}
+  </head>
+
+  <body class="hold-transition sidebar-mini layout-fixed">
+
+
+    
+    {% include 'user-admin/include/navbar.html'%} 
+    {% include 'user-admin/include/sidebar.html'%}
+
+    <!--Body Start-->
+    <div class="content-wrapper">
+      <div class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-6">
+             
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--Title End-->
+
+
+
+      <section class="content">
+        <div class="container-fluid">
+          <div class="row justify-content-center">
+
+            
+            <div class="col-md-11">
+              <h3>AUDIT</h3>            
+              <div class="card">
+                  <div class="card-body" id="list_table_view">
+                      <table id="tableIndicator" class="table table-bordered m-0 p-0" style="width:100%">
+                          <thead>
+                              <tr>
+                                  <th class="ps-5 pe-5">Timestamp</th>
+                                  <th>User</th>
+                                  <th>Action</th>
+                                  <th>Object</th>
+                                  <th>Model</th>
+                              </tr>
+                          </thead>
+                          <tbody>
+          
+                            {% for entry in auditlog_entries %}
+                            <tr>
+                                <td>{{ entry.timestamp }}</td>
+                                <td>
+                                    {% if entry.actor.get_full_name %}
+                                        {{ entry.actor.get_full_name }} ({{ entry.actor.username }})
+                                    {% else %}
+                                        System
+                                    {% endif %}
+                                </td>
+                                {% if entry.action == 0 %}
+                                    <td class="fw-bold text-success">Created</td>
+                                {% elif entry.action == 1 %}
+                                    <td class="fw-bold text-warning">Updated</td>
+                                {% elif entry.action == 2 %}
+                                    <td class="fw-bold text-danger">Deleted</td>
+                                {% else %}
+                                    <td class="fw-bold text-primary">Other</td>
+                                {% endif %}
+                                <td>{{ entry.object_repr }}</td>
+                                <td>{{ entry.content_type.name }}</td>
+                            </tr>
+                        {% endfor %}
+                        
+                        
+          
+                          </tbody>
+                      </table>
+                  </div>
+              </div>
+              <!-- Data List End-->
+          </div>
+          
+          </div>
+
+          <div class="row justify-content-center">
+            <div class="col-10">
+              <div id="tableTest" class="mt-5">
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+    <!--Body End-->
+    {% include 'user-admin/include/footer.html' %}
+
+    {% include 'user-admin/include/footer_js.html' %}
+
+    <script>
+      
+      $(document).ready(function () {
+        $("#tableIndicator").DataTable({
+          retrieve: true,
+          ordering: false,
+          scrollX: true,
+          responsive: true,
+          paging: true,
+          searching: true,
+          orderNumber: true,
+          lengthMenu: [
+            [10, 25, 50, -1],
+            ["10 rows", "25 rows", "50 rows", "Show all"],
+          ],
+          columnDefs: [{ width: "100%" }],
+          dom: "Bfrtip",
+          buttons: ["pageLength", "excel", "csv", "pdf", "print"],
+        });
+      });
+    </script>
+
+
+<script src="{% static 'assets/js/indicator_filter.js' %}"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.min.css">
+    <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.0.1/js/dataTables.buttons.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.0.1/css/buttons.dataTables.min.css">
+    <script src="https://cdn.datatables.net/buttons/2.0.1/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.0.1/js/buttons.print.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/vfs_fonts.js"></script>
+
+    
+
+
+</script>
+
+    
+  </body>
+</html>

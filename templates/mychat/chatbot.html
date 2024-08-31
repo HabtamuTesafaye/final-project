@@ -1,0 +1,425 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Modal Example</title>
+    <style>
+           /* Button to open the chat modal */
+           #openChatBtn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            border: none;
+            cursor: pointer;
+            background: none;
+            padding: 0;
+            z-index: 1000; /* Ensure it is above other elements */
+        }
+
+        #openChatBtn img {
+            width: 60px;
+            height: 60px;
+        }
+
+        /* Custom modal background */
+        .custom-modal {
+            display: none;
+            position: fixed;
+            bottom: 60px;
+            right: 40px;
+            width: 400px;
+            max-width: 90%;
+            height: 73%;
+            padding: 20px;
+            z-index: 1000; /* Ensure it is above other elements */
+        }
+
+        /* Custom modal content container */
+        .custom-modal-content {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 0px 0 20px 0;
+            border: 1px solid #888;
+            border-radius: 10px;
+            width: 100%;
+            height: 100%;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            /* Removed box-shadow */
+        }
+
+        /* Close button */
+        .custom-close {
+            color: #fff;
+            position: absolute;
+            top: 5px;
+            right: 20px;
+            font-size: 28px;
+            padding-bottom: 20px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .custom-close:hover,
+        .custom-close:focus {
+            color: black;
+            text-decoration: none;
+        }
+
+        .chat-header {
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+            padding: 10px;     
+            background-color: #159e6a;
+            width: 100%;
+            color: white;
+        }
+
+        .chat-body {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 10px;
+            margin-top: 10px;
+        }
+
+        .chat-footer {
+            display: flex;
+            justify-content: space-between;
+            border-top: 1px solid #ddd;
+            padding-top: 10px;
+        }
+
+        .chat-footer input {
+            width: 80%;
+            padding: 10px;
+            margin-right: 4px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .chat-footer button {
+            width: 15%;
+            background-color: #00a2ed;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+
+        .input-container {
+            display: flex;
+            align-items: center;
+            background-color: #FFFFFF;
+            border-radius: 20px;
+            padding: 5px 15px;
+            flex-grow: 1;
+            max-width: 600px;
+            position: relative;
+            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .file-upload-label img {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            margin-right: 10px;
+            filter: invert(0);
+        }
+
+        .input-container input[type="text"] {
+            background-color: transparent;
+            border: none;
+            color: #333;
+            outline: none;
+            width: 100%;
+            padding: 10px 0;
+            font-size: 14px;
+            border-radius: 20px;
+        }
+
+        .input-container input[type="text"]::placeholder {
+            color: #888;
+        }
+
+        .input-container button {
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            margin-left: 10px;
+        }
+
+        .input-container button img {
+            width: 18px;
+            height: 18px;
+            filter: invert(0);
+        }
+        
+        .message {
+            margin: 10px 0;
+            padding: 12px 16px;
+            border-radius: 18px;
+            max-width: 80%;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+        
+        .bot-message {
+    background-color: #e0e0e0; /* Light gray background for the bot */
+    color: #333; /* Darker text color for contrast */
+    width: calc(100% - 20px); /* Full width minus padding for margin */
+    text-align: left;
+    align-self: flex-start;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+    border-top-left-radius: 0; /* Rounded corners for better design */
+    border-bottom-right-radius: 18px;
+    margin: 10px 10px 10px 10px; /* Margin on all sides to keep spacing */
+    padding: 10px; /* Add padding for better content spacing */
+    font-size: 16px; /* Smaller font size for bot messages */
+    box-sizing: border-box; /* Ensure padding and border are included in width */
+}
+
+        
+        .user-message {
+            background: linear-gradient(to right, hsl(204, 89%, 64%), #4381ee);
+            color: white;
+            text-align: right;
+            align-self: flex-end;
+            border-top-right-radius: 0;
+            border-bottom-left-radius: 18px;
+            margin-left: auto;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2); /* Slightly stronger shadow for contrast */
+        }
+        
+        .bot-message:before {
+            content: "🤖"; /* Adds a robot emoji to signify the bot */
+            margin-right: 8px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <button id="openChatBtn">
+        <img src="{% static 'mychat/discussion.png' %}" alt="Discussion">
+    </button>
+
+    <div id="chatModal" class="custom-modal">
+        <div class="custom-modal-content">
+            <span class="custom-close">&times;</span>
+            <div class="chat-header">
+                <h5>MOPD Chatbot</h5>
+            </div>
+            <div class="chat-body" id="chatBody">
+                <div class="message bot-message">Hi! How can I help you today?</div>
+            </div>
+            <div class="chat-footer">
+                <div class="input-container">
+                    <label for="fileInput" class="file-upload-label">
+                        <img src="{% static 'mychat/upload-icon.png' %}" alt="Upload">
+                    </label>
+                    <input type="file" id="fileInput" style="display: none;" />
+                    <input type="text" id="userInput" placeholder="Message Chatbot" />
+                    <button id="sendBtn">
+                        <img src="{% static 'mychat/send-icon.png' %}" alt="Send">
+                    </button>
+                </div>                
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const modal = document.getElementById("chatModal");
+            const btn = document.getElementById("openChatBtn");
+            const closeBtn = document.getElementsByClassName("custom-close")[0];
+            const sendBtn = document.getElementById("sendBtn");
+            const userInput = document.getElementById("userInput");
+            const chatBody = document.getElementById("chatBody");
+            const fileInput = document.getElementById("fileInput");
+            const fileUploadLabel = document.querySelector('.file-upload-label');
+        
+            btn.onclick = function() {
+                modal.style.display = modal.style.display === "block" ? "none" : "block";
+            };
+        
+            closeBtn.onclick = function() {
+                modal.style.display = "none";
+            };
+        
+            window.onclick = function(event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            };
+        
+            sendBtn.onclick = function() {
+                sendMessage();
+            };
+        
+            userInput.addEventListener("keypress", function(event) {
+                if (event.key === "Enter") {
+                    event.preventDefault();
+                    sendMessage();
+                }
+            });
+        
+            fileInput.addEventListener('change', function() {
+                uploadFile();
+            });
+        
+            function sendMessage() {
+                const userMessage = userInput.value;
+                if (userMessage.trim() !== "") {
+                    const userMessageDiv = document.createElement("div");
+                    userMessageDiv.className = "message user-message";
+                    userMessageDiv.textContent = userMessage;
+                    chatBody.appendChild(userMessageDiv);
+                    userInput.value = "";
+                    chatBody.scrollTop = chatBody.scrollHeight;
+            
+                    // Send message to server
+                    fetch('/dashboard-api/chat_view/', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                            'X-CSRFToken': getCookie('csrftoken'),
+                        },
+                        body: new URLSearchParams({
+                            'message': userMessage
+                        })
+                    })
+                    .then(response => response.text())  // Read response as text
+                    .then(text => {
+                        try {
+                            const data = JSON.parse(text);  // Try to parse text as JSON
+                            let botResponse = data.response || data.error;
+            
+                            // Convert Markdown to HTML
+                            botResponse = convertMarkdownToHtml(botResponse);
+            
+                            const botMessageDiv = document.createElement("div");
+                            botMessageDiv.className = "message bot-message";
+            
+                            if (botResponse.includes("<code>")) {
+                                const codeBlock = document.createElement("pre");
+                                codeBlock.innerHTML = botResponse;
+            
+                                const copyButton = document.createElement("button");
+                                copyButton.className = "copy-btn";
+                                copyButton.textContent = "Copy code";
+                                copyButton.onclick = function() {
+                                    copyToClipboard(codeBlock.textContent);
+                                };
+            
+                                botMessageDiv.appendChild(codeBlock);
+                                botMessageDiv.appendChild(copyButton);
+                            } else {
+                                botMessageDiv.innerHTML = botResponse;
+                            }
+            
+                            chatBody.appendChild(botMessageDiv);
+                            chatBody.scrollTop = chatBody.scrollHeight;
+                        } catch (error) {
+                            console.error("Failed to parse JSON:", error);
+                            chatBody.innerHTML += `<div class="message bot-message">Error: ${text}</div>`;
+                        }
+                    });
+                }
+            }
+        
+            function uploadFile() {
+                const file = fileInput.files[0];
+                if (file) {
+                    const formData = new FormData();
+                    formData.append('file', file);
+            
+                    fetch('/dashboard-api/chat_view/', {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'X-CSRFToken': getCookie('csrftoken'),
+                        }
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.message) {
+                            // Instead of alerting, display the file name
+                            fileUploadLabel.textContent = file.name;
+                        } else {
+                            console.error(data.error);
+                        }
+                    })
+                    .catch(error => console.error('File upload error:', error));
+                }
+            }
+            
+        
+            function cleanText(text) {
+                return text.replace(/\u00a0/g, ' ').trim();
+            }
+        
+            function convertMarkdownToHtml(markdown) {
+                let titleAdded = false;
+        
+                markdown = cleanText(markdown);
+        
+                return markdown
+                    .replace(/^### (.+)$/gm, '<h3><u>$1</u></h3>')
+                    .replace(/^## (.+)$/gm, function (match, p1) {
+                        if (!titleAdded) {
+                            titleAdded = true;
+                            return `<h2><u>${p1} by AI</u></h2>`;
+                        }
+                        return `<h2><u>${p1}</u></h2>`;
+                    })
+                    .replace(/^# (.+)$/gm, '<h1><u>$1</u></h1>')
+                    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+                    .replace(/_(.+?)_/g, '<u>$1</u>')
+                    .replace(/^\s*[\*\-]\s*(.+)$/gm, function (match, p1) {
+                        const level = match.match(/^\s*/)[0].length / 2;
+                        return `${'<ul>'.repeat(level)}<li>${p1}</li>${'</ul>'.repeat(level)}`;
+                    })
+                    .replace(/^\s*(\d+)\.\s*(.+)$/gm, function (match, p1, p2) {
+                        const level = match.match(/^\s*/)[0].length / 2;
+                        return `${'<ol>'.repeat(level)}<li>${p2}</li>${'</ol>'.repeat(level)}`;
+                    })
+                    .replace(/<\/ul>\s*<ul>/g, '')
+                    .replace(/<\/ol>\s*<ol>/g, '')
+                    .replace(/<\/li>\s*<li>/g, '</li><li>')
+                    .replace(/^\n+|\n+$/g, '')
+                    .replace(/^(.+?)$/gm, '<p>$1</p>')
+                    .replace(/<\/p>\n<p>/g, '</p><p>');
+            }
+        
+            function getCookie(name) {
+                let cookieValue = null;
+                if (document.cookie && document.cookie !== '') {
+                    const cookies = document.cookie.split(';');
+                    for (let i = 0; i < cookies.length; i++) {
+                        const cookie = cookies[i].trim();
+                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            }
+        
+            function copyToClipboard(text) {
+                navigator.clipboard.writeText(text).then(() => {
+                    alert('Code copied to clipboard!');
+                }, (err) => {
+                    console.error('Failed to copy: ', err);
+                });
+            }
+        });
+        
+    </script>
+</body>
+</html>

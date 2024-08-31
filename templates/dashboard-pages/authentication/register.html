@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+  {% load static %}
+
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>Register Form</title>
+    <!--Bootstrap-->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+    <!-- Include jQuery UI library -->
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            list-style: none;
+            font-family: 'Montserrat', sans-serif
+        }
+        
+        body{
+            background-color:#ffffff;
+        }
+        
+        .container {
+            margin: 20px auto;
+            width: 800px;
+            padding: 30px ;
+            display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+        
+        .card.box2 {
+            width: 450px;
+            height: 500px;
+            background-color: #ffffff;
+            border-radius: 0
+        }
+        
+        .text {
+            font-size: 13px
+        }
+        
+        .box2 .btn.btn-primary.bar {
+            width: 20px;
+            background-color: transparent;
+            border: none;
+            color: #3ecc6d
+        }
+        
+        .box2 .btn.btn-primary.bar:hover {
+            color: #baf0c3
+        }
+        .btn.btn-success {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #ddd;
+            color: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: none
+        }
+        
+        .nav.nav-tabs {
+            border: none;
+            border-bottom: 2px solid #ddd
+        }
+        
+        .nav.nav-tabs .nav-item .nav-link {
+            border: none;
+            color: black;
+            border-bottom: 2px solid transparent;
+            font-size: 14px
+        }
+        
+        .nav.nav-tabs .nav-item .nav-link:hover {
+            border-bottom: 2px solid #3ecc6d;
+            color: #05cf48
+        }
+        
+        .nav.nav-tabs .nav-item .nav-link.active {
+            border: none;
+            border-bottom: 2px solid #3ecc6d
+        }
+        
+        .form-control {
+            border: none;
+            border-bottom: 1px solid #ddd;
+            box-shadow: none;
+            height: 20px;
+            font-weight: 100;
+            font-size: 14px;
+            padding: 15px 0px;
+            letter-spacing: 1.5px;
+            border-radius: 0
+        }
+        
+        .inputWithIcon {
+            position: relative
+        }
+        
+        img {
+            width: 50px;
+            height: 20px;
+            object-fit: cover
+        }
+        
+        .inputWithIcon span {
+            position: absolute;
+            right: 0px;
+            bottom: 9px;
+            color: #57c97d;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 14px
+        }
+        
+        .form-control:focus {
+            box-shadow: none;
+            border-bottom: 1px solid #ddd
+        }
+        
+        .btn-outline-primary {
+            color: black;
+            background-color: #ddd;
+            border: 1px solid #ddd
+        }
+        
+        .btn-outline-primary:hover {
+            background-color: #05cf48;
+            border: 1px solid #ddd
+        }
+        
+        .btn-check:active+.btn-outline-primary,
+        .btn-check:checked+.btn-outline-primary,
+        .btn-outline-primary.active,
+        .btn-outline-primary.dropdown-toggle.show,
+        .btn-outline-primary:active {
+            color: #baf0c3;
+            background-color: #3ecc6d;
+            box-shadow: none;
+            border: 1px solid #ddd
+        }
+        
+        .btn-group>.btn-group:not(:last-child)>.btn,
+        .btn-group>.btn:not(:last-child):not(.dropdown-toggle),
+        .btn-group>.btn-group:not(:first-child)>.btn,
+        .btn-group>.btn:nth-child(n+3),
+        .btn-group>:not(.btn-check)+.btn {
+            border-radius: 50px;
+            margin-right: 20px
+        }
+        
+        form {
+            font-size: 14px
+        }
+        
+        form .btn.btn-primary {
+            width: 100%;
+            height: 45px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: #3ecc6d;
+            border: 1px solid #ddd
+        }
+        
+        form .btn.btn-primary:hover {
+            background-color: #05cf48
+        }
+        
+        @media (max-width:750px) {
+            .container {
+                padding: 10px;
+                width: 100%
+            }
+        
+            .text-blue {
+                font-size: 14px
+            }
+        
+            .card.box2 {
+                width: 100%
+            }
+        
+            .nav.nav-tabs .nav-item .nav-link {
+                font-size: 12px
+            }
+        }
+    </style>
+  </head>
+
+  <body class="hold-transition register-page">
+    <div class="container d-md-flex align-items-center">
+      <div class="card box2 shadow-sm">
+        <div class="d-flex align-items-center justify-content-center p-md-3 p-4">
+          <span class="h5 fw-bold m-0">Create an Account</span>
+        </div>
+        <hr>
+        <form id="registerform" method="POST">
+          {% csrf_token %}
+          <div class="row">
+
+<div class="col-12">
+      <!-- Error message display area -->
+      {% if message %}
+      <div id="error-message" class="alert alert-danger">
+        {{ message }}
+      </div>
+      {% endif %}
+    </div>
+
+            <div class="col-12">
+              <div class="d-flex flex-column px-md-5 px-4 mb-4">
+                <span>Email</span>
+                <div class="inputWithIcon">
+                  <input
+                    class="form-control"
+                    type="email"
+                    id="user_email"
+                    placeholder="Your email*"
+                  />
+                  <span class=""><i class="fa-solid fa-envelope"></i></span>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="d-flex flex-column ps-md-5 px-md-0 px-4 mb-4">
+                <span>First<span class="ps-1">Name</span></span>
+                <div class="inputWithIcon">
+                  <input type="text" class="form-control" id="first_name" placeholder="First name*"/>
+                  <span class="far fa-user"></span>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="d-flex flex-column pe-md-5 px-md-0 px-4 mb-4">
+                <span>Last Name</span>
+                <div class="inputWithIcon">
+                  <input type="text" class="form-control" id="last_name" placeholder="Last name*"/>
+                  <span class="far fa-user"></span>
+                </div>
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="d-flex flex-column px-md-5 px-4 mb-4">
+                <span>Password</span>
+                <div class="inputWithIcon">
+                  <input
+                    class="form-control text-uppercase"
+                    type="password"
+                    id="user_password"
+                    placeholder="New Password"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="d-flex flex-column px-md-5 px-4 mb-4">
+                <span>Confirm Password</span>
+                <div class="inputWithIcon">
+                  <input
+                    class="form-control text-uppercase"
+                    type="password"
+                    id="re_password"
+                    placeholder="Confirm Password*"
+                  />
+                </div>
+                <div id="password-mismatch" class="error" style="display:none;color: red;">Passwords do not match.</div>
+              </div>
+            </div>
+            <div class="col-12 px-md-5 px-4 mt-3">
+              <button type="submit" class="btn btn-primary w-100">Register</button>
+            </div>
+          </div>
+        </form>
+        <div id="success-message" style="display:none; color:green; text-align:center; margin-top:10px;"></div>
+        <div id="error-message" style="display:none; color:red; text-align:center; margin-top:10px;"></div>
+      </div>
+    </div>
+
+    <script>
+      $(document).ready(function() {
+          $('#registerform').on('submit', function(e) {
+              e.preventDefault(); // Prevent the default form submission
+  
+              var password = $('#user_password').val();
+              var confirmPassword = $('#re_password').val();
+  
+              // Validate the confirm password
+              if (confirmPassword === '' || confirmPassword !== password) {
+                  $('#password-mismatch').text('Passwords do not match').show();
+                  return false; // Prevent form submission
+              } else {
+                  $('#password-mismatch').hide();
+                  
+                  $.ajax({
+                      type: 'POST',
+                      url: "{% url 'dashboard_register' %}", // Ensure this URL is correctly configured in your Django urls.py
+                      data: {
+                          email: $('#user_email').val(),
+                          first_name: $('#first_name').val(),
+                          last_name: $('#last_name').val(),
+                          password: password,
+                          re_password: confirmPassword,
+                          csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+                      },
+                      success: function(response) {
+                          if (response.redirect_url) {
+                              window.location.href = response.redirect_url;
+                          } else {
+                              $('#success-message').text('Registration successful!').show();
+                              $('#error-message').hide();
+                          }
+                      },
+                      error: function(xhr, status, error) {
+                          $('#error-message').text(xhr.responseJSON.message || 'An error occurred. Please try again later.').show();
+                          $('#success-message').hide();
+                      }
+                  });
+              }
+          });
+      });
+  </script>
+  
+  </body>
+</html>
+
+
+
+
+
+

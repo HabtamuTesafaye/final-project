@@ -1,0 +1,239 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>DPMEs</title>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.min.css">
+    {% include 'user-admin/include/head.html'%}
+    
+  </head>
+
+  <body class="hold-transition sidebar-mini layout-fixed">
+<!-- Restore trash modal -->
+<div class="modal fade" id="restoreIndicator" tabindex="-1" aria-labelledby="restoreIndicatorLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="restoreIndicatorLabel">Restore Topic</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form name="restoretrash" method="post" action="{% url 'restore_item' 'topic' 0 %}" id="form_trash_restore">
+        {% csrf_token %}
+        <div class="modal-body text-center fs-4">
+          <p>Are you sure you want to restore this Indicator?</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+          <a href="#" id="forRestoreIndicator" class="btn btn-danger">Yes</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+
+    {% include 'user-admin/include/navbar.html'%} 
+    {% include 'user-admin/include/sidebar.html'%}
+    <!--Body Start-->
+    <div class="content-wrapper">
+  <section class="content pt-2">
+    <div class="container-fluid">
+      <div class="card">
+        <ul class="nav nav-pills ps-5 pt-3 pb-3">
+          <li class="nav-item ">
+            <a class="nav-link ml-5 " href="{% url 'trash-topic' %}" ><span id="boot-icon" class="bi bi-trash" style="font-size:1rem"></span>Topics</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link ml-5 active" href="{% url 'trash-indicator'%}"><span id="boot-icon" class="bi bi-trash" style="font-size:1rem"></span>Indicators</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link ml-5" href="{% url 'trash-category' %}"><span id="boot-icon" class="bi bi-trash" style="font-size:1rem"></span>Categories</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link ml-5" href="{% url 'trash-source' %}" ><span id="boot-icon" class="bi bi-trash" style="font-size:1rem"></span>Sources</a>
+          </li>
+        </ul>
+        <hr>
+
+        <div class="card-body">
+
+          <div class="tab-content">
+
+
+
+            <!--Deletd Indicator-->
+            <div id="deletedIndicator">
+                <div class="content-header">
+                    <div class="container-fluid">
+                      <div class="row mb-2">
+                        <div class="col-sm-6">
+                         
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!--Title End-->
+            
+                  <section class="content">
+                    <div class="container-fluid">
+                      <div class="row justify-content-center">
+                        <!--Accordion Start -->
+                        <div class="col-md-3">
+                          <div class="accordion" id="accordionExample">
+                            
+                            <!--Accordion 1 Start-->
+                            <div class="accordion-item">
+                              <h2 class="accordion-header" id="headingOne">
+                                <button
+                                  class="accordion-button"
+                                  type="button"
+                                  data-bs-toggle="collapse"
+                                  data-bs-target="#collapseOne"
+                                  aria-expanded="true"
+                                  aria-controls="collapseOne"
+                                >
+                                  Topics
+                                </button>
+                              </h2>
+                              <div
+                                id="collapseOne"
+                                class="accordion-collapse collapse show"
+                                aria-labelledby="headingOne"
+                                data-bs-parent="#accordionExample"
+                              >
+                                <div class="accordion-body">
+                                  <ul class="list-unstyled mb-0 filter-list scrollable" id='topic_list_filter'>
+                                  </ul>
+                                </div>
+                              </div>
+                            </div>
+                            <!--Accordion 1 End-->
+            
+                            <!--Category-->
+                            <div class="accordion-item">
+                              <h2 class="accordion-header" id="headingTwo">
+                                <button
+                                  class="accordion-button collapsed"
+                                  type="button"
+                                  data-bs-toggle="collapse"
+                                  data-bs-target="#collapseTwo"
+                                  aria-expanded="false"
+                                  aria-controls="collapseTwo"
+                                >
+                                  Categories
+                                </button>
+                              </h2>
+                              <div
+                                id="collapseTwo"
+                                class="accordion-collapse collapse"
+                                aria-labelledby="headingTwo"
+                                data-bs-parent="#accordionExample"
+                              >
+                                <div class="accordion-body p-2">
+                                  <div class="accordion-body p-2">
+                                    <ul class="list-unstyled mb-0 filter-list scrollable" id="category_list_filter">
+                                      <p class="text-danger">Please Select Topic</p>
+                                    </ul>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+            
+            
+            
+                            <div class="d-grid" id="filter_apply_button">
+                              <button id="apply_button" style="display: none;" class="btn btn-primary m-2">Apply</button>
+                            </div>
+                          </div>
+                        </div>
+                        <!--Accordion End-->
+                        
+                        <div class="col-md-9">
+                          <!--Add Data Start-->
+                           <!--Messages-->
+                        {% include 'user-admin/include/messages.html'%}
+                        
+                          <div class="card">
+                            <div class="card-body" id="list_table_view">
+                              <table id="deletedIndicatorTable"class="table table-bordered m-0 p-0" style="width:100%">
+                                <thead>
+                                  <tr>
+                                    <th class="ps-5 pe-5">English</th>
+                                    <th>Amharic</th>
+                                    <th>Created Date</th>
+                                    <th>Action</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                         
+                          <!--Data List End-->
+                        </div>
+                      </div>
+            
+                      <div class="row justify-content-center">
+                        <div class="col-10">
+                          <div id="tableTest" class="mt-5">
+            
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </section>
+            </div>
+            <!--Deletd Indicator End-->
+
+
+          </div>
+
+        </div>
+        
+      </div>
+
+      {%include 'includes/footer_js.html'%}
+    
+          </section>
+        </div>
+        <!--Body End-->
+        {% include 'user-admin/include/footer.html'%} 
+        {% include 'user-admin/include/footer_js.html'%}
+        <script src="{% static 'assets/js/trash_indicator.js' %}"></script>
+        <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/2.0.1/js/dataTables.buttons.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.0.1/css/buttons.dataTables.min.css">
+        <script src="https://cdn.datatables.net/buttons/2.0.1/js/buttons.html5.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/2.0.1/js/buttons.print.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/pdfmake.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/vfs_fonts.js"></script>
+        <script>
+          $(document).ready(function () {
+            $("#deletedIndicatorTable").DataTable({
+              retrieve: true,
+              ordering: false,
+              scrollX: true,
+              responsive: true,
+              paging: true,
+              searching: true,
+              orderNumber: true,
+              lengthMenu: [
+                [10, 25, 50, -1],
+                ["10 rows", "25 rows", "50 rows", "Show all"],
+              ],
+              columnDefs: [
+                { width: "100%" },
+                { width: "300px", targets: 0 },
+              ],
+              dom: "Bfrtip",
+              buttons: ["pageLength", "excel", "csv", "pdf", "print"],
+            });
+          });
+        </script>
+  </body>
+</html>

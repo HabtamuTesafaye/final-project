@@ -1,0 +1,431 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  {% include "includes/head.html" %}
+  <style>
+    /* Styles for the loading spinner */
+    .loading-container {
+        display: none;
+        text-align: center;
+        margin-top: 20px;
+    }
+    .file-upload{display:block;text-align:center;font-family: Helvetica, Arial, sans-serif;font-size: 12px;}
+.file-upload .file-select{display:block;border: 2px solid #dce4ec;color: #34495e;cursor:pointer;height:40px;line-height:40px;text-align:left;background:#FFFFFF;overflow:hidden;position:relative;}
+.file-upload .file-select .file-select-button{background:#dce4ec;padding:0 10px;display:inline-block;height:40px;line-height:40px;}
+.file-upload .file-select .file-select-name{line-height:40px;display:inline-block;padding:0 10px;}
+.file-upload .file-select:hover{border-color:#34495e;transition:all .2s ease-in-out;-moz-transition:all .2s ease-in-out;-webkit-transition:all .2s ease-in-out;-o-transition:all .2s ease-in-out;}
+.file-upload .file-select:hover .file-select-button{background:#34495e;color:#FFFFFF;transition:all .2s ease-in-out;-moz-transition:all .2s ease-in-out;-webkit-transition:all .2s ease-in-out;-o-transition:all .2s ease-in-out;}
+.file-upload.active .file-select{border-color:#3fa46a;transition:all .2s ease-in-out;-moz-transition:all .2s ease-in-out;-webkit-transition:all .2s ease-in-out;-o-transition:all .2s ease-in-out;}
+.file-upload.active .file-select .file-select-button{background:#3fa46a;color:#FFFFFF;transition:all .2s ease-in-out;-moz-transition:all .2s ease-in-out;-webkit-transition:all .2s ease-in-out;-o-transition:all .2s ease-in-out;}
+.file-upload .file-select input[type=file]{z-index:100;cursor:pointer;position:absolute;height:100%;width:100%;top:0;left:0;opacity:0;filter:alpha(opacity=0);}
+.file-upload .file-select.file-select-disabled{opacity:0.65;}
+.file-upload .file-select.file-select-disabled:hover{cursor:default;display:block;border: 2px solid #dce4ec;color: #34495e;cursor:pointer;height:40px;line-height:40px;margin-top:5px;text-align:left;background:#FFFFFF;overflow:hidden;position:relative;}
+.file-upload .file-select.file-select-disabled:hover .file-select-button{background:#dce4ec;color:#666666;padding:0 10px;display:inline-block;height:40px;line-height:40px;}
+.file-upload .file-select.file-select-disabled:hover .file-select-name{line-height:40px;display:inline-block;padding:0 10px;}
+
+</style>
+</head>
+
+    <body class="justify-content-center overflow-auto">
+        <div id="loading">
+            <div id="loading-center">
+                <div id="loading-center-absolute">
+                    <div class="object" id="object_one"></div>
+                    <div class="object" id="object_two"></div>
+                    <div class="object" id="object_three"></div>
+                    <div class="object" id="object_four"></div>
+                    <div class="object" id="object_five"></div>
+                    <div class="object" id="object_six"></div>
+                    <div class="object" id="object_seven"></div>
+                    <div class="object" id="object_eight"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="scroll-up" id="scroll" style="display: none;">
+            <a href="javascript:void(0);"><i class="fas fa-level-up-alt"></i></a>
+        </div>
+      
+        {% include "includes/navbar.html" %}
+        
+        <main>
+          
+          </section>
+            <section class="hero__area p-relative">
+                <div class="hero__shape">
+                    <img class="one" src="as{% static 'sets/img/icon/slider/03/icon-1.png' %}" alt="">
+                    <img class="two" src="{% static 'assets/img/icon/slider/03/icon-2.png' %}" alt="">
+                    <img class="three" src="{% static 'assets/img/icon/slider/03/icon-3.png' %}" alt="">
+                </div>
+
+                <div class="hero__item hero__height d-flex align-items-center text-center">
+                  <div class="container-fluid">
+                    <div class="row align-items-center">
+                      <div class="col-md-6">
+                        <img src="{% static "assets/image/mopd_logo_green.png" %}" style="max-width: 70%" class='img-fluid  mx-auto d-block'>
+                      </div>
+                      
+                      <div class="col-md-6 ">
+                        <span class="wow fadeInUp" data-wow-delay=".2s">Economic Analysis and Policy Directorate</span>
+                        <h1 class="wow fadeInUp" data-wow-delay=".4s">Ministry of PLANNING  <br> AND DEVELOPMENT </h1>
+                        <p class="wow fadeInUp" data-wow-delay=".6s"> የፕላን እና ልማት ሚኒስቴር የኢኮኖሚ ትንተና እና ፖሊሲ ዳይሬክቶሬት</p>
+                        <a href="{% url "data" %}" class="z-btn z-btn-border">See what's New</a>
+                      </div>
+                      
+                    </div>
+                  </div>
+                </div>
+                               
+            </section>
+
+            <!-- hero area end -->
+            <section class="faq__area p-relative pt-135 pb-120 grey-bg-12">
+                <div class="container">
+                  <div class="row justify-content-center">
+                    <div class="col-md-6 mt-2">
+                      <img style="max-width: 100%" class='img-fluid  mx-auto d-block' src="{% static 'assets/image/drawPresentation1.svg' %}" alt="">
+                    </div>
+                    <div class="col-md-5 mt-2 borde wow fadeInUp" data-wow-delay=".4s">
+                      <h1 class="h1 fw-bold">Our Mission</h1>
+
+
+                      <div class="accordion  text-start" id="accordionExample">
+
+
+                        <div class="accordion-item border-0">
+                          <h2 class="accordion-header" id="headingOne">
+                            <button class="card-header accordion-button collapsed " type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                              <h4 class="text-start">Our mission is to provide comprehensive policy analysis</h4>
+                            </button>
+                          </h2>
+                          <div id="collapseOne" class="accordion-collapse  collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                            <div class="card-body grey-bg-12 wow fadeInUp" data-wow-delay=".4s">
+                              <p>
+                                Our mission is to provide comprehensive policy analysis, guidance,
+                                and support to drive the multidimensional development endeavors of
+                                our country. We aim to play a pivotal role in shaping Ethiopia's
+                                future by preparing medium and long-term national development plans
+                                through effective coordination with sectoral ministries and relevant
+                                government agencies.
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+
+
+                        
+                        <div class="accordion-item border-0">
+                          <h2 class="accordion-header" id="headingThree">
+                            <button class="card-header accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                             <div class="h4 text-start fw-bold "> We are committed to developing robust public investment</div>
+                            </button>
+                          </h2>
+                          <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                            <div class="accordion-body grey-bg-12 " data-wow-delay=".4s">
+                             <p>
+                              We are committed to developing robust public investment
+                              administration and management capabilities to ensure efficient
+                              appraisal, selection, and prioritization of policies, programs, and
+                              development projects. By enhancing these capacities, we strive to
+                              maximize the impact of public resources and promote sustainable and
+                              inclusive development.
+                             </p>
+                            </div>
+                          </div>
+                        </div>
+
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            </section>
+
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog modal-xl modal-fullscreen-lg-down modal-dialog-scrollable">
+                  <div class="modal-content">
+                      <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabel">Generated Ai insights</h5>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                          <div id="reportContent" class="pt-1 ps-3 pe-3 pb-1">
+                              <!-- This will hold the tables and charts -->
+                              <div class="row justify-content-center" id="report-container">
+                                <p id="description">Here you will find the explanation of the prediction.</p>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          
+            <!-- services area start -->
+            <section class="services__area-2 mt--120 pt-270 pb-140 p-relative" data-background="{% static "assets/img/bg/wave-bg-2.png" %}">
+                <div class="container pt-5">
+                    <div class="row justify-content-center">
+
+                      <div class="col-lg-11 shadow bg-light" id="graph-card">
+                        <div class="card-header">
+                            <h1 class="card-header text-muted mb-3">Prediction</h1>
+                        </div>
+                        <div class="d-flex align-item-center justify-content-center" style="text-align: center; margin: 13px;">
+                            <img src="{% static 'assets/image/loading.gif' %}" id="load" alt="Loading..." />
+                        </div>
+                    
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                          <!-- File upload input and upload button -->
+                          <div class="text-center d-flex space-between ms-3">
+                           
+                            <div class="file-upload me-3 pt-2">
+                              <div class="file-select">
+                                <div class="file-select-button" id="fileName">Choose File</div>
+                                <div class="file-select-name" id="noFile">No file chosen...</div> 
+                                <input type="file" name="chooseFile" id="chooseFile" accept=".csv" >
+                              </div>
+                            </div>
+                              <button id="upload-btn" class="btn btn-success mt-2">Upload</button>
+                          </div>
+                          
+                          <!-- 'Show Prediction Explanation' button -->
+                          <div class="me-2">
+                              <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                  Show insights
+                              </button>
+                          </div>
+                      </div>
+                      
+
+                    
+                        <div id="pred-container" style="display:none;"></div>
+                    </div>
+                    
+                     <!--Card 1-->
+                        <div class="col-lg-7  mt-3 shadow bg-light">
+                          <!--CPI-->
+                          <div class="row">
+
+                            <div class="card-body">
+                              <h1 class="card-header text-muted mb-3">Inflation</h1>
+                            </div>
+                            <h3 class="ps-4 text-muted mb-3">{{ cpi_category.name_ENG }}</h3>
+
+
+                            {% for item in cpi %}
+                            <!--Data 1-->
+                            <div class="col-4 border-end">
+                              <div class="card-body">
+                                <h4 class="card-subtitle mb-2 text-muted">{{ item.item }} </h4>
+                                <h5 class="card-text text-muted">{{year.year_EC}} (Year on Year)</h5>
+                                <h1 class="fs-1">
+                                  {% if item.mode == 'positive' %}
+                                  ↑
+                                  {% else %}
+                                  ↓
+                                  {% endif %}
+                                  
+                                  {{item.value}}%</h1>
+                                <a href="{% url 'detail-analysis' item.link %}" class="nav-link text-end">Data</a>
+                              </div>
+                            </div>
+                            {% endfor %}
+
+                          </div>
+
+                        </div>
+
+                        <!--EXPORT-->
+                        <div class="col-lg-4 mt-3 ms-3 shadow bg-light">
+                          <div class="row">
+
+                            <div class="card-body">
+                              <h1 class="card-header text-muted mb-3">Export in Bil USD</h1>
+                            </div>
+                            <h3 class="ps-4 fs-3 text-muted mb-3">{{ export_bill_category.name_ENG }}</h3>
+
+
+                            {% for item in export_bill_value %}
+                            <!--Data 1-->
+                            <div class="col-12 border-end">
+                              <div class="card-body">
+                                <h4 class="card-subtitle mb-2 text-muted">{{ item.item }} </h4>
+                                <h5 class="card-text text-muted">{{year.year_EC}} (Year on Year)</h5>
+                                <h1 class="fs-1">
+                                  {% if item.mode == 'positive' %}
+                                  ↑
+                                  {% else %}
+                                  ↓
+                                  {% endif %}
+                                  
+                                  {{item.value}}%</h1>
+                                <a href="{% url 'detail-analysis' item.link %}" class="nav-link text-end">Data</a>
+                              </div>
+                            </div>
+                            {% endfor %}
+
+                          </div>
+                        </div>
+
+                        <!--GDP-->
+                        <div style="margin-top: 60px;" class="col-11 shadow bg-light shadow">
+                           <!--CPI-->
+                           <div class="row">
+
+                            <div class="card-body">
+                              <h1 class="card-header text-muted mb-3">Annual Budget in Bil Birr </h1>
+                            </div>
+                            <h3 class="ps-4 text-muted mb-3">{{ cpi_category.name_ENG }}</h3>
+
+
+                            {% for item in cpi %}
+                            <!--Data 1-->
+                            <div class="col-4 border-end">
+                              <div class="card-body">
+                                <h4 class="card-subtitle mb-2 text-muted">{{ item.item }} </h4>
+                                <h5 class="card-text text-muted">{{year.year_EC}} (Year on Year)</h5>
+                                <h1 class="fs-1">
+                                  {% if item.mode == 'positive' %}
+                                  ↑
+                                  {% else %}
+                                  ↓
+                                  {% endif %}
+                                  
+                                  {{item.value}}%</h1>
+                                <a href="{% url 'detail-analysis' item.link %}" class="nav-link text-end">Data</a>
+                              </div>
+                            </div>
+                            {% endfor %}
+
+                          </div>
+
+                        </div>
+
+                      
+
+
+                    <div class="about__area-2 pt-130">
+                        <div class="row">
+                            <div class="col-xl-7 col-lg-6">
+                                <div class="about__thumb-2 p-relative m-img wow fadeInLeft" data-wow-delay=".2s">
+                                    <img src="{% static "assets/img/about/about-2.png" %}" alt="">
+                                </div>
+                            </div>
+                            <div class="col-xl-5 col-lg-6">
+                                <div class="about__content">
+                                    <div class="section__title section__title-3 mb-25">
+                                        <h2 class="wow fadeInUp" data-wow-delay=".4s">About Analysis tool</h2>
+                                    </div>
+                                    <p class="wow fadeInUp" data-wow-delay=".6s"> This analysis tool is designed to provide insights into various
+                                        economic factors, such as GDP growth, inflation rates, employment
+                                        levels, and other relevant indicators. By utilizing this tool, the
+                                        MOPD aims to make informed decisions and develop effective policies
+                                        that can drive economic growth and improve the overall well-being of
+                                        the country</p>
+                                    <div class="about__list wow fadeInUp" data-wow-delay=".8s">
+                                        <ul>
+                                            <li><span><i class="far fa-check"></i>Innovative ideas</span></li>
+                                            <li><span><i class="far fa-check"></i>Professional assistance</span></li>
+                                            <li><span><i class="far fa-check"></i>Financial advisory</span></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- services area end -->
+            <section class="services__area-2 mt--120 pt-270 pb-140 p-relative" data-background="{% static "assets/img/bg/wave-bg-2.png" %}">
+                <div class="section__title section__title-3 mb-60 center">
+                    <h2 class="wow fadeInUp text-center" data-wow-delay=".4s"> Our web application</h2>
+                </div>
+                <div class="container">
+                    <div id="carouselExampleDark" class="carousel carousel-dark slide">
+                        <div class="carousel-indicators">
+                          <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                          <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                          <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                          <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="3" aria-label="Slide 4"></button>
+                        </div>
+                        <div class="carousel-inner">
+                          <div class="carousel-item active" data-bs-interval="1000">
+                            <img src="{% static 'assets/image/main.png' %}" class="d-block w-100 rounded img-fluid" alt="...">
+                        
+                          </div>                          
+                          <div class="carousel-item" data-bs-interval="2000">
+                            <img src="{% static 'assets/image/expanded.png' %}" class=" d-block w-100 rounded img-fluid" alt="...">
+            
+                          </div>
+                          <div class="carousel-item">
+                            <img src="{% static 'assets/image/table.png' %}" class=" d-block w-100 rounded img-fluid" alt="...">
+ 
+                          </div>
+                          <div class="carousel-item">
+                            <img src="{% static 'assets/image/chart.png' %}" class=" d-block w-100 rounded img-fluid" alt="...">
+  
+                          </div>
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
+                          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                          <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
+                          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                          <span class="visually-hidden">Next</span>
+                        </button>
+                      </div>
+                  
+                </div>
+            </section>
+
+            <!-- Include the chatbot UI -->
+            {% include 'mychat/chatbot.html' %}
+        </main>
+
+        <!-- footer area start -->
+        {% include "includes/footer.html" %}
+        <!-- footer area end -->
+
+		<!-- JS here -->
+     {% include "includes/footer_js.html" %}
+    </body>
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="{% static "assets/plugins/jquery/jquery.min.j" %}s"></script>
+
+    <script src="{% static "assets/plugins/bootstrap/js/bootstrap.bundle.min.js" %}"></script>
+  
+    <script src="{% static "assets/dist/js/adminlte.min2167.js?v=3.2.0" %}"></script>
+  
+    <script src="{% static "assets/plugins/flot/jquery.flot.js" %}"></script>
+  
+    <script src="{% static "assets/plugins/flot/plugins/jquery.flot.resize.js" %}"></script>
+  
+    <script src="{% static "assets/plugins/flot/plugins/jquery.flot.pie.js" %}"></script>
+    <script src="{% static 'assets/js/prediction.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/series-label.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+    <script>
+      $('#chooseFile').bind('change', function () {
+        var filename = $("#chooseFile").val();
+        if (/^\s*$/.test(filename)) {
+          $(".file-upload").removeClass('active');
+          $("#noFile").text("No file chosen..."); 
+        }
+        else {
+          $(".file-upload").addClass('active');
+          $("#noFile").text(filename.replace("C:\\fakepath\\", "")); 
+        }
+      });
+    </script>
+
+</html>

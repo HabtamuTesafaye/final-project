@@ -1,0 +1,239 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>DPMEs</title>
+  <link>
+  {% include 'user-admin/include/head.html' %}
+</head>
+
+<body class="hold-transition sidebar-mini layout-fixed">
+  <!--User Registration Modal Start-->
+  <div class="modal fade" id="userRegistration" tabindex="-1" aria-labelledby="userRegistrationLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="userRegistrationLabel">
+            New Catagory Registration
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <div class="modal-body">
+          <form method='POST' name='addcatagory'>
+            {% csrf_token %}
+            {{form.as_p}}
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+            Cancel
+          </button>
+          <button name="addcatagory" type="submit" class="btn btn-primary">Add catagory</button>
+        </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+  </div>
+  <!--User Registration Modal End-->
+
+  <!-- Edit Catagory -->
+  <div class="modal fade" id="editModalcatagory" tabindex="-1" aria-labelledby="editModalcatagoryLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editModalcatagoryLabel">Modal title</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <form method="post" id="form_catagory_edit">
+          {% csrf_token %}
+          <div class="modal-body">
+            <input type="number" name="catagory_Id" id="id_catagory_id" style="display: none;">
+            {{form.as_p}}
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Save changes</button>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+
+    <!--Add Excel Data-->
+    <div class="modal fade" id="categoryExcel" tabindex="-1" aria-labelledby="categoryExcelLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="categoryExcelLabel">
+              New Category Registration
+            </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <form method='POST' name="fileCategoryValue" enctype="multipart/form-data">
+            <div class="modal-body">
+  
+              {% csrf_token %}
+              <p class="text-info">Click Download button to download sample Excel format. <a href="{% static 'SampleExcel/CategorySample.xlsx' %}" download="CategorySample.xlsx"
+                  class="btn btn-info">Download</a></p>
+  
+  
+              <div class="row justify-content-start mt-5">
+                <div class="col-12">
+                  <label for="">Add Excel</label>
+                  {{formFile.as_p}}
+  
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                Cancel
+              </button>
+              <button type="submit" name="fileCategoryValue" class="btn btn-primary">Add Category</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    </div>
+
+
+  <!-- Remove Indicator -->
+  <div class="modal fade" id="removeCatagoryModal" tabindex="-1" aria-labelledby="removeCatagoryModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="removeCatagoryModalLabel">Remove Indicator</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form name="removeCatagory" method="post">
+          {% csrf_token %}
+          <div class="modal-body text-center fs-4">
+            <p> Are you sure you want to remove? </p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+            <a href="#" id="forRemoveCatagory" class="btn btn-danger">Yes</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  {% include 'user-admin/include/navbar.html'%}
+
+  {% include 'user-admin/include/sidebar.html'%}
+
+  <!--Body Start-->
+  <div class="content-wrapper">
+    {% if messages %}
+    {% include 'user-admin/include/messages.html'%}
+    {% endif %}
+    <!-- TItle Start-->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--Title End-->
+
+    <section class="content">
+      <div class="container-fluid">
+        <!--Add Topic Button Start-->
+        <div class="text-end">
+          <button type="button" class="btn btn-success mb-2" data-bs-toggle="modal" data-bs-target="#userRegistration"
+            data-bs-whatever="@mdo">
+            + Add Categories
+          </button>
+          <button type="button" class="btn btn-success mb-2" data-bs-toggle="modal" data-bs-target="#categoryExcel"
+          data-bs-whatever="@mdo">
+          <i class="bi bi-file-earmark-arrow-down"></i> Add Excel
+        </button>
+        </div>
+        <!--Add Topic Button End-->
+
+        <!--Topic Table List Start-->
+        <div class="row justify-content-center">
+          <div class="col-md-12">
+            <div id='table-contain' class="table-responsive border p-3 shadow">
+              <table id="example" class="table table-striped table-hover table-sm">
+                <thead>
+                  <tr>
+                    <th>Name English</th>
+                    <th>Name Amharic</th>
+                    <th>topic</th>
+                    <th class='text-center'>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for catagory in categories%}
+                  {% if catagory.is_deleted == False %}
+                  <tr>
+                    <td> {{catagory.name_ENG }}</td>
+                    <td> {{catagory.name_AMH }}</td>
+                    <td>
+                      {% if catagory.topic %}
+                      {{ catagory.topic.title_ENG }} / {{ catagory.topic.title_AMH }}
+                      {% endif %}
+                    </td>
+
+                    <td>
+                      <div class="d-flex justify-content-center text-center">
+                        <button type="button" name="EditCategory" id="{{catagory.id}}" data-bs-toggle="modal"
+                          data-bs-target="#editModalcatagory" data-bs-toggle="modal" data-bs-target="#addIndicatorModal"
+                          class="btn btn-outline-warning border-0  pt-1 pb-1" data-bs-toggle="tooltip"
+                          data-bs-placement="bottom" title="Edit catagory "><i class="fas fa-pen"></i></button>
+
+                        <button id={{catagory.id}} name='catgorydelete' type="button" class="btn  m-0 p-0 text-center"
+                          data-bs-toggle="modal" data-bs-target="#removeCatagoryModal" data-bs-whatever="@mdo">
+                          <i class="fas ms-3  text-danger fa-trash"></i>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                  {% endif %}
+
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <!--Topic Table List End-->
+      </div>
+    </section>
+  </div>
+  <!--Body End-->
+
+  {% include 'user-admin/include/footer.html'%}
+
+
+  <!--Chart -->
+  <script src="{% static 'assets/plugins/jquery-ui/jquery-ui.min.js' %}"></script>
+  <script src="{% static 'assets/plugins/chart.js/Chart.min.js' %}"></script>
+  <script src="{% static 'assets/plugins/jquery-knob/jquery.knob.min.js' %}"></script>
+  <script src="{% static 'assets/plugins/moment/moment.min.js' %}"></script>
+  <script src="{% static 'assets/plugins/daterangepicker/daterangepicker.js' %}"></script>
+  <script src="{% static 'assets/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js' %}"></script>
+  <script src="{% static 'assets/plugins/summernote/summernote-bs4.min.js' %}"></script>
+  <script src="{% static 'assets/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js' %}"></script>
+
+  {% include 'user-admin/include/footer_js.html'%}
+
+</body>
+<script src="{% static 'assets/js/updatedata.js' %}"></script>
+
+</html>

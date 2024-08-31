@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+   {% include 'user-admin/include/head.html'%}
+</head>
+<body class="hold-transition sidebar-mini layout-fixed">
+    <!--Location Registration Modal Start-->
+    <div class="modal fade " id="userRegistration" tabindex="-1" aria-labelledby="userRegistrationLabel"
+      aria-hidden="true">
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="userRegistrationLabel">
+              New Location Registration
+            </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form method='POST'>
+              {% csrf_token %}
+              <div class="mb-3">
+                <label for="id_location" class="col-form-label">Name English: {% for err in form.name_ENG.errors%}<small
+                    class="text-danger">{{err}}</small> {% endfor %}</label>
+                {{form.name_ENG}}
+              </div>
+              <div class="mb-3">
+                <label for="id_location" class="col-form-label">Name Amharic: {% for err in form.name_AMH.errors%}<small
+                    class="text-danger">{{err}}</small> {% endfor %}</label>
+                {{form.name_AMH}}
+              </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+              Cancel
+            </button>
+            <button type="submit" class="btn btn-primary">Add Location</button>
+          </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <!--Location Registration Modal End-->
+  
+    <!--Delete Location Modal Start-->
+    <div class="modal fade deletionModel " id="deleteLocation" tabindex="-1" aria-labelledby="deleteLocationLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="deleteLocationLabel">
+              Deletion Form
+            </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <h2>Are you sure you want to delete {{form.name_ENG.value}}/{{form.name_AMH.value}}? </h2>      
+          </div>
+    
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            {% comment %} <a  href="{% url 'user-catagory-delete' catagorys.pk %}" type="submit" class="btn btn-primary">Yes</a> {% endcomment %}
+          </div>
+        </div>
+      </div>
+    </div>
+      <!--Delete Location Modal End-->
+      <!-- Remove location -->   
+             <div class="modal fade" id="removelocationModal" tabindex="-1" aria-labelledby="removelocationModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="removelocationModalLabel">Remove Indicator</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <form name="removelocation" method="post">
+                    {% csrf_token %}
+                    <div class="modal-body text-center fs-4"> 
+                      <p> Are you sure you want to remove? </p>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                      <a href="#" id="forRemovelocation" class="btn btn-danger">Yes</a>
+                    </div>
+                  </form>
+                </div>
+              </div>
+          </div>
+  
+    {% include 'user-admin/include/navbar.html'%}
+    {% include 'user-admin/include/sidebar.html'%}
+    <!--Body Start-->
+    <div class="content-wrapper">
+      {% if messages %}
+      {% include 'user-admin/include/messages.html'%}
+      {% endif %}
+      <!-- TItle Start-->
+      <div class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-6">
+             
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--Title End-->
+      <section class="content">
+        <div class="container-fluid">
+             
+          {% if result.has_errors %}
+          {% block errors %}
+            <h2> "Errors"</h2>
+            <ul>
+              {% for error in result.base_errors  %}
+              <li>
+                {{ error.error }}
+                <div class="traceback">{{ error.traceback|linebreaks }}</div>
+              </li>
+              {% endfor %}
+              {% for line, errors in result.row_errors %}
+                {% for error in errors %}
+                  <li>
+                    "Line number" : {{ line }} - {{ error.error }}
+                    <div><code>{{ error.row.values|join:", " }}</code></div>
+                   
+                  </li>
+                {% endfor %}
+              {% endfor %}
+            </ul>
+            <a href="javascript:history.back()"  class="btn btn-secondary">Back</a>
+          {% endblock %}
+          
+          {% elif result.has_validation_errors %}
+          
+          {% block validation_errors %}
+            <h2> "Some rows failed to validate"</h2>
+          
+            <p>"Please correct these errors in your data where possible, then reupload it using the form above."</p>
+          
+            <table class="import-preview">
+              <thead>
+                <tr>
+                  <th>"Row"</th>
+                  <th>"Errors"</th>
+                  {% for field in result.diff_headers %}
+                    <th>{{ field }}</th>
+                  {% endfor %}
+                </tr>
+              </thead>
+              <tbody>
+              {% for row in result.invalid_rows %}
+                <tr>
+                  <td>{{ row.number }} </td>
+                  <td class="errors">
+                    <span class="validation-error-count">{{ row.error_count }}</span>
+                    <div class="validation-error-container">
+                      <ul class="validation-error-list">
+                        {% for field_name, error_list in row.field_specific_errors.items %}
+                          <li>
+                              <span class="validation-error-field-label">{{ field_name }}</span>
+                              <ul>
+                                {% for error in error_list %}
+                                  <li>{{ error }}</li>
+                                {% endfor %}
+                              </ul>
+                          </li>
+                        {% endfor %}
+                        {% if row.non_field_specific_errors %}
+                          <li>
+                            <span class="validation-error-field-label"> "Non field specific"</span>
+                            <ul>
+                              {% for error in row.non_field_specific_errors %}
+                                <li>{{ error }}</li>
+                              {% endfor %}
+                            </ul>
+                          </li>
+                        {% endif %}
+                      </ul>
+                    </div>
+                  </td>
+                  {% for field in row.values %}
+                    <td>{{ field }}</td>
+                  {% endfor %}
+                </tr>
+              {% endfor %}
+              </tbody>
+            </table>
+            <a href="javascript:history.back()"  class="btn btn-secondary">Back</a>
+            {% endblock %}
+            {% else %}
+    
+    
+    <div class="row justify-content-center mt-5">
+        <div class="col-10">
+            <h2>Preview</h2>
+            <table class="table table-sm  table-bordered" >
+                <thead>
+                  <tr>
+                    <th class="text-center">#</th>
+                    {% for field in result.diff_headers %}
+                      <th class="text-center">{{ field }}</th>
+                    {% endfor %}
+                  </tr>
+                </thead>
+                {% for row in result.valid_rows %}
+                  <tr>
+                    <td class="text-center import-type">
+                      {% if row.import_type == 'new' %}
+                         <p class="btn rounded-pill btn-sm btn-success">New</p>
+                      {% elif row.import_type == 'skip' %}
+                         <p class="btn rounded-pill btn-sm btn-secondary">Skipped</p> 
+                      {% elif row.import_type == 'delete' %}
+                         <p class="btn rounded-pill btn-sm btn-danger">Delete</p>
+                      {% elif row.import_type == 'update' %}
+                         <p class="btn rounded-pill btn-sm btn-warning">Update</p> 
+                      {% endif %}
+                    </td>
+                    {% for field in row.diff %}
+                      <td class="text-center">{{ field }}</td>
+                    {% endfor %}
+                  </tr>
+                {% endfor %}
+              </table>
+              <form  method="post">
+                {% csrf_token %}
+                <button name="confirm_data_form"  class="btn btn-success" type="submit">Confirm</button>
+                <a href="javascript:history.back()"  class="btn btn-secondary">Cancel</a>
+              </form>
+        </div>
+    </div>
+
+    {% endif %}
+        </div>
+      </section>
+    </div>
+    <!--Body End-->
+  
+    {% include 'user-admin/include/footer.html'%}
+    <aside class="control-sidebar control-sidebar-dark"></aside>
+  
+    {% include 'user-admin/include/footer_js.html'%}
+   
+</body>
+
+<script>
+    function goBack() {
+        // Use window.history.back() to go back to the previous page
+        window.history.back();
+    }
+  </script>
+
+</html>

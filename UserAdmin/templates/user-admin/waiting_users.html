@@ -1,0 +1,172 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Waiting Users</title>
+  <link>
+  {% include 'user-admin/include/head.html' %}
+</head>
+
+<body class="hold-transition sidebar-mini layout-fixed">
+
+
+<div class="modal fade" id="AddTopic" tabindex="-1" aria-labelledby="AddTopicLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="AddTopicLabel">Waiting Users</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+    
+    </div>
+  </div>
+</div>
+
+
+
+  {% include 'user-admin/include/navbar.html'%}
+
+  {% include 'user-admin/include/sidebar.html'%}
+
+  <!--Body Start-->
+  <div class="content-wrapper">
+    {% if messages %}
+    {% include 'user-admin/include/messages.html'%}
+    {% endif %}
+    <!-- TItle Start-->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--Title End-->
+
+    <section class="content">
+      <div class="container-fluid">
+       
+        <div class="page-content">
+            <div class="container-fluid">
+                <div class="table-responsive">
+                  <table id="example" class="table table-striped table-hover table-sm">
+                    <caption class="table-title">Payment Records</caption>
+                    <thead>
+                      <tr>
+                        <th>Id</th>
+                        <th>Email</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for user_data in waiting_users %}
+                      <tr>
+                        <td>
+                          {{ user_data.id }}</td>
+                        <td>{{ user_data.email }}</td>
+                        <td>{{ user_data.first_name }}</td>
+                        <td>{{ user_data.last_name }}</td>
+                      </tr>
+                      {%endfor%}
+                    </tbody>
+                  </table> <nav aria-label="Page navigation example">
+                <ul class="pagination pagination-circle pagination-outline justify-content-center" >
+                {% if topics.has_previous %}
+                  <li class="page-item">
+                  <a class="page-link" href="?page={{ topics.previous_page_number }}">Previous</a>
+                  </li>
+                {% else %}
+                  <li class="page-item disabled">
+                  <a class="page-link" href="#" tabindex="-1" aria-disabled="True">Previous</a>
+                  </li>
+                {% endif %}
+            
+                {% if topics.number|add:'-4' > 1 %}
+                  <li class="page-item"><a class="page-link" href="?page={{ topics.number|add:'-5' }}">&hellip;</a></li>
+                {% endif %}
+            
+                {% for i in topics.paginator.page_range %}
+                  {% if topics.number == i %}
+                    <li class="page-item active" aria-current="page">
+                    <span class="page-link">
+                    {{ i }}
+                    <span class="sr-only">(current)</span>
+                    </span>
+                  </li>
+                  {% elif i > topics.number|add:'-5' and i < topics.number|add:'5' %}
+                     <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                  {% endif %}
+                {% endfor %}
+            
+                {% if topics.paginator.num_pages > topics.number|add:'4' %}
+                   <li class="page-item"><a class="page-link" href="?page={{ topics.number|add:'5' }}">&hellip;</a></li>
+                {% endif %}
+            
+                {% if topics.has_next %}
+                  <li class="page-item">
+                  <a class="page-link" href="?page={{ topics.next_page_number }}">Next</a>
+                  </li>
+                {% else %}
+                  <li class="page-item disabled">
+                  <a class="page-link" href="#" tabindex="-1" aria-disabled="True">Next</a>
+                  </li>
+                {% endif %}
+                </ul>
+              </nav>
+                </div>
+            </div>
+            <!-- container-fluid -->
+        </div>
+
+      </div>
+    </section>
+  </div>
+  <!--Body End-->
+
+  {% include 'user-admin/include/footer.html'%}
+
+
+  <!--Chart -->
+  <script src="{% static 'assets/plugins/jquery-ui/jquery-ui.min.js' %}"></script>
+  <script src="{% static 'assets/plugins/chart.js/Chart.min.js' %}"></script>
+  <script src="{% static 'assets/plugins/jquery-knob/jquery.knob.min.js' %}"></script>
+  <script src="{% static 'assets/plugins/moment/moment.min.js' %}"></script>
+  <script src="{% static 'assets/plugins/daterangepicker/daterangepicker.js' %}"></script>
+  <script src="{% static 'assets/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js' %}"></script>
+  <script src="{% static 'assets/plugins/summernote/summernote-bs4.min.js' %}"></script>
+  <script src="{% static 'assets/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js' %}"></script>
+
+  {% include 'user-admin/include/footer_js.html'%}
+
+</body>
+<script src="{% static 'assets/js/updatedata.js' %}">
+ 
+</script>
+<script>
+
+  $(document).ready(function(){
+  
+    $(".btn-delete").on('click', function(){
+      const buttonData = $(this).data()
+      $("#deleteCompanyAnchor").attr("href", `/user-admin/dashboard_topic_delete/${buttonData.id}`)
+      $("#deleteMessageYear").html(`Are you sure you want to delete <div> <code> ${buttonData.name}</code>? </div> `)
+    })
+    
+
+        
+  
+      })
+
+      
+  
+  </script>
+
+</html>

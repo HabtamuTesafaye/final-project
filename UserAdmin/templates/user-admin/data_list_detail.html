@@ -1,0 +1,393 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>DPMEs</title>
+  {% include 'user-admin/include/head.html'%}
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
+  
+
+
+  <style>
+    .scrollable {
+      max-height: 500px;
+      /* replace 500px with your desired maximum width */
+      overflow-y: auto;
+      /* enable horizontal scrolling */
+    }
+
+    .ss{
+      padding-bottom: 700px;
+    }
+
+
+
+
+    .horizontal-text {
+      writing-mode: horizontal-tb;
+      text-align: center;
+      /* Add this line to center the text */
+    }
+
+    {% if indicator.type_of == 'monthly'%}
+
+    {% endif %}
+  </style>
+</head>
+<body class="hold-transition sidebar-mini layout-fixed">
+
+
+  <!-- Add Sub Indicator  -->
+  <div  class="modal fade" id="addIndicatorModal" tabindex="-1" aria-labelledby="addIndicatorModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addIndicatorModalLabel">Add New Sub-Indicator</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form name="formAddIndicator" method="post" id="formAddIndicator">
+          {% csrf_token %}
+          <div class="modal-body">
+            <input type="number" name="addNewIndicator" id="addNewIndicatorId" style="display: none;">
+            {{sub_indicator_form}}
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" name="formAddIndicator" class="btn btn-primary">Save changes</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+    <!-- Edit Operation  -->
+    <div  class="modal fade" id="operationEdit" tabindex="-1" aria-labelledby="operationEditLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="operationEditLabel">Edit Operation</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form name="editOperation" method="post" id="editOperation">
+          {% csrf_token %}
+          <div class="modal-body">
+            <input type="number" name="indicator_operator" id="indicator_operation_id" style="display: none;">
+            {{operationForm.as_p}}
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" name="editOperation" class="btn btn-primary">Save changes</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- Remove Indicator -->
+  <div class="modal fade" id="removeIndicatorModal" tabindex="-1" aria-labelledby="removeIndicatorModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="removeIndicatorModalLabel">Remove Indicator</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form name="removeIndicator" method="post">
+          {% csrf_token %}
+          <div class="modal-body">
+            <p>Are you sure you want to remove? </p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+            <a href="#" id="forRemoveIndicator" class="btn btn-danger">Yes</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Modal Edit -->
+  <div class="modal fade editIndicator" id="indicatorEditValue" tabindex="-1" aria-labelledby="indicatorEditValueLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h5 class="modal-title" id="indicatorEditValueLabel">Modal title</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <div id="form_1">
+          <form name="formEditIndicator" id="addValueIndicator" method="post">
+            {% csrf_token %}
+            <div class="modal-body" id="form_body">
+              <input type="number" id="indicator_id" name="indicator" style="display: none;">
+              <input type="number" id="data_point_id" name="data_point" style="display: none;">
+              <input type="number" id="month_id" name="month" style="display: none;">
+              <input type="number" id="quarter_id" name="quarter" style="display: none;">
+              <label for="id_value" class="form-label">Value: </label>
+              <input type="text" name="value" class="form-control" maxlength="50" required id="id_value">
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary" name="addValueIndicator">Save changes</button>
+            </div>
+          </form>
+        </div>
+
+        <div id="form_2">
+          <form name="editFormIndicator" id="editForm" method="post">
+            {% csrf_token %}
+            <div class="modal-body" id="form_body">
+              <input type="number" id="data_value" name="data_value" style="display: none;">
+              <label for="id_value" class="form-label">Value: </label>
+              <input type="text" name="value2" class="form-control" maxlength="50" required id="id_value_form2">
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary" name="editFormIndicatorValue">Save changes</button>
+            </div>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Edit Measurement  -->
+  <div class="modal fade" id="editMeasurement" tabindex="-1" aria-labelledby="editMeasurementLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editMeasurementLabel">Edit Measurement</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <form id="measurementFormId" method="post">
+          {% csrf_token %}
+          <div class="modal-body" id="measurementOptionId">
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" name="measurementFormId" class="btn btn-primary">Save changes</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Is-Actual Modal -->
+  <div class="modal fade" id="isActualModal" tabindex="-1" aria-labelledby="isActualModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+
+      <form method="post">
+        {% csrf_token %}
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="isActualModalLabel">Actualness </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <input type="hidden" id="indicatorYearId" name="indicatorYearId">
+            <label class="form-label" for="">Is Actual</label>
+            <input type="checkbox" name="isActualInput" id="isActualInput" class="form-check">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Save changes</button>
+          </div>
+        </div>
+    </div>
+    </form>
+
+
+  </div>
+  </div>
+
+
+  {% include 'user-admin/include/navbar.html'%}
+  {% include 'user-admin/include/sidebar.html'%}
+
+  <!--Body Start-->
+  <div class="content-wrapper">
+    <!-- TItle Start-->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0">
+              {{indicator.title_ENG}}</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--Title End-->
+    
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-12">
+
+
+            <div class="col-4 p-0 m-0">
+
+              <!--Measurement Start-->
+              <div class="mt-2 mb-2 text-start">
+                <div>
+                  <p class="h4">
+                    {% if indicator.measurement %}
+                    {{indicator.measurement.parent.Amount_ENG}} - {{indicator.measurement.Amount_ENG}}
+                    {% else %}
+                    <span class="text-warning">Please Add Measurement</span>
+
+                    {% endif %}
+                    <button class="ms-4 btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#editMeasurement"
+                      data-bs-whatever="@mdo">Edit </button>
+                  </p>
+                </div>
+              </div>
+              <!--Measurement End-->
+            </div>
+
+            <!--Messages-->
+            {% include 'user-admin/include/messages.html'%}
+
+            {% if form.errors %}
+            {% for field in form %}
+            {% if field.errors %}
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+              <strong>{{ field.errors|striptags }}!</strong>
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endif %}
+            {% endfor %}
+            {% endif %}
+
+
+            {% if form_update.errors %}
+            {% for field in form_update %}
+            {% if field.errors %}
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+              <strong>{{ field.errors|striptags }}!</strong>
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endif %}
+            {% endfor %}
+            {% endif %}
+
+
+            {% if sub_indicator_form.errors %}
+            <div class="text-danger">
+              <ul>
+                {% for field in sub_indicator_form %}
+                {% if field.errors %}
+                <li>{{ field.label }}: {{ field.errors|striptags }}</li>
+                {% endif %}
+                {% endfor %}
+              </ul>
+            </div>
+            {% endif %}
+
+
+
+            <!--Data List Start-->
+            <div class="card">
+                               <!--Loading Page-->
+        <div class="d-flex justify-content-center">
+          <div  id="loading_div" style="display: none;"  class="spinner-border mt-5" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+      </div>
+              <div class="card-body" id="list_table_view">
+                <div id="tableTest">
+                </div>
+              </div>
+            </div>
+            <!--Data List End-->
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+
+    <script src="https://code.highcharts.com/stock/highstock.js"></script>
+    <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/stock/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/stock/modules/accessibility.js"></script>
+    
+    <div class="row justify-content-center">
+      <div class="col-10">
+        <div id="container"></div>
+      </div>
+    </div>
+
+  </div>
+  <!--Body End-->
+  {% include 'user-admin/include/footer.html' %}
+
+  {% include 'user-admin/include/footer_js.html' %}
+
+  <script>
+    $(document).ready(function () {
+      $("#example1").DataTable({
+        retrieve: true,
+        ordering: false,
+        scrollX: true,
+        responsive: true,
+        paging: true,
+        searching: true,
+        orderNumber: true,
+        lengthMenu: [
+          [10, 25, 50, -1],
+          ["10 rows", "25 rows", "50 rows", "Show all"],
+        ],
+        columnDefs: [
+          { width: "100%" },
+          { width: "200px", targets: 0 },
+        ],
+        dom: "Bfrtip",
+        buttons: ["pageLength",
+              {
+                   extend: 'excelHtml5',
+                  text: 'Save as Excel',
+                  customize: function( xlsx ) {
+                    var sheet = xlsx.xl.worksheets['sheet1.xml'];
+                    $('row:nth-child(2) c', sheet).attr( 's', '54' );
+                  }
+              }
+          ]
+      });
+    });
+
+
+
+
+
+  </script>
+  
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.min.css">
+  <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/buttons/2.0.1/js/dataTables.buttons.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.0.1/css/buttons.dataTables.min.css">
+  <script src="https://cdn.datatables.net/buttons/2.0.1/js/buttons.html5.min.js"></script>
+  <script src="https://cdn.datatables.net/buttons/2.0.1/js/buttons.print.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/pdfmake.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/vfs_fonts.js"></script>
+  <script src="{% static 'assets/js/data_list_detail.js'%}"></script>
+</body>
+
+</html>

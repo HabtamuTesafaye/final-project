@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generate Report</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/highcharts-3d.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
+</head>
+<body>
+<div class="container mt-5">
+    <h1>Generate Report</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Generate Report</button>
+    </form>
+
+    {% if categories_table %}
+        <h2>Categories</h2>
+        {{ categories_table|safe }}
+    {% endif %}
+
+    {% if indicators_table %}
+        <h2>Indicators</h2>
+        {{ indicators_table|safe }}
+    {% endif %}
+
+    {% if users_table %}
+        <h2>Users</h2>
+        {{ users_table|safe }}
+    {% endif %}
+
+
+    {% if pie_chart_data %}
+        <h2 class="mt-5">Pie Chart</h2>
+        <div id="container" style="width:100%; height:400px;"></div>
+     
+        <script>
+        Highcharts.chart('container', {
+            chart: {
+                type: 'pie',
+                options3d: {
+                    enabled: true,
+                    alpha: 45,
+                    beta: 0
+                }
+            },
+            title: {
+                text: 'Report Data Distribution'
+            },
+            subtitle: {
+                text: 'Data source: Your system'
+            },
+            accessibility: {
+                point: {
+                    valueSuffix: '%'
+                }
+            },
+            tooltip: {
+                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    depth: 35,
+                    dataLabels: {
+                        enabled: true,
+                        format: '{point.name}'
+                    }
+                }
+            },
+            series: [{
+                type: 'pie',
+                name: 'Share',
+                data: {{ pie_chart_data|safe }}
+            }]
+        });
+    </script>
+    {% endif %}
+
+    {% if ai_insights %}
+    <h2 class="mt-5">AI Insights</h2>
+    <p>{{ ai_insights }}</p>
+    {% endif %}
+    
+    {% if growth_chart %}
+    <h2>Predicted Growth Chart</h2>
+    <img src="data:image/png;base64,{{ growth_chart }}" alt="Growth Chart">
+
+    {% endif %}
+
+</div>
+
+<script>
+    $(document).ready(function() {
+        $('table').DataTable();
+    });
+</script>
+</body>
+</html>

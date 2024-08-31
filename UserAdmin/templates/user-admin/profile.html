@@ -1,0 +1,180 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>DPMEs</title>
+    <style>
+       
+    </style>
+    {% include 'user-admin/include/head.html'%}
+
+       </head>
+
+  <body class="hold-transition sidebar-mini layout-fixed">
+
+
+    <!--Data Add Modal Start-->
+    <div class="modal fade" id="userRegistration" tabindex="-1" aria-labelledby="userRegistrationLabel" aria-hidden="true">
+       <div class="modal-dialog modal-lg modal-dialog-centered">
+          <div class="modal-content">
+              <div class="modal-header bg-primary text-white">
+                  <h5 class="modal-title" id="userRegistrationLabel">
+                       Update User Profile
+                  </h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <form method="post" id="update-user-form" action="{% url 'admin-update-profile'%}" enctype="multipart/form-data">
+                  {% csrf_token %}
+                  <div class="modal-body">
+                      <div class="mb-3">
+                          <label for="{{ form.username.id_for_label }}" class="col-form-label">Username:</label>
+                          <input type="text" class="form-control" id="{{ form.username.id_for_label }}" name="{{ form.username.name }}" value="{{ user.username }}" />
+                      </div>
+                      <div class="row">
+                          <div class="col mb-3">
+                              <label for="{{ form.first_name.id_for_label }}" class="col-form-label">First Name:</label>
+                              <input type="text" class="form-control" id="{{ form.first_name.id_for_label }}" name="{{ form.first_name.name }}" value="{{ user.first_name }}" />
+                          </div>
+                          <div class="col mb-3">
+                              <label for="{{ form.last_name.id_for_label }}" class="col-form-label">Last Name:</label>
+                              <input type="text" class="form-control" id="{{ form.last_name.id_for_label }}" name="{{ form.last_name.name }}" value="{{ user.last_name }}" />
+                          </div>
+                      </div>
+                      <div class="mb-3">
+                          <label for="{{ form.email.id_for_label }}" class="col-form-label">Email:</label>
+                          <input type="email" class="form-control" id="{{ form.email.id_for_label }}" name="{{ form.email.name }}" value="{{ user.email }}" />
+                      </div>
+                      <div class="mb-3">
+                        <label for="{{ form.photo.id_for_label }}" class="col-form-label">Photo:</label>
+                        {{form.photo}}
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      <button type="submit" class="btn btn-primary">Save changes</button>
+                  </div>
+
+                  
+                    </form>
+              </div>
+              
+          </div>
+      </div>
+  </div>
+  <!--Data Add Modal End-->
+
+
+    {% include 'user-admin/include/navbar.html'%}
+    {% include 'user-admin/include/sidebar.html' %}
+    <!--Body Start-->
+    <div class="content-wrapper">
+      <!-- TItle Start-->
+      <div class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-6">
+              <h1 class="m-0"></h1>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--Title End-->
+
+      <section class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="container-fluid">
+              <div class="row justify-content-center">
+                {% include 'user-admin/include/messages.html'%}
+                <div class="col-md-8 ">
+                  {% if form.errors %}
+                       <ul class="text-danger">
+                        {% for field, errors in form.errors.items %}
+                      {% for error in errors %}
+                       <li>{{ field }}: {{ error }}</li>
+                     {% endfor %}
+                     {% endfor %}
+                     </ul>
+                      {% endif %}
+                  <div class="card card-primary card-outline">
+                    <div class="card-body box-profile">
+                      <div class="text-center">
+                        <img class="img-circle img-fluid" width="200px" {% if user.photo %} src="/media/{{user.photo}}" {% else%} src="{% static 'assets/img/avatar.png'%}" {% endif %} alt="Profile Picture">
+                      </div>
+                      <h3 class="profile-username text-center">
+                        {{user.username | capfirst}}
+                      </h3>
+                      <p class="text-muted text-center">{{ user.first_name | capfirst }} {{ user.last_name| capfirst }}</p>
+                      <!-- Edit Button -->
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-8">
+                  <div class="card">
+                    <div class="card-header p-2">
+                      <ul class="nav nav-pills">
+                        <li class="nav-item">
+                          <a class="nav-link" href="#settings" data-toggle="tab">Settings</a>
+                        </li>
+                      </ul>
+                    </div>
+
+                    <div class="card-body">
+                      <div class="tab-content">
+                          <div class="active tab-pane" id="settings">
+                              {% comment %} from strat {% endcomment %}
+                              <div class="form-group row">
+                                  <label class="col-sm-2 col-form-label">Username:</label>
+                                  <div class="col-sm-10">
+                                      <p class="form-control-plaintext font-weight-bold">{{ user.username | capfirst}}</p>
+                                  </div>
+                              </div>
+                              <div class="form-group row">
+                                  <label class="col-sm-2 col-form-label">First Name:</label>
+                                  <div class="col-sm-10">
+                                      <p class="form-control-plaintext">{{ user.first_name | capfirst }}</p>
+                                  </div>
+                              </div>
+                              <div class="form-group row">
+                                  <label class="col-sm-2 col-form-label">Last Name:</label>
+                                  <div class="col-sm-10">
+                                      <p class="form-control-plaintext">{{ user.last_name | capfirst }}</p>
+                                  </div>
+                              </div>
+                              <div class="form-group row">
+                                  <label class="col-sm-2 col-form-label">Email:</label>
+                                  <div class="col-sm-10">
+                                      <p class="form-control-plaintext">{{ user.email | capfirst}}</p>
+                                  </div>
+                              </div>
+                              <div class="row justify-content-center">
+                                <div class="col-3">
+                                  <button type="button" class="btn btn-primary btn-block " data-bs-toggle="modal" data-bs-target="#userRegistration">
+                                    Edit Profile
+                                  </button>
+                                </div>
+                              </div>
+                              
+                              
+                              {% comment %} from end {% endcomment %}
+                          </div>
+                      </div>
+                  </div>
+                  
+                  
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    {% include 'user-admin/include/footer.html'%}
+    {% include 'user-admin/include/footer_js.html'%}
+  </body>
+</html>

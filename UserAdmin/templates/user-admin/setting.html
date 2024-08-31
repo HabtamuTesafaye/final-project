@@ -1,0 +1,131 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>DPMEs</title>
+    
+    {% include 'user-admin/include/head.html'%}
+
+       </head>
+
+  <body class="hold-transition sidebar-mini layout-fixed">
+
+
+
+    {% include 'user-admin/include/navbar.html'%}
+    {% include 'user-admin/include/sidebar.html' %}
+    <!--Body Start-->
+    <div class="content-wrapper">
+      <!-- TItle Start-->
+      <div class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-6">
+              <h1 class="m-0"></h1>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--Title End-->
+
+      <section class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="container-fluid">
+              <div class="row justify-content-center">
+                {% include 'user-admin/include/messages.html'%}
+                <div class="col-md-8 ">
+                  {% if request.user.is_first_time%}
+                  <h2 class="text-danger text-center">Please Change Your Password!</h2>
+                  {% endif %}
+                  <div class="card card-primary card-outline">
+                    <div class="card-body box-profile">
+                      <div class="text-center">
+                        <img class="img-circle img-fluid" width="200px" {% if user.photo %} src="/media/{{user.photo}}" {% else%} src="{% static 'assets/img/avatar.png'%}" {% endif %} alt="Profile Picture" >
+                      </div>
+                      <h3 class="profile-username text-center">
+                        {{user.username | capfirst}}
+                      </h3>
+                      <p class="text-muted text-center">{{ user.first_name | capfirst }} {{ user.last_name| capfirst }}</p>
+                      <!-- Edit Button -->
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-8">
+                  <div class="card pt-3">
+                    <div class="card-body">
+                      <div class="tab-content">
+                          <div class="active tab-pane" id="settings">
+                              <form method="POST" >
+                                {% csrf_token %}
+                                
+                                {% if formChangePassword.errors %}
+                               <div class="text-danger">
+                                 <ul>
+                                   {% for field in formChangePassword %}
+                                     {% if field.errors %}
+                                       <li>{{ field.label }}: {{ field.errors|striptags }}</li>
+                                     {% endif %}
+                                   {% endfor %}
+                                 </ul>
+                               </div>
+                             {% endif %}
+
+                                <div class="form-group row">
+                                 <label for="oldPassword" class="col-sm-2 col-form-label"
+                                   >Old Password</label
+                                 >
+                                 <div class="col-sm-10">
+                                 
+                                   <input type="password" class="form-control" id="{{ formChangePassword.old_password.id_for_label }}" name="{{ formChangePassword.old_password.name }}" />
+                                   
+                                  </div>
+                               </div>
+                               <div class="form-group row">
+                                 <label for="newPassword" class="col-sm-2 col-form-label"
+                                   >New Password</label
+                                 >
+                                 <div class="col-sm-10">
+                                    
+                                     <input type="password" class="form-control" id="{{ formChangePassword.new_password1.id_for_label }}" name="{{ formChangePassword.new_password1.name }}" />
+                                 </div>
+                               </div>
+                               <div class="form-group row">
+                                 <label
+                                   for="confirmPassword"
+                                   class="col-sm-2 col-form-label"
+                                   >Confirm Password</label
+                                 >
+                                 <div class="col-sm-10">
+                            
+                                     <input type="password" class="form-control" id="{{ formChangePassword.new_password2.id_for_label }}" name="{{ formChangePassword.new_password2.name }}" />
+                                 </div>
+                               </div>
+                              <div class="offset-sm-2 ">
+                                     <input class="btn btn-danger text-center" type="submit" value="Change My Password"> </div>
+                               </form>
+
+
+
+                          </div>
+                      </div>
+                  </div>
+                  
+                  
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    {% include 'user-admin/include/footer.html'%}
+    {% include 'user-admin/include/footer_js.html'%}
+  </body>
+</html>
+
+                              

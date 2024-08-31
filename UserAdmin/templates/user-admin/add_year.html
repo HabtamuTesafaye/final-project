@@ -1,0 +1,191 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>DPMEs</title>
+    {% include 'user-admin/include/head.html'%}
+  </head>
+
+  <body class="hold-transition sidebar-mini layout-fixed">
+        <!--year Registration Modal Start-->
+        <div class="modal fade" id="userRegistration" tabindex="-1" aria-labelledby="userRegistrationLabel" aria-hidden="true">
+          <div class="modal-dialog modal-lg modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="userRegistrationLabel">
+                    New Year Registration
+                    </h5>
+                    <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                    ></button>
+                </div>
+                <div class="modal-body">
+                  <p>Are you sure you want to add the next year?</p>
+                </div>
+                <!-- Modal Footer -->
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                      No
+                  </button>
+                  <button type="button" class="btn btn-primary" id="confirmAddYear">
+                      Yes
+                  </button>
+                </div>
+              </div>
+          </div>
+        </div>
+
+    {% include 'user-admin/include/navbar.html'%}
+    {% include 'user-admin/include/sidebar.html'%}
+    <!--Body Start-->
+    <div class="content-wrapper">
+      {% if messages %}
+      <!-- Your table goes here -->
+
+<!-- Messages -->
+<div id="messageContainer" class="row d-flex justify-content-center">
+  <div class="col-8">
+      {% if messages %}
+          <ul class="messages">
+              {% for message in messages %}
+                  <div class="alert {% if message.tags == 'success' %} alert-success {% else %} alert-danger {% endif %} alert-dismissible">
+                      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                      {{ message }}
+                  </div>
+              {% endfor %}
+          </ul>
+      {% endif %}
+  </div>
+</div>
+<!-- End Messages -->
+
+      {% endif %}
+      <!-- TItle Start-->
+      <div class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-6">
+              
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--Title End-->
+
+      <section class="content">
+        <div class="container-fluid">
+          <!--Add Topic Button Start-->
+          <div class="text-end">
+            <button type="button" class="btn btn-success mb-2" data-bs-toggle="modal" data-bs-target="#userRegistration" data-bs-whatever="@mdo">
+              + Add year
+            </button>
+          </div>
+          <!--Add Topic Button End-->
+          <!--Topic Table List Start-->
+          <div class="row justify-content-center">
+            <div class="col-md-12">
+              <div class="table-responsive border p-3 shadow"  id="table-contain">
+                <table id="example" class="table table-striped table-hover table-sm">
+                  <thead>
+                    <tr>
+                      <th>Year E.C</th>
+                      <th>Yaer G.C</th>
+                      <th>Created Date</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for year in years %}
+                    <tr>
+                      <td> {{year.year_EC }}</td>
+                      <td> {{year.year_GC }}</td>
+                      <td> {{year.created_at | date:'F d, Y' }}</td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <!--Topic Table List End-->
+        </div>
+      </section>
+    </div>
+    <!--Body End-->
+    {% include 'user-admin/include/footer.html'%}
+    {% include 'user-admin/include/footer_js.html' %}
+    <script>
+      $(document).ready(function() {
+        // Click event for the "Yes" button in the confirmation modal
+        $("#confirmAddYear").on("click", function() {
+          // Close the confirmation modal
+          $("#userRegistration").modal("hide");
+      
+          // Get the CSRF token from the cookie
+          function getCSRFToken() {
+            var name = "csrftoken=";
+            var decodedCookie = decodeURIComponent(document.cookie);
+            var cookieArray = decodedCookie.split(';');
+            for (var i = 0; i < cookieArray.length; i++) {
+              var cookie = cookieArray[i].trim();
+              if (cookie.indexOf(name) == 0) {
+                return cookie.substring(name.length, cookie.length);
+              }
+            }
+            return null;
+          }
+          // Make an AJAX request to your Django view to add the year
+          $.ajax({
+            url: "/user-admin/json-filter-year/",
+            type: "POST",
+            headers: {
+                "X-CSRFToken": getCSRFToken(),
+            },
+            success: function(data) {
+                // Handle success
+                if (data.success) {
+                    // Update the UI dynamically with the new year
+                    var newYear = data.new_year;
+                        // Display Django messages
+                        location.reload();
+                    // Display success message
+                    djangoSuccessMessage('Year added successfully!');
+                } else {
+                                          // Display Django messages
+        location.reload();
+                    // Display failure message
+                    djangoErrorMessage('Error adding year: ' + data.error);
+                }
+            },
+            error: function(error) {
+                // Handle error
+                console.error("Error adding year:", error);
+                // Display failure message
+                djangoErrorMessage('Error adding year. Please try again.');
+                        // Display Django messages
+        location.reload();
+            }
+          });
+
+
+          // Function to display Django success message
+          function djangoSuccessMessage(text) {
+            // Example: Use Django messages for success
+            messages.success(text);
+          }
+
+          // Function to display Django error message
+          function djangoErrorMessage(text) {
+            // Example: Use Django messages for error
+            messages.error(text);
+          }
+        });
+      });
+      </script>
+  </body>
+</html>
+

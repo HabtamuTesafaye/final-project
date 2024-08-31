@@ -1,0 +1,197 @@
+{% load static %}
+<!DOCTYPE HTML>
+<html lang="en">
+
+<head>
+    {% include 'mobile-Dashbord/include/head.html'%}
+</head>
+
+<body class="theme-light" data-highlight="green">
+    <div id="preloader">
+        <div class="spinner-border color-highlight" role="status"></div>
+    </div>
+
+    <div id="page">
+
+        {% include 'mobile-Dashbord/include/navbar.html'%}
+        <div class="page-content footer-clear">
+            <div class="pt-3">
+                <div class="page-title d-flex">
+                    <div class="align-self-center me-auto">
+                        <p class="color-highlight header-date"></p>
+                        <h1>Welcome</h1>
+                    </div>
+                    <div class="align-self-center ms-auto">
+                        <div class="dropdown-menu">
+                            <div class="card card-style shadow-m mt-1 me-1">
+                                <div class="list-group list-custom list-group-s list-group-flush rounded-xs px-3 py-1">
+                                    <a href="{% url 'page_profile' %}" class="list-group-item">
+                                        <i
+                                            class="has-bg gradient-yellow shadow-bg shadow-bg-xs color-white rounded-xs bi bi-person-circle"></i>
+                                        <strong class="font-13">Account</strong>
+                                    </a>
+                                    <a href="{% url 'page_signin_1' %}" class="list-group-item">
+                                        <i
+                                            class="has-bg gradient-red shadow-bg shadow-bg-xs color-white rounded-xs bi bi-power"></i>
+                                        <strong class="font-13">Log Out</strong>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="splide single-slider slider-no-dots slider-no-arrows slider-visible" id="single-slider-1">
+                <div class="splide__track">
+                    <div class="splide__list">
+                        {% for topic in topics  %}
+                        <div class="splide__slide">
+                           
+                           <div class="card card-style m-0 bg-5 shadow-card shadow-card-m" style="height:200px">
+                            <div class="card-top p-3">
+                                <a href="#" data-bs-toggle="offcanvas" data-bs-target="#menu-card-more"
+                                    class="icon icon-xxs bg-white color-black float-end"><i
+                                        class="bi bi-three-dots font-18"></i></a>
+                            </div>
+                            <div class="card-center">
+                                <div class="bg-theme px-3 py-2 rounded-end d-inline-block">
+                                    <h1 class="font-13 my-n1">
+                                        <a class="color-theme" data-bs-toggle="collapse" href="#balance{{topic.id}}"
+                                            aria-controls="balance2">Categories</a>
+                                    </h1>
+                                    <div class="collapse" id="balance{{topic.id}}">
+                                        <h2 class="color-theme font-26">{{topic.category_count}}</h2>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-overlay bg-black opacity-50"></div>
+                        </div>
+                           
+                        </div>
+                        {% endfor %}
+                     
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="content my-0 mt-n2 px-1">
+                <div class="d-flex">
+                    <div class="align-self-center">
+                        <h3 class="font-16 mb-2 mt-3">Categories</h3>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tabs tabs-cards" id="tab-group-5">
+                <div class="tab-controls">
+                    <a class="font-13" data-bs-toggle="collapse" href="#tab-13" aria-expanded="true">1</a>
+                    <a class="font-13" data-bs-toggle="collapse" href="#tab-14" aria-expanded="false">2</a>
+                    <a class="font-13" data-bs-toggle="collapse" href="#tab-15" aria-expanded="false">3</a>
+                </div>
+                <div class="card card-style">
+                    <div class="collapse show" id="tab-13" data-bs-parent="#tab-group-5">
+                        <p class="content">Some placeholder content for the collapse component. This panel is hidden by
+                            default but revealed when the user activates the relevant trigger.</p>
+                    </div>
+                    <div class="collapse" id="tab-14" data-bs-parent="#tab-group-5">
+                        <p class="content">Some placeholder content for the collapse component. This panel is hidden by
+                            default but revealed when the user activates the relevant trigger.</p>
+                    </div>
+                    <div class="collapse" id="tab-15" data-bs-parent="#tab-group-5">
+                        <p class="content">Some placeholder content for the collapse component. This panel is hidden by
+                            default but revealed when the user activates the relevant trigger.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card card-style">
+                <div class="indicator-content">
+                    
+                   
+                </div>
+            </div>
+
+
+
+
+
+
+
+
+
+
+        </div>
+
+        <div id="menu-sidebar" data-menu-active="nav-pages" data-menu-load="{% url 'menu_sidebar' %}"
+         class="offcanvas offcanvas-start offcanvas-detached rounded-m" style="display: block;">
+
+
+        <div id="menu-highlights" data-menu-load= "{% url 'menu_highlights' %}"
+            class="offcanvas offcanvas-bottom offcanvas-detached rounded-m">
+        </div>
+
+        <a href="#" data-bs-toggle="offcanvas" data-bs-target="#menu-notifications"
+        class="icon gradient-blue color-white shadow-bg shadow-bg-xs rounded-m">
+        <i class="bi bi-bell-fill font-17"></i>
+        <em class="badge bg-red-dark color-white scale-box">3</em>
+    </a>
+
+        <div id="menu-card-more" data-menu-load= "#"
+            class="offcanvas offcanvas-bottom offcanvas-detached rounded-m">
+        </div>
+
+        <div id="menu-transfer" data-menu-load= "{% url 'menu_transfer' %}"
+            class="offcanvas offcanvas-bottom offcanvas-detached rounded-m">
+        </div>
+
+        <div id="menu-friends-transfer" data-menu-load="{% url 'menu_friends_transfer' %}"
+            class="offcanvas offcanvas-bottom offcanvas-detached rounded-m">
+        </div>
+
+        <div id="menu-request" data-menu-load="#}"
+            class="offcanvas offcanvas-bottom offcanvas-detached rounded-m">
+        </div>
+
+        <div id="menu-exchange" data-menu-load="{% url 'menu_exchange' %}"
+            class="offcanvas offcanvas-bottom offcanvas-detached rounded-m">
+        </div>
+
+        <div class="offcanvas offcanvas-bottom rounded-m offcanvas-detached" id="menu-install-pwa-ios">
+            <div class="content">
+                <img src="app/icons/icon-128x128.png" alt="img" width="80" class="rounded-m mx-auto my-4">
+                <h1 class="text-center">Install PayApp</h1>
+                <p class="boxed-text-xl">
+                    Install PayApp on your home screen, and access it just like a regular app. Open your Safari menu and
+                    tap "Add to Home Screen".
+                </p>
+                <a href="#"
+                    class="pwa-dismiss close-menu color-theme text-uppercase font-900 opacity-50 font-11 text-center d-block mt-n2"
+                    data-bs-dismiss="offcanvas">Maybe Later</a>
+            </div>
+        </div>
+
+        <div class="offcanvas offcanvas-bottom rounded-m offcanvas-detached" id="menu-install-pwa-android">
+            <div class="content">
+                <img src="app/icons/icon-128x128.png" alt="img" width="80" class="rounded-m mx-auto my-4">
+                <h1 class="text-center">Install PayApp</h1>
+                <p class="boxed-text-l">
+                    Install PayApp to your Home Screen to enjoy a unique and native experience.
+                </p>
+                <a href="#"
+                    class="pwa-install btn btn-m rounded-s text-uppercase font-900 gradient-highlight shadow-bg shadow-bg-s btn-full">Add
+                    to Home Screen</a><br>
+                <a href="#" data-bs-dismiss="offcanvas"
+                    class="pwa-dismiss close-menu color-theme text-uppercase font-900 opacity-60 font-11 text-center d-block mt-n1">Maybe
+                    later</a>
+            </div>
+        </div>
+        
+    </div>
+
+    {% include 'mobile-Dashbord/include/script.html'%}
+</body>
+
+<script src="{% static 'assets/mobile/scripts/index_js.js' %}"></script>
+</html>

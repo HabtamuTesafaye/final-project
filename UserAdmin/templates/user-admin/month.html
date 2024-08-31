@@ -1,0 +1,72 @@
+{% load static %}
+{% load widget_tweaks %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>DPMEs</title>
+  {% include 'user-admin/include/head.html'%}
+</head>
+
+<body class="hold-transition sidebar-mini layout-fixed">
+  {% include 'user-admin/include/navbar.html'%}
+  {% include 'user-admin/include/sidebar.html'%}
+  <!--Body Start-->
+  <div class="content-wrapper">
+    {% if messages %}
+    {% include 'user-admin/include/messages.html'%}
+    {% endif %}
+    <!-- TItle Start-->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--Title End-->
+    <section class="content">
+      <div class="container-fluid">
+        <!--Topic Table List Start-->
+        <div class="row justify-content-center">
+          <div class="col-md-12">
+            <div class="table-responsive border p-3 shadow">
+              <table id="example" class="table table-striped table-hover table-sm">
+                <thead>
+                  <tr>
+                    <th>Year G.C</th>
+                    <th>Year E.C</th>
+                    <th>Created Date</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for month in months%}
+                  <tr>
+                    <td> {{month.month_ENG}}</td>
+                    <td> {{month.month_AMH}}</td>
+                    <td> {{month.created_at | date:'F d, Y' }}</td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <!--Topic Table List End-->
+      </div>
+    </section>
+  </div>
+  <!--Body End-->
+
+  {% include 'user-admin/include/footer.html'%}
+  <aside class="control-sidebar control-sidebar-dark"></aside>
+
+  {% include 'user-admin/include/footer_js.html'%}
+</body>
+
+</html>

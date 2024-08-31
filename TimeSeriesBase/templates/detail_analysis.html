@@ -1,0 +1,63 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MoPD Analysis</title>
+    {% include "includes/head.html" %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+</head>
+
+<body>
+    {% include 'includes/navbar.html'%}
+    <div class="row justify-content-center mt-5 pt-5">
+        
+       
+        <!--Title-->
+        <div class="col-10">
+            <h3 id="currentTitleIndicator"></h3>
+            
+        </div>
+        <!--Table-->
+        <div class="col-10 mt-5">
+            <!--Data List Start-->
+            <div class="card">
+                <div class="card-body" id="list_table_view">
+                    <div id="tableTest">
+                         <!--Loading Page-->
+        <div class="d-flex justify-content-center">
+            <div  id="loading_div" style="display: none;"  class="spinner-border" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+                    </div>
+                </div>
+            </div>
+            <!--Data List End-->
+        </div>
+        <!--Graph-->
+        <div class="col-10 pt-5 mb-5 pb-5">
+            <div id="container"></div>
+        </div>
+    </div>
+</body>
+<script src="https://code.highcharts.com/stock/highstock.js"></script>
+<script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/stock/modules/export-data.js"></script>
+<script src="https://code.highcharts.com/stock/modules/accessibility.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.min.css">
+<script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.0.1/js/dataTables.buttons.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.0.1/css/buttons.dataTables.min.css">
+<script src="https://cdn.datatables.net/buttons/2.0.1/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.0.1/js/buttons.print.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/vfs_fonts.js"></script>
+<script src="{% static 'assets/js/user-detail-analysis.js'%}"></script>
+
+
+</html>

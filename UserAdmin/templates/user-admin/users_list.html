@@ -1,0 +1,392 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>DPMEs</title>
+   {% include 'user-admin/include/head.html'%}
+
+   <style>
+
+    .custom-btn {
+      width: 100px;  
+    }
+    
+   </style>
+  </head>
+
+  <body class="hold-transition sidebar-mini layout-fixed">
+
+
+
+
+
+    <!--User Registration Modal Start-->
+     <!--Data Add Modal Start-->
+    <div class="modal fade" id="userRegistration" tabindex="-1" aria-labelledby="userRegistrationLabel" aria-hidden="true">
+       <div class="modal-dialog modal-lg modal-dialog-centered">
+          <div class="modal-content">
+              <div class="modal-header bg-primary text-white">
+                  <h5 class="modal-title" id="userRegistrationLabel">
+                      New User Registration
+                  </h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <form  method="post" class="auth-form"> {% csrf_token %}
+                                                 
+                  <div class="row">
+                   
+                  <div class=" col-md mb-3">
+                    <label class="small"  for="{{form.first_name.id_for_label}}">First Name: {% for err in form.first_name.errors %} <small class="text-warning fw-bold "> {{err}}</small> {% endfor %}  </label>
+                      {{form.first_name}}
+                  </div>
+                  <div class="col-md mb-3">
+                    
+                    <label class="small" for="{{form.last_name.id_for_label}}">Last Name: {% for err in form.last_name.errors %} <small class="text-warning fw-bold"> {{err}}</small> {% endfor %}  </label>
+                      {{form.last_name}}
+                  </div>
+      
+                </div>
+
+
+                  <div class="mb-3">
+                    <label class="small" for="{{form.username.id_for_label}}">Username: {% for err in form.username.errors %} <small class="text-warning fw-bold"> {{err}}</small> {% endfor %}  </label>
+                        {{form.username}}
+                    </div>
+                    
+                    <div class="row justify-content-start">
+                      <div class="col-3">
+                        <label class="small me-4" for="{{form.is_admin.id_for_label}}">Is Admin: {% for err in form.is_admin.errors %} <small class="text-warning fw-bold"> {{err}}</small> {% endfor %}  </label>
+                        {{form.is_superuser}}
+                      </div>
+                    </div>
+
+
+
+                    <div class="mb-3">
+                      <label class="small" for="{{form.email.id_for_label}}">Email: {% for err in form.email.errors %} <small class="text-warning fw-bold"> {{err}}</small> {% endfor %}  </label>
+                        {{form.email}}
+                    </div>
+                    
+                    <div class="text-center">
+                        <button type="submit"
+                            class="btn btn-success">Add User</button>
+                    </div>
+                </form>
+              </div>
+              
+          </div>
+      </div>
+  </div>
+
+  <div class="modal fade" id="configsite"  aria-labelledby="configsiteLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+       <div class="modal-content">
+           <div class="modal-header bg-primary text-white">
+               <h5 class="modal-title" id="configsiteLabel">
+                  Configure Site Acess here
+               </h5>
+               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+           </div>
+           <div class="modal-body">
+            <form method="post">
+              {% csrf_token %}
+              <div class="row">
+                  <div class="col-md-12 mb-3">
+                      <div class="form-check form-switch ml-2">
+                        <label class="form-check-label mr-5" for="{{ form1.is_public.id_for_label }}">
+                          Allow Public Acesss
+                       </label>
+                          {{ form1.is_public }}
+                      </div>
+                  </div>
+              </div>
+          
+              <div class="text-center">
+                  <button type="submit" class="btn btn-success">Save</button>
+              </div>
+          </form>
+          
+             </form>
+           </div>
+           
+       </div>
+   </div>
+</div>
+  <!--Data Add Modal End-->
+
+ <!-- Edit User Modal Start -->
+{% for user in users %}
+<div class="modal fade" id="editUserModal{{ user.id }}" tabindex="-1" aria-labelledby="editUserModalLabel{{ user.id }}" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title" id="editUserModalLabel{{ user.id }}">
+          Edit User: {{ user.first_name  | capfirst}} {{ user.last_name  | capfirst}}
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form method="post" id="update-user-form" action="{% url 'edit_user' user.id %}">
+          {% comment %} action="{% url 'edit_user' user.id %}" {% endcomment %}
+          {% csrf_token %}
+          <div class="modal-body">
+            <div class="mb-3">
+              <label for="{{ form.username.id_for_label }}" class="col-form-label">Username:</label>
+              <input type="text" class="form-control" id="{{ form.username.id_for_label }}" name="{{ form.username.name }}" value="{{user.username }}" />
+            </div>
+            <div class="row">
+              <div class="col mb-3">
+                <label for="{{ form.first_name.id_for_label }}" class="col-form-label">First Name:</label>
+                <input type="text" class="form-control" id="{{ form.first_name.id_for_label }}" name="{{ form.first_name.name }}" value="{{ user.first_name }}" />
+              </div>
+              <div class="col mb-3">
+                <label for="{{ form.last_name.id_for_label }}" class="col-form-label">Last Name:</label>
+                <input type="text" class="form-control" id="{{ form.last_name.id_for_label }}" name="{{ form.last_name.name }}" value="{{ user.last_name }}" />
+              </div>
+            </div>
+            <div class="row justify-content-start">
+              <div class="col-3">
+                <label class=" me-4" for="{{form.is_admin.id_for_label}}">Is Admin: {% for err in form.is_admin.errors %} <small class="text-warning fw-bold"> {{err}}</small> {% endfor %}  </label>
+                {{form.is_superuser}}
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="{{ form.email.id_for_label }}" class="col-form-label">Email:</label>
+              <input type="email" class="form-control" id="{{ form.email.id_for_label }}" name="{{ form.email.name }}" value="{{ user.email }}" />
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-success">Update User</button>
+          </div>
+         
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endfor %}
+<!-- Edit User Modal End -->
+
+
+
+<!-- Deactivate User Modal Start -->
+{% for user in users %}
+  <div class="modal fade" id="deleteUserModal{{ user.id }}" tabindex="-1" aria-labelledby="deleteUserModalLabel{{ user.id }}" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header {% if user.is_active %}bg-danger{% else %}bg-success{% endif %} text-white">
+          <h5 class="modal-title" id="deleteUserModalLabel{{ user.id }}">
+            {% if user.is_active %}Deactivate{% else %}Activate{% endif %}: {{ user.username }}
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>Are you sure you want to {% if user.is_active %}deactivate{% else %}activate{% endif %} the user '{{ user.username }}'?  
+            {% if user.is_active %}
+              This will remove all of their access, and they won't be able to log into the system anymore.
+            {% else %}
+              This will grant them access, and they will be able to log into the system.
+            {% endif %}
+          </p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <form method="post" action="{% url 'activate_deactivate_user' user_id=user.id %}">
+            {% csrf_token %}
+            <button type="submit" class="btn {% if user.is_active %}btn-danger{% else %}btn-success{% endif %}">
+              {% if user.is_active %}Deactivate{% else %}Activate{% endif %} User
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endfor %}
+<!-- Deactivate User Modal End -->
+
+    {% include 'user-admin/include/navbar.html'%}
+    {% include 'user-admin/include/sidebar.html'%}
+    <!--Body Start-->
+    <div class="content-wrapper">
+      <!-- TItle Start-->
+      <div class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-6">
+              <h1 class="m-0"></h1>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--Title End-->
+
+      {% if action_result %}
+      <div class="alert alert-success" role="alert">
+        {{ action_result }}
+      </div>
+    {% endif %}
+
+      <section class="content">
+        <div class="container-fluid">
+          <!--Card Start-->
+          <div class="row">
+            <div class="col-lg-4 col-6">
+              <div class="small-box bg-info">
+                <div class="inner">
+                  <h3>{{ total_users_count }}</h3>
+                  <h3>{{count2}}</h3>
+                  <p>Total Users</p>
+                </div>
+                <div class="icon">
+                  <i class="ion ion-bag"></i>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-4 col-6">
+              <div class="small-box bg-success">
+                <div class="inner">
+                  <h3>{{ active_users_count }}</h3>
+                  <p>Active Users</p>
+                </div>
+                <div class="icon">
+                  <i class="ion ion-bag"></i>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-4 col-6">
+              <div class="small-box bg-warning">
+                <div class="inner">
+                  <h3>{{ inactive_users_count }}</h3>
+                  <p>Inactive User</p>
+                </div>
+                <div class="icon">
+                  <i class="ion ion-bag"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+         
+          <!--Card End-->
+
+          <!--User Registration Button Start-->
+          <div class="text-end">
+            <button
+            type="button"
+            class="btn btn-success mb-2"
+            data-bs-toggle="modal"
+            data-bs-target="#configsite"
+            data-bs-whatever="@mdo"
+          >
+            + Configure site access
+          </button>
+
+            <button
+              type="button"
+              class="btn btn-success mb-2"
+              data-bs-toggle="modal"
+              data-bs-target="#userRegistration"
+              data-bs-whatever="@mdo"
+            >
+              + Add User
+            </button>
+          </div>
+          <!--User Registration Button End-->
+                    <!-- User Table List Start -->
+                    {% include 'user-admin/include/messages.html' %}
+
+                        <!-- example template code -->
+    {% if form.errors %}
+    <div class="alert alert-danger">
+      <ul>
+        {% for field_errors in form.errors.values %}
+          {% for error in field_errors %}
+            <li>{{ error }}</li>
+          {% endfor %}
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+
+<div class="row justify-content-center">
+  <div class="col-md-12">
+    <div class="table-responsive border p-3 shadow">
+      <table id="example" class="table table-striped table-hover table-sm">
+        <thead>
+          <tr>
+            <th>Username</th>
+            <th>Email</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Account Type</th>
+            <th>Created Date</th>
+            <th>Account Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {% for user in users %}
+
+         
+          <tr>
+            <td>{{ user.username }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.first_name | capfirst }}</td>
+            <td>{{ user.last_name | capfirst }}</td>
+            <td>{% if user.is_superuser %}
+              Admin
+              {%else%}
+              Staff
+              {% endif %}
+            </td>
+            <td>{{ user.date_joined|date:"m-d-y" }}</td>
+            <td>
+              {% if user.is_active %}
+              <span class="badge bg-success badge-lg">Active</span>
+              {% else %}
+              <span class="badge bg-danger badge-lg">In-Active</span>
+              {% endif %}
+            </td>
+            <td>
+              {% if user != request.user%}
+              <div class="d-flex justify-content-around text-center">
+                <!-- Edit User Modal Trigger Button -->
+                <i class="fas fa-pen mt-2 mr-4" data-bs-toggle="modal"
+                  data-bs-target="#editUserModal{{ user.id }}"></i>
+
+                <!-- Deactivate User Modal Trigger Button -->
+                <button type="button"
+        class="btn {% if user.is_active %}btn-danger{% else %}btn-success{% endif %} btn-sm custom-btn"
+        data-bs-toggle="modal" data-bs-target="#deleteUserModal{{ user.id }}">
+  <i class=""></i> {% if user.is_active %} Deactivate {% else %}Activate{% endif %}
+</button>
+{% else%} 
+ <p class="text-success text-end fw-bold">Current User</p>
+{% endif %}
+
+              </div>
+            </td>
+          </tr>
+          
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<!-- User Table List End -->
+
+        </div>
+      </section>
+    </div>
+    <!--Body End-->
+    {% include 'user-admin/include/footer.html'%}
+    {% include 'user-admin/include/footer_js.html'%}
+  </body>
+</html>

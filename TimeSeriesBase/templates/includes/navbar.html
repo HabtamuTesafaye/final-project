@@ -1,0 +1,55 @@
+{%load static%}
+<nav class="navbar navbar-expand-lg bg-light navbar-light sticky-top shadow fs-5">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="{% url 'index'%}"
+      ><img src="{% static 'assets/img/icon/brand/trianlge.png' %}" alt="" />
+      <img src="{% static 'assets/img/icon/brand/trianlge.png' %}" alt="" />
+      <h3>MoPD</h3></a
+    >
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNav"
+      aria-controls="navbarNav"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse  justify-content-end ms-5" id="navbarNav">
+      <ul class="navbar-nav gap-3">
+        <li class="nav-item">
+          <a class="nav-link"  href="{% url 'index' %}">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'data' %}">Data</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'about' %}">About</a>
+        </li>
+        <li class="nav-item dropdown dropstart">
+            {% if user.is_anonymous %}
+            <a  class="btn btn-success" href="{% url 'login' %}">Login</a>
+            </a>
+            {% else %}
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <img class="rounded-circle img-fluid" width="30px"
+                   {% if user.photo %} 
+                       src="/media/{{user.photo}}" 
+                   {% else %}
+                      src="{% static 'assets/img/avatar.png'%}"
+                   {% endif %}
+                      alt="Profile Picture">
+              </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <li><a class="dropdown-item" href="{% url 'staff-profile' %}">View Profile</a></li>
+              <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
+            </ul>
+            {% endif %}
+          </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+

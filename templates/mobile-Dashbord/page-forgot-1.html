@@ -1,0 +1,56 @@
+{% load static %}
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    {% include 'mobile-Dashbord/include/head.html'%}
+</head>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+<body class="theme-light">
+    <div id="preloader">
+        <div class="spinner-border color-highlight" role="status"></div>
+    </div>
+
+    <div id="page">
+
+        <div class="page-content my-0 py-0">
+            <div class="card bg-5 card-fixed">
+                <div class="card-center mx-3 px-4 py-4 bg-white rounded-m">
+                    <h1 class="font-30 font-800 mb-0">PayApp</h1>
+                    <p>Recover your Account</p>
+                    <div class="form-custom form-label form-border form-icon mb-3 bg-transparent">
+                        <i class="bi bi-at font-16"></i>
+                        <input type="email" class="form-control rounded-xs" id="c1" placeholder="Email Address" />
+                        <label for="c1" class="color-theme">Email Address</label>
+                        <span>(required)</span>
+                    </div>
+                    <a href="{% url 'Mobile_index' %}" class="btn btn-full gradient-highlight shadow-bg shadow-bg-s mt-4">Send
+                        Recovery Instructions</a>
+                    <div class="row">
+                        <div class="col-6 text-start">
+                            <a href="{% url 'page_signup_1' %}" class="font-11 color-theme opacity-40 pt-4 d-block">Create
+                                Account</a>
+                        </div>
+                        <div class="col-6 text-end">
+                            <a href="{% url 'page_signin_1' %}" class="font-11 color-theme opacity-40 pt-4 d-block">Sign In
+                                Account</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-overlay rounded-0 m-0 bg-black opacity-70"></div>
+            </div>
+        </div>
+
+
+
+
+        <div id="menu-sidebar" data-menu-active="nav-pages" data-menu-load="{% url 'menu_sidebar' %}"
+            class="offcanvas offcanvas-start offcanvas-detached rounded-m">
+        </div>
+
+        <div id="menu-highlights" data-menu-load="{% url 'menu_highlights' %}"
+            class="offcanvas offcanvas-bottom offcanvas-detached rounded-m">
+        </div>
+    </div>
+    {% include 'mobile-Dashbord/include/script.html'%}
+</body>

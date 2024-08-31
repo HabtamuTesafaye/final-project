@@ -1,0 +1,147 @@
+{% load static%}
+<html lang="en">
+{% include "includes/head.html" %}
+
+<body>
+
+  <!--Navbar Start-->
+  {% include 'includes/navbar.html' %}
+
+
+  </head>
+  <!--Navbar End-->
+
+
+
+
+  <div style="margin-top: 100px;" class="container emp-profile">
+    {%load static%}
+    <form method="post">
+      <div class="row">
+        <div class="col-md-4">
+
+        </div>
+        <div class="col-md-6">
+
+        </div>
+        <section class="content">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="container-fluid">
+                <div class="row justify-content-center">
+                  {% include 'user-admin/include/messages.html'%}
+
+                  <div class="col-md-8 ">
+                    <div class="card card-primary card-outline shadow ">
+                      <div class="card-body box-profile">
+                        <div class="text-center">
+                          <img class="rounded-circle img-fluid shadow img-thumbnail" width="150px" {% if user.photo %}
+                            src="/media/{{user.photo}}" {% else%} src="{% static 'assets/img/avatar.png'%}" {% endif %}
+                            alt="Profile Picture">
+                        </div>
+                        <h3 class="profile-username text-center">
+                          {{user.username | capfirst}}
+                        </h3>
+                        <p class="text-muted text-center">{{ user.first_name | capfirst }}
+                          {{ user.last_name| capfirst}}</p>
+                        <div class="card-body">
+                          <div class="tab-content">
+                            <div class="active tab-pane" id="settings">
+                              <div class="card-footer">
+                                <div class="row justify-content-center">
+                                  <div class="col-md-4 mt-2">
+                                    <a class="btn btn-outline-primary" href="{% url 'staff-profile' %}"> <svg
+                                        xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                        class="bi bi-arrow-left-square-fill" viewBox="0 0 16 16">
+                                        <path
+                                          d="M16 14a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2zm-4.5-6.5H5.707l2.147-2.146a.5.5 0 1 0-.708-.708l-3 3a.5.5 0 0 0 0 .708l3 3a.5.5 0 0 0 .708-.708L5.707 8.5H11.5a.5.5 0 0 0 0-1" />
+                                      </svg> profile...</a>
+                                  </div>
+                                  <div class="col-md-4 mt-2">
+                                    <a class="active btn btn-outline-primary "
+                                      href="{% url 'staff-update-profile' %}"><svg xmlns="http://www.w3.org/2000/svg"
+                                        width="16" height="16" fill="currentColor" class="bi bi-pencil-square"
+                                        viewBox="0 0 16 16">
+                                        <path
+                                          d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                        <path fill-rule="evenodd"
+                                          d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
+                                      </svg> Edit Profile</a>
+                                  </div>
+                                  <div class="col-md-4 mt-2">
+                                    <a class="btn btn-outline-primary " href="{% url 'staff-change-password' %}"><svg
+                                        xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                        class="bi bi-person-fill-lock" viewBox="0 0 16 16">
+                                        <path
+                                          d="M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0m-9 8c0 1 1 1 1 1h5v-1a1.9 1.9 0 0 1 .01-.2 4.49 4.49 0 0 1 1.534-3.693C9.077 9.038 8.564 9 8 9c-5 0-6 3-6 4m7 0a1 1 0 0 1 1-1v-1a2 2 0 1 1 4 0v1a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1zm3-3a1 1 0 0 0-1 1v1h2v-1a1 1 0 0 0-1-1" />
+                                      </svg> Change Password</a>
+                                  </div>
+                                  <form method="post" id="update-user-form" action="{% url 'staff-update-profile' %}"
+                                    enctype="multipart/form-data">
+
+                                    {% csrf_token %}
+                                    {% if form.errors %}
+                                    <ul class="text-danger">
+                                      {% for field_errors in form.errors.values %}
+                                      {% for error in field_errors %}
+                                      <li>* {{ error }}</li>
+                                      {% endfor %}
+                                      {% endfor %}
+                                    </ul>
+                                    {% endif %}
+
+                                    <div class="modal-body">
+                                      <div class="mt-3 fw-bold">
+                                        {{form.username.label}}:
+                                        {{form.username}}
+                                      </div>
+
+                                      <div class="mt-3 fw-bold">
+                                        {{form.email.label}}:
+                                        {{form.email}}
+                                      </div>
+
+                                      <div class="mt-3 fw-bold">
+                                        {{form.first_name.label}}:
+                                        {{form.first_name}}
+                                      </div>
+
+                                      <div class="mt-3 fw-bold">
+                                        {{form.last_name.label}}:
+                                        {{form.last_name}}
+                                      </div>
+                                      <div class="mt-3 fw-bold">
+                                        {{form.photo.label}}:
+                                        {{form.photo}}
+                                      </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                      <a href="{% url 'index'%}" type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Close</a>
+                                      <button type="submit" class="btn btn-success">Save
+                                        changes</button>
+                                    </div>
+                                  </form>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+        </section>
+      </div>
+
+    </form>
+  </div>
+  <main>
+
+
+
+</body>
+
+{%include "includes/footer_js.html" %}
+
+</html>

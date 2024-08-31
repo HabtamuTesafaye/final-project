@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+
+{% load static %}
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>DPMEs</title>
+  <link rel="stylesheet" href="{% static 'assets/css/homepage.css' %}">
+  {% include 'user-admin/include/head.html'%}
+  <!--High Chart-->
+  <script src="https://code.highcharts.com/highcharts.js"></script>
+  <script src="https://code.highcharts.com/modules/series-label.js"></script>
+  <script src="https://code.highcharts.com/modules/exporting.js"></script>
+  <script src="https://code.highcharts.com/modules/export-data.js"></script>
+  <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <link rel="stylesheet" href="{% static 'bootstrap_icons/css/bootstrap_icons.css' %}">
+
+<!-- Bootstrap Icons from CDN -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css" rel="stylesheet">
+
+<!-- html2pdf Library from CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+
+  
+<style>
+/* Center align the first heading */
+.ai_highlight h1 {
+    text-align: center;
+}
+
+/* Basic styling for headings */
+.ai_highlight h1, .ai_highlight h2, .ai_highlight h3 {
+    margin: 1em 0;
+}
+
+/* Basic styling for paragraphs and lists */
+.ai_highlight p {
+    margin: 0.5em 0;
+}
+
+.ai_highlight ul, .ai_highlight ol {
+    list-style: none;  /* Removes bullets and numbers */
+    margin-left: 12px;         /* Remove margin around lists */
+    padding: 0;        /* Remove padding around lists */
+}
+
+/* Remove margin and padding from list items */
+.ai_highlight li {
+    margin-left: 12px;         /* Removes margin around list items */
+    padding: 0;        /* Removes padding inside list items */
+}
+
+/* Optionally, add space before list items */
+.ai_highlight li {
+    margin-top: 1em;   /* Add space before list items */
+}
+
+
+        /* Optional: Add some padding around the report */
+        .report-container {
+            padding: 1em;
+            line-height: 1.6;
+        }
+        /* Align the navigation tabs to the right */
+.analytics-tab {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Ensure that the button aligns correctly */
+.analytics-tab .nav-item.ms-auto {
+    margin-left: auto; /* Pushes the item to the right */
+}
+
+    .header-container {
+        display: flex;
+        align-items: center;
+        position: relative;
+        width: 100%; /* Full width of the parent container */
+        padding-top: 10px; /* Optional: Add some space from the top */
+        padding-bottom: 20px; /* Space below the header */
+        margin-bottom: 4px;
+    }
+
+    .logo {
+        position: absolute;
+        top: 0;
+        left: 0; /* Align logo to the top-left corner */
+    }
+
+    #info {
+        margin: 0 auto; /* Center the heading */
+        text-align: center;
+        flex: 1;
+    }
+
+    .file-upload{display:block;text-align:center;font-family: Helvetica, Arial, sans-serif;font-size: 12px;}
+.file-upload .file-select{display:block;border: 2px solid #dce4ec;color: #34495e;cursor:pointer;height:40px;line-height:40px;text-align:left;background:#FFFFFF;overflow:hidden;position:relative;}
+.file-upload .file-select .file-select-button{background:#dce4ec;padding:0 10px;display:inline-block;height:40px;line-height:40px;}
+.file-upload .file-select .file-select-name{line-height:40px;display:inline-block;padding:0 10px;}
+.file-upload .file-select:hover{border-color:#34495e;transition:all .2s ease-in-out;-moz-transition:all .2s ease-in-out;-webkit-transition:all .2s ease-in-out;-o-transition:all .2s ease-in-out;}
+.file-upload .file-select:hover .file-select-button{background:#34495e;color:#FFFFFF;transition:all .2s ease-in-out;-moz-transition:all .2s ease-in-out;-webkit-transition:all .2s ease-in-out;-o-transition:all .2s ease-in-out;}
+.file-upload.active .file-select{border-color:#3fa46a;transition:all .2s ease-in-out;-moz-transition:all .2s ease-in-out;-webkit-transition:all .2s ease-in-out;-o-transition:all .2s ease-in-out;}
+.file-upload.active .file-select .file-select-button{background:#3fa46a;color:#FFFFFF;transition:all .2s ease-in-out;-moz-transition:all .2s ease-in-out;-webkit-transition:all .2s ease-in-out;-o-transition:all .2s ease-in-out;}
+.file-upload .file-select input[type=file]{z-index:100;cursor:pointer;position:absolute;height:100%;width:100%;top:0;left:0;opacity:0;filter:alpha(opacity=0);}
+.file-upload .file-select.file-select-disabled{opacity:0.65;}
+.file-upload .file-select.file-select-disabled:hover{cursor:default;display:block;border: 2px solid #dce4ec;color: #34495e;cursor:pointer;height:40px;line-height:40px;margin-top:5px;text-align:left;background:#FFFFFF;overflow:hidden;position:relative;}
+.file-upload .file-select.file-select-disabled:hover .file-select-button{background:#dce4ec;color:#666666;padding:0 10px;display:inline-block;height:40px;line-height:40px;}
+.file-upload .file-select.file-select-disabled:hover .file-select-name{line-height:40px;display:inline-block;padding:0 10px;}
+</style>
+
+</head>
+
+<body class="hold-transition sidebar-mini layout-fixed">
+  <div class="wrapper">
+    <!--Loading Start-->
+    <div class="preloader flex-column justify-content-center align-items-center">
+      <img class="animation__shake" src="{% static '/assets/image/mopd_logo_green.png' %}" alt="AdminLTELogo"
+        height="300" width="300" />
+    </div>
+    <!--Loading End-->
+
+    {% include 'user-admin/include/navbar.html'%}
+    {% include 'user-admin/include/sidebar.html'%}
+
+
+
+    <!--Body Start-->
+    <div class="content-wrapper">
+      <!-- TItle Start-->
+      <div class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-6">
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--Title End-->
+
+      <section class="content">
+        <div class="container-fluid">
+          <div class="d-flex justify-content-between align-items-center p-2">
+            <h6 class="text-muted mb-0">Dashboard</h6>
+            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
+              Generate Report
+            </button>
+          </div>
+          
+          <!--Card Start-->
+          <div class="row">
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-xl modal-fullscreen-lg-down modal-dialog-scrollable">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Generate Report</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                      <!-- Navigation -->
+                      <ul class="nav nav-tabs analytics-tab" id="myTab" role="tablist">
+                          <li class="nav-item" role="presentation">
+                              <button class="nav-link active" id="analytics-tab-1" data-bs-toggle="tab" data-bs-target="#analytics-tab-1-pane" type="button" role="tab" aria-controls="analytics-tab-1-pane" aria-selected="true">
+                                  All
+                              </button>
+                          </li>
+                          <li class="nav-item ms-auto"> <!-- Add Download PDF Button -->
+                              <button id="downloadPdfBtn" class="btn btn-primary">Download PDF</button>
+                          </li>
+                      </ul>
+  
+                      <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active" id="analytics-tab-1-pane" role="tabpanel" aria-labelledby="analytics-tab-1" tabindex="0">
+                            <div class="header-container">                           
+                                <img src="{% static 'assets/image/mopd_logo_green.png' %}" style="width: 60px; height:60px; margin-left:2px ;" class="logo" alt="Logo" />
+                                <h5 class="d-flex justify-content-center align-item-center" id="info"></h5>
+                            </div>
+                            <div class="d-flex align-item-center justify-content-center" style="text-align: center; margin: 13px;">
+                              <img src="{% static 'assets/image/loading.gif' %}" id="load" alt="Loading..." />
+                          </div>
+                            <div id="reportContent">
+                                <!-- This will hold the tables and charts -->
+                                <div class="row justify-content-center" id="report-container">
+                                    <div class="col-md-6">
+                                        <div id="topic-chart"></div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div id="user-chart"></div>
+                                    </div>
+                                    <div class="row" id="ai_highlight"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                  </div>
+              </div>
+          </div>
+      </div>
+      <!-- Add this container for PDF export -->
+      <div id="pdfContainer" class="pdf-container" style="display: none;">
+        <img src="{% static 'assets/image/mopd_logo_green.png' %}" class="logo" alt="Logo" />
+        <div class="title">Report</div>
+        <div class="content" id="pdfContent">
+            <!-- Content for PDF export -->
+            <div id="reportContent">
+              <!-- This will hold the tables and charts -->
+              <div class="row justify-content-center" id="report-container">
+                  <h5 class="d-flex justify-content-center align-item-center" id="info"> </h5>
+                  <div class="col-md-6">
+                      <div id="topic-chart"></div>
+                  </div>
+                  <div class="col-md-6">
+                      <div id="user-chart"></div>
+                  </div>
+                  <div class="row" id="ai_highlight"></div>
+              </div>
+          </div>
+        </div>
+      </div>
+        
+            <!--Card 1-->
+            <div class="col-md-6 col-xl-3 ">
+              <div class="small-box nav-link text-center">
+                <div class="inner">
+
+                  <h4 class="text-info"> <i class="bi bi-person-video3"></i>Total Topic</h4>
+                  <h3 class="text-info">{{size_topic}}</h3>
+                </div>
+                <div class="icon">
+                  <i class="ion ion-bag"></i>
+                </div>
+                <a href="{% url 'user-admin-topic' %}" class="small-box-footer text-info">More info <i
+                    class="bi bi-arrow-down-circle-fill"></i></a>
+              </div>
+            </div>
+
+            <!--Card 2-->
+            <div class="col-md-6 col-xl-3 ">
+              <div class="small-box nav-link text-center">
+                <div class="inner">
+
+
+                  <h4 class="text-success"> <i class="bi bi-app-indicator "></i>Total Category</h4>
+                  <h3 class="text-success">{{size_category}}
+                  </h3>
+                </div>
+                <div class="icon">
+                  <i class="ion ion-bag"></i>
+                </div>
+                <a href="{% url 'user-admin-category' %}" class="small-box-footer">More info <i
+                    class="bi bi-arrow-down-circle-fill"></i></a>
+              </div>
+            </div>
+            <!--Card 3-->
+            <div class="col-md-6 col-xl-3 ">
+              <div class="small-box nav-link text-center">
+                <div class="inner">
+                  <h4 class="text-secondary"> <i class="bi bi-list-nested"></i>Total indicator</h4>
+                  <h3 class="text-secondary">{{size_indicator}}</h3>
+                </div>
+                <div class="icon">
+                  <i class="ion ion-bag"></i>
+                </div>
+                <a href="{% url 'user-admin-indicators'%}" class="small-box-footer text-secondary">More info <i
+                    class="bi bi-arrow-down-circle-fill"></i></a>
+              </div>
+            </div>
+
+            <!--Card 4-->
+            <div class="col-md-6 col-xl-3 ">
+              <div class="small-box nav-link text-center">
+                <div class="inner">
+                  <h4 class="text-primary"> <i class="bi bi-buildings"></i>Total source</h4>
+                  <h3 class="text-primary">{{size_source}}</h3>
+                </div>
+                <div class="icon">
+                  <i class="ion ion-bag"></i>
+                </div>
+                <a href="{% url 'user-admin-source'%}" class="small-box-footer text-secondary">More info <i
+                    class="bi bi-arrow-down-circle-fill"></i></a>
+              </div>
+            </div>
+
+          </div>
+          <!--Card End-->
+
+          <!--Body Row Start-->
+
+          
+         </div>
+          <div class="row">
+            <h6 class="text-muted p-2">Random Monthly Category</h6>
+            <!--Random Month Graph Start-->
+            <div class="col-12">
+             <figure class="highcharts-figure">
+               <div id="containerMonth1"></div>
+             </figure>
+           </div>
+            <!--Random Month Grapd End-->
+
+            <h6 class="text-muted p-2">Random Yearly Category</h6>
+           <!--Random Year Graph Start-->
+           <!--Year 1-->
+            <div class="col-lg-6">
+              <figure class="highcharts-figure">
+                <div id="containerYear1"></div>
+              </figure>
+            </div>
+
+            <!--Year 2-->
+            <div class="col-lg-6">
+              <figure class="highcharts-figure">
+                <div id="containerYear2"></div>
+              </figure>
+            </div>
+             <!--Random Year Graph End-->
+             
+             <h6 class="text-muted p-2">Topic catagory and indicator count</h6>
+            <!--Year 2-->
+            <div class="col-12 ">
+              <div class="pt-4">
+                <figure class="highcharts-figure">
+                  <div class='mt-1' id="drilldown"></div>
+              </figure>
+              </div>
+            </div>
+
+            <h6 class="text-muted p-2 ">Prediction</h6>
+                        <!-- Modal -->
+      <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel1" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-fullscreen-lg-down modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel1">Generated Ai insights</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="reportContent" class="pt-1 ps-3 pe-3 pb-1">
+                        <!-- This will hold the tables and charts -->
+                        <div class="row justify-content-center" id="report-container">
+                          <p id="description">Here you will find the explanation of the prediction.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+                      
+            <!--Year 2-->
+            <div class="col-12 ">
+              <div class="d-flex align-item-center justify-content-center" style="text-align: center; margin: 13px;">
+                <img src="{% static 'assets/image/loading.gif' %}" id="load2" alt="Loading..." />
+            </div>
+        
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <!-- File upload input and upload button -->
+                <div class="text-center d-flex space-between ms-3">
+                
+                  <div class="file-upload me-3 pt-2">
+                    <div class="file-select">
+                      <div class="file-select-button" id="fileName">Choose File</div>
+                      <div class="file-select-name" id="noFile">No file chosen...</div> 
+                      <input type="file" name="chooseFile" id="chooseFile" accept=".csv" >
+                    </div>
+                  </div>
+                    <button id="upload-btn" class="btn btn-success mt-2">Upload</button>
+                </div>
+                
+                <!-- 'Show Prediction Explanation' button -->
+                <div class="me-2">
+                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal1">
+                        Show insights
+                    </button>
+                </div>
+            </div>
+            
+          <div id="pred-container" style="display:none;"></div>
+            </div>
+
+            <h6 class="text-muted p-2">Random Catagory indicator Data</h6>
+
+            <div class="container-fluid">
+              <div class="row">
+                <div style="max-width: 100%;" class="col-12">
+                  <div class="controls d-flex justify-content-center  pl-1">
+                    <button type="button" id="start" class="btn btn-success">Start</button>
+                  </div>
+                  <div class="mt-2" id="live_data"></div>
+                </div>
+              </div>
+            </div>
+            
+
+             <!--Last 5 Audit Start -->
+             <div class="col-12">
+              <h6 class="text-muted p-2">Recent Audits</h6>
+              <div class="table-responsive">
+                <table class="table bg-white " style="width: 100%;">
+                  <thead>
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">Timestamp</th>
+                      <th scope="col">User</th>
+                      <th scope="col">Action</th>
+                      <th scope="col">Object</th>
+                      <th scope="col">Model</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for entry in auditlog_entries %}
+                    <tr>
+                      <th scope="row">{{ forloop.counter }}</th>
+                      <td>{{ entry.timestamp }}</td>
+                      <td>
+                        {% if entry.actor.get_full_name %}
+                        {{ entry.actor.get_full_name }} ({{ entry.actor.username }})
+                    {% else %}
+                        System
+                    {% endif %}
+                      </td>
+                   {% if entry.action == 0 %}
+                       <td><span class="badge bg-success">Created</span></td>
+                   {% elif entry.action == 1 %}
+                       <td><span class="badge bg-warning">Updated</span></td>
+                   {% elif entry.action == 2 %}
+                       <td><span class="badge bg-danger">Deleted</span></td>
+                   {% else %}
+                      <td><span class="badge bg-info">Other</span></td>
+                   {% endif %}
+                   <td>{{ entry.object_repr | capfirst }}</td>
+                   <td>{{ entry.content_type.name | capfirst }}</td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+             </div>
+             <!--Last 5 Audit End -->
+          </div>
+          <!--Body Row End-->
+
+        </div>
+      </section>
+    </div>
+    <!--Body End-->
+                                <!-- Include the chatbot UI -->
+                                {% include 'mychat/chatbot.html' %}
+
+
+    {% include 'user-admin/include/footer.html'%}
+  </div>
+
+  {% include 'user-admin/include/footer_js.html'%}
+
+<script src="https://code.highcharts.com/modules/data.js"></script>
+<script src="https://code.highcharts.com/modules/drilldown.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+  <script>
+    $(document).ready(function () {
+      $("#tableIndicator").DataTable({
+        retrieve: false,
+        ordering: false,
+        scrollX: true,
+        responsive: true,
+        paging: true,
+        searching: true,
+        orderNumber: false,
+        columnDefs: [{ width: "100%" }],
+      });
+    });
+  </script>
+  <script src="{% static 'assets/js/pages/dashboard1.js'%}"></script>
+  <script src="{% static 'assets/js/pre2.js' %}"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+
+  <script>
+document.addEventListener('DOMContentLoaded', function () {
+    const generateReportButton = document.querySelector('button[data-bs-target="#exampleModal"]');
+    const loadingGif = document.getElementById('load');
+    const reportContent = document.getElementById('reportContent');
+    const logoImage = document.querySelector('img.logo'); // Select the logo image
+    const downloadPdfBtn = document.getElementById('downloadPdfBtn'); // Select the Download PDF button
+
+    generateReportButton.addEventListener('click', function () {
+        // Disable the button, show the loading GIF, and hide the logo
+        generateReportButton.disabled = true;
+        loadingGif.style.display = 'block'; // Show loading GIF
+        reportContent.style.display = 'none'; // Hide report content while loading
+        logoImage.style.display = 'none'; // Hide the logo image
+        downloadPdfBtn.innerHTML = 'Loading...'; // Change button text to "Loading..."
+        downloadPdfBtn.disabled = true; // Make the button unclickable
+
+        fetch('/user-admin/report/')
+            .then(response => response.json())
+            .then(data => {
+                // Extract topic and user data
+                const topics = data.topics;
+                const users = data.users;
+
+                // Prepare data for charts
+                const topicLabels = Object.keys(topics);
+                const categoryCounts = topicLabels.map(topic => topics[topic].category_count);
+                const indicatorCounts = topicLabels.map(topic => topics[topic].indicators_count);
+
+                // Function to format date as mm/dd/yyyy
+                function formatDate(dateString) {
+                    const date = new Date(dateString);
+                    const month = ('0' + (date.getMonth() + 1)).slice(-2);
+                    const day = ('0' + date.getDate()).slice(-2);
+                    const year = date.getFullYear();
+                    return `${month}/${day}/${year}`;
+                }
+
+                // Format the end date
+                const formattedEndDate = formatDate(data.end_date);
+
+                // Update the info element with formatted dates
+                document.getElementById('info').innerHTML = "Report for data created from 1/1/2020 to " + formattedEndDate;
+
+                // Convert Markdown-like report to HTML
+                const htmlReport = convertMarkdownToHtml(data.ai_report);
+                document.getElementById('ai_highlight').innerHTML = htmlReport;
+
+                // Prepare user data for chart
+                const userLabels = ['Staff', 'Dashboard', 'Admin'];
+                const userCounts = [users.staff_count, users.dashboard_count, users.admin_count];
+
+                // Create Topic Chart
+                Highcharts.chart('topic-chart', {
+                    title: {
+                        text: 'Topic Report'
+                    },
+                    xAxis: {
+                        categories: topicLabels
+                    },
+                    yAxis: {
+                        title: {
+                            text: 'Count'
+                        }
+                    },
+                    series: [{
+                        name: 'Category Count',
+                        data: categoryCounts
+                    }, {
+                        name: 'Indicator Count',
+                        data: indicatorCounts
+                    }]
+                });
+
+                // Create User Chart
+                Highcharts.chart('user-chart', {
+                    chart: {
+                        type: 'pie'
+                    },
+                    title: {
+                        text: 'User Statistics'
+                    },
+                    series: [{
+                        name: 'Users',
+                        data: userLabels.map((label, index) => ({
+                            name: label,
+                            y: userCounts[index]
+                        }))
+                    }]
+                });
+            })
+            .catch(error => console.error('Error fetching report data:', error))
+            .finally(() => {
+                // Hide loading GIF, show report content, and restore button text
+                loadingGif.style.display = 'none'; // Hide loading GIF
+                reportContent.style.display = 'block'; // Show report content
+                generateReportButton.disabled = false; // Re-enable the button
+                logoImage.style.display = 'block'; // Hide the logo image
+                downloadPdfBtn.innerHTML = 'Download PDF'; // Restore button text
+                downloadPdfBtn.disabled = false; // Re-enable the button
+            });
+    });
+
+    function cleanText(text) {
+    // Replace Unicode non-breaking spaces with regular spaces
+    return text.replace(/\u00a0/g, ' ').trim();
+}
+
+function convertMarkdownToHtml(markdown) {
+    let titleAdded = false; // Track if the first title has been processed
+
+    // Clean the markdown text first
+    markdown = cleanText(markdown);
+
+    return markdown
+        .replace(/^### (.+)$/gm, '<h3><u>$1</u></h3>')             // Convert ### Header to <h3> and underline
+        .replace(/^## (.+)$/gm, function (match, p1) {
+            if (!titleAdded) {
+                titleAdded = true;  // Mark that the first title has been processed
+                return `<h2><u>${p1} by AI</u></h2>`;  // Add "by AI" to the first title and underline
+            }
+            return `<h2><u>${p1}</u></h2>`; // Return other titles as <h2> with underline
+        })
+        .replace(/^# (.+)$/gm, '<h1><u>$1</u></h1>')              // Convert # Header to <h1> and underline
+        .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')         // Convert **Bold** to <strong>
+        .replace(/_(.+?)_/g, '<u>$1</u>')                         // Convert _Underline_ to <u>
+        // Convert unordered list items with proper nesting
+        .replace(/^\s*[\*\-]\s*(.+)$/gm, function (match, p1) {
+            const level = match.match(/^\s*/)[0].length / 2; // Determine nesting level based on leading spaces
+            return `${'<ul>'.repeat(level)}<li>${p1}</li>${'</ul>'.repeat(level)}`;
+        })
+        // Convert ordered list items with proper nesting
+        .replace(/^\s*(\d+)\.\s*(.+)$/gm, function (match, p1, p2) {
+            const level = match.match(/^\s*/)[0].length / 2; // Determine nesting level based on leading spaces
+            return `${'<ol>'.repeat(level)}<li>${p2}</li>${'</ol>'.repeat(level)}`;
+        })
+        .replace(/<\/ul>\s*<ul>/g, '')  // Remove redundant opening/closing tags between list items
+        .replace(/<\/ol>\s*<ol>/g, '')  // Remove redundant opening/closing tags between list items
+        .replace(/<\/li>\s*<li>/g, '</li><li>')                   // Ensure proper list item separation
+        .replace(/^\n+|\n+$/g, '')                                 // Trim leading and trailing newlines
+        .replace(/^(.+?)$/gm, '<p>$1</p>')                        // Convert remaining single lines to paragraphs
+        .replace(/<\/p>\n<p>/g, '</p><p>');                       // Remove extra paragraphs between lines
+}
+
+
+});
+
+</script>
+ <!-- Custom JavaScript -->
+ <script>
+  document.addEventListener('DOMContentLoaded', function () {
+      document.querySelector('#downloadPdfBtn').addEventListener('click', function () {
+          // Apply CSS to control page breaks for specific elements
+          const element = document.getElementById('myTabContent');
+  
+          // Add CSS to handle page breaks more effectively
+          const style = document.createElement('style');
+          style.innerHTML = `
+              /* Avoid page breaks within these specific elements */
+              .chart-container, .table-container {
+                  page-break-inside: avoid;
+              }
+  
+              /* Allow text to flow naturally */
+              #myTabContent p {
+                  page-break-inside: auto;
+              }
+  
+              /* Ensure that large elements (e.g., headings, images) start on a new page if necessary */
+              h1, h2, h3, .large-element {
+                  page-break-before: avoid;
+                  page-break-after: auto;
+              }
+          `;
+          document.head.appendChild(style);
+  
+          // Define PDF options with custom page size and margins
+          const options = {
+              margin: [10, 15, 10, 15], // Set margins (Top, Right, Bottom, Left)
+              filename: 'report.pdf',
+              image: { type: 'jpeg', quality: 0.95 }, // Adjust image quality if needed
+              html2canvas: {
+                  scale: 2, // Higher scale for better quality
+                  logging: true, // Enable logging to debug performance issues
+                  useCORS: true // Allow cross-origin images if needed
+              },
+              jsPDF: { 
+                  unit: 'px', 
+                  format: [1100, 1400], // Set custom width and height
+                  orientation: 'portrait' // Portrait orientation
+              }
+          };
+  
+          // Create a new instance of html2pdf with custom options
+          html2pdf().from(element).set(options).toPdf().get('pdf').then(function (pdf) {
+              // Save the PDF
+              pdf.save('report.pdf');
+          }).catch(function (error) {
+              console.error('Error generating PDF:', error);
+          });
+      });
+  });
+
+  </script>
+  <script>
+    $('#chooseFile').bind('change', function () {
+      var filename = $("#chooseFile").val();
+      if (/^\s*$/.test(filename)) {
+        $(".file-upload").removeClass('active');
+        $("#noFile").text("No file chosen..."); 
+      }
+      else {
+        $(".file-upload").addClass('active');
+        $("#noFile").text(filename.replace("C:\\fakepath\\", "")); 
+      }
+    });
+  </script>
+  
+</body>
+
+</html>

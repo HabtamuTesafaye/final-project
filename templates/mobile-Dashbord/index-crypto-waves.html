@@ -1,0 +1,1283 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% include 'mobile-Dashbord/include/head.html'%}
+</head>
+
+<body class="theme-light" data-highlight="green">
+    <div id="preloader" class="preloader-hide">
+        <div class="spinner-border color-highlight" role="status"></div>
+    </div>
+
+    <div id="page" data-swup="0" style="display: block;">
+
+        <div id="footer-bar" class="footer-bar-1 footer-bar-detached">
+            <a href="{% url 'page_wallet' %}"><i class="bi bi-wallet2"></i><span>Cards</span></a>
+            <a href="{% url 'page_activity' %}"><i class="bi bi-graph-up"></i><span>Activity</span></a>
+            <a href="#" data-bs-toggle="offcanvas" data-bs-target="#menu-get-started" class="circle-nav-2 scale-box"><i
+                    class="bi bi-arrow-left-right"></i><span>Get Started</span></a>
+            <a href="{% url 'page_payments' %}"><i class="bi bi-receipt"></i><span>Payments</span></a>
+            <a href="#" data-bs-toggle="offcanvas" data-bs-target="#menu-sidebar"><i
+                    class="bi bi-three-dots"></i><span>More</span></a>
+        </div>
+        
+
+        <div class="page_content footer-clear">
+
+            <div class="pt-3">
+                <div class="page_title d-flex">
+                    <div class="align-self-center me-auto">
+                        <p class="color-white opacity-80 header-date">Friday 24th May</p>
+                        <h1 class="color-white">Welcome</h1>
+                    </div>
+                    <div class="align-self-center ms-auto">
+                        <a href="#" data-bs-toggle="offcanvas" data-bs-target="#menu-highlights"
+                            class="icon bg-white color-theme rounded-m shadow-xl">
+                            <i class="bi bi-palette-fill color-black font-16"></i>
+                        </a>
+                        <a href="#" data-bs-toggle="offcanvas" data-bs-target="#menu-notifications"
+                            class="icon bg-white color-theme rounded-m shadow-xl">
+                            <i class="bi bi-bell-fill color-black font-17"></i>
+                            <em class="badge bg-red-light color-white scale-box">3</em>
+                        </a>
+                        <a href="#" data-bs-toggle="dropdown" class="icon rounded-m shadow-xl">
+                            <img src="{% static 'mobile/images/pictures/25s.jpg' %}" width="45" class="rounded-m" alt="img">
+                        </a>
+
+                        <div class="dropdown-menu">
+                            <div class="card card-style shadow-m mt-1 me-1">
+                                <div class="list-group list-custom list-group-s list-group-flush rounded-xs px-3 py-1">
+                                    <a href="{% url 'page_wallet' %}" class="list-group-item">
+                                        <i
+                                            class="has-bg gradient-green shadow-bg shadow-bg-xs color-white rounded-xs bi bi-credit-card"></i>
+                                        <strong class="font-13">Wallet</strong>
+                                    </a>
+                                    <a href="{% url 'page_activity' %}" class="list-group-item">
+                                        <i
+                                            class="has-bg gradient-blue shadow-bg shadow-bg-xs color-white rounded-xs bi bi-graph-up"></i>
+                                        <strong class="font-13">Activity</strong>
+                                    </a>
+                                    <a href="{% url 'page_profile' %}" class="list-group-item">
+                                        <i
+                                            class="has-bg gradient-yellow shadow-bg shadow-bg-xs color-white rounded-xs bi bi-person-circle"></i>
+                                        <strong class="font-13">Account</strong>
+                                    </a>
+                                    <a href="{% url 'page_signin_1' %}" class="list-group-item">
+                                        <i
+                                            class="has-bg gradient-red shadow-bg shadow-bg-xs color-white rounded-xs bi bi-power"></i>
+                                        <strong class="font-13">Log Out</strong>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <svg id="header-deco" viewBox="0 0 1440 600" xmlns="http://www.w3.org/2000/svg"
+                class="transition duration-300 ease-in-out delay-150">
+                <path id="header-deco-1"
+                    d="M 0,600 C 0,600 0,120 0,120 C 92.36363636363635,133.79904306220095 184.7272727272727,147.59808612440193 287,148 C 389.2727272727273,148.40191387559807 501.4545454545455,135.40669856459328 592,129 C 682.5454545454545,122.5933014354067 751.4545454545455,122.77511961722489 848,115 C 944.5454545454545,107.22488038277511 1068.7272727272727,91.49282296650718 1172,91 C 1275.2727272727273,90.50717703349282 1357.6363636363635,105.25358851674642 1440,120 C 1440,120 1440,600 1440,600 Z">
+                </path>
+                <path id="header-deco-2"
+                    d="M 0,600 C 0,600 0,240 0,240 C 98.97607655502392,258.2105263157895 197.95215311004785,276.4210526315789 278,282 C 358.04784688995215,287.5789473684211 419.16746411483257,280.5263157894737 524,265 C 628.8325358851674,249.4736842105263 777.377990430622,225.47368421052633 888,211 C 998.622009569378,196.52631578947367 1071.3205741626793,191.57894736842107 1157,198 C 1242.6794258373207,204.42105263157893 1341.3397129186603,222.21052631578948 1440,240 C 1440,240 1440,600 1440,600 Z">
+                </path>
+                <path id="header-deco-3"
+                    d="M 0,600 C 0,600 0,360 0,360 C 65.43540669856458,339.55023923444975 130.87081339712915,319.1004784688995 245,321 C 359.12918660287085,322.8995215311005 521.9521531100479,347.1483253588517 616,352 C 710.0478468899521,356.8516746411483 735.3205741626795,342.3062200956938 822,333 C 908.6794258373205,323.6937799043062 1056.7655502392345,319.62679425837325 1170,325 C 1283.2344497607655,330.37320574162675 1361.6172248803828,345.1866028708134 1440,360 C 1440,360 1440,600 1440,600 Z">
+                </path>
+                <path id="header-deco-4"
+                    d="M 0,600 C 0,600 0,480 0,480 C 70.90909090909093,494.91866028708137 141.81818181818187,509.8373205741627 239,499 C 336.18181818181813,488.1626794258373 459.6363636363636,451.5693779904306 567,446 C 674.3636363636364,440.4306220095694 765.6363636363636,465.88516746411483 862,465 C 958.3636363636364,464.11483253588517 1059.8181818181818,436.8899521531101 1157,435 C 1254.1818181818182,433.1100478468899 1347.090909090909,456.555023923445 1440,480 C 1440,480 1440,600 1440,600 Z">
+                </path>
+            </svg>
+            <div class="card card-style bg-5" data-card-height="200" style="height: 200px;">
+                <div class="card-center">
+                    <div class="bg-theme px-3 py-2 rounded-end d-inline-block">
+                        <h1 class="font-13 my-n1">
+                            <a class="color-theme" data-bs-toggle="collapse" href="#balance3"
+                                aria-controls="balance2">Tap to View Balance</a>
+                        </h1>
+                        <div class="collapse" id="balance3">
+                            <h2 class="color-theme font-26">$226,315</h2>
+                        </div>
+                    </div>
+                </div>
+                <strong class="card-top no-click font-12 p-3 color-white font-monospace">Crypto Account</strong>
+                <strong
+                    class="card-bottom no-click p-3 text-start color-white font-monospace font-10 line-height-xs">Wallet
+                    ID: 1GVY5eZvtc5bA6EFEGnpqJeHUC5YaV5dsb</strong>
+                <div class="card-overlay bg-black opacity-50"></div>
+            </div>
+            <div class="splide single-slider slider-no-dots slider-no-arrows slider-visible splide--loop splide--ltr splide--draggable is-active"
+                id="single-slider-1" style="visibility: visible;">
+                <div class="splide__arrows"><button class="splide__arrow splide__arrow--prev" type="button"
+                        aria-controls="single-slider-1-track" aria-label="Previous slide"><svg
+                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" width="40" height="40">
+                            <path
+                                d="m15.5 0.932-4.3 4.38 14.5 14.6-14.5 14.5 4.3 4.4 14.6-14.6 4.4-4.3-4.4-4.4-14.6-14.6z">
+                            </path>
+                        </svg></button><button class="splide__arrow splide__arrow--next" type="button"
+                        aria-controls="single-slider-1-track" aria-label="Next slide"><svg
+                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" width="40" height="40">
+                            <path
+                                d="m15.5 0.932-4.3 4.38 14.5 14.6-14.5 14.5 4.3 4.4 14.6-14.6 4.4-4.3-4.4-4.4-14.6-14.6z">
+                            </path>
+                        </svg></button></div>
+                <div class="splide__track" id="single-slider-1-track">
+                    <div class="splide__list" id="single-slider-1-list" style="transform: translateX(-1020px);">
+                        <div class="splide__slide splide__slide--clone" style="width: 340px;" aria-hidden="true"
+                            tabindex="-1">
+                            <div class="card card-style mb-3 mx-0">
+                                <div class="content pb-0">
+                                    <div class="d-flex">
+                                        <div>
+                                            <span
+                                                class="icon gradient-dark me-2 color-white shadow-bg shadow-bg-xs rounded-m">
+                                                <i class="bi bi-gem font-24"></i>
+                                            </span>
+                                        </div>
+                                        <div class="ps-1">
+                                            <h1 class="font-24 mb-n1">ETH</h1>
+                                            <h5 class="font-14 font-400 opacity-70 mb-n1">Ethereum</h5>
+                                        </div>
+                                        <div class="ms-auto text-end">
+                                            <span class="color-red-dark rounded-l font-500 font-12 d-block text-end"><i
+                                                    class="bi bi-caret-down-fill pe-2"></i>Down 1.24%</span>
+                                            <h1 class="mb-0 mt-n2">$135,315</h1>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="splide__slide splide__slide--clone" style="width: 340px;">
+                            <div class="card card-style mx-0">
+                                <div class="content pb-0">
+                                    <div class="d-flex">
+                                        <div>
+                                            <span
+                                                class="icon gradient-yellow me-2 color-white shadow-bg shadow-bg-xs rounded-m">
+                                                <i class="bi bi-currency-yen font-24"></i>
+                                            </span>
+                                        </div>
+                                        <div class="ps-1">
+                                            <h1 class="font-24 mb-n1">SHI</h1>
+                                            <h5 class="font-14 font-400 opacity-70 mb-n1">Shiba Iu</h5>
+                                        </div>
+                                        <div class="ms-auto text-end">
+                                            <span
+                                                class="color-green-dark rounded-l font-500 font-12 d-block text-end"><i
+                                                    class="bi bi-caret-down-fill pe-2"></i>Up by 51.24%</span>
+                                            <h1 class="mb-0 mt-n2">$216,335</h1>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="splide__slide" id="single-slider-1-slide01" style="width: 340px;" aria-hidden="true"
+                            tabindex="-1">
+                            <div class="card card-style mb-3 mx-0">
+                                <div class="content pb-0">
+                                    <div class="d-flex">
+                                        <div>
+                                            <span
+                                                class="icon gradient-orange me-2 color-white shadow-bg shadow-bg-xs rounded-m">
+                                                <i class="bi bi-currency-bitcoin font-24"></i>
+                                            </span>
+                                        </div>
+                                        <div class="ps-1">
+                                            <h1 class="font-24 mb-n1">BTC</h1>
+                                            <h5 class="font-14 font-400 opacity-70 mb-n1">Bitcoin</h5>
+                                        </div>
+                                        <div class="ms-auto">
+                                            <span
+                                                class="color-green-dark rounded-l font-500 font-12 d-block text-end"><i
+                                                    class="bi bi-caret-up-fill pe-2"></i>Up by 4.3%</span>
+                                            <h1 class="mb-0 mt-n2">$245,250</h1>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="splide__slide is-active is-visible" id="single-slider-1-slide02"
+                            style="width: 340px;" aria-hidden="false" tabindex="0">
+                            <div class="card card-style mb-3 mx-0">
+                                <div class="content pb-0">
+                                    <div class="d-flex">
+                                        <div>
+                                            <span
+                                                class="icon gradient-dark me-2 color-white shadow-bg shadow-bg-xs rounded-m">
+                                                <i class="bi bi-gem font-24"></i>
+                                            </span>
+                                        </div>
+                                        <div class="ps-1">
+                                            <h1 class="font-24 mb-n1">ETH</h1>
+                                            <h5 class="font-14 font-400 opacity-70 mb-n1">Ethereum</h5>
+                                        </div>
+                                        <div class="ms-auto text-end">
+                                            <span class="color-red-dark rounded-l font-500 font-12 d-block text-end"><i
+                                                    class="bi bi-caret-down-fill pe-2"></i>Down 1.24%</span>
+                                            <h1 class="mb-0 mt-n2">$135,315</h1>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="splide__slide" id="single-slider-1-slide03" style="width: 340px;" aria-hidden="true"
+                            tabindex="-1">
+                            <div class="card card-style mx-0">
+                                <div class="content pb-0">
+                                    <div class="d-flex">
+                                        <div>
+                                            <span
+                                                class="icon gradient-yellow me-2 color-white shadow-bg shadow-bg-xs rounded-m">
+                                                <i class="bi bi-currency-yen font-24"></i>
+                                            </span>
+                                        </div>
+                                        <div class="ps-1">
+                                            <h1 class="font-24 mb-n1">SHI</h1>
+                                            <h5 class="font-14 font-400 opacity-70 mb-n1">Shiba Iu</h5>
+                                        </div>
+                                        <div class="ms-auto text-end">
+                                            <span
+                                                class="color-green-dark rounded-l font-500 font-12 d-block text-end"><i
+                                                    class="bi bi-caret-down-fill pe-2"></i>Up by 51.24%</span>
+                                            <h1 class="mb-0 mt-n2">$216,335</h1>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="splide__slide splide__slide--clone" style="width: 340px;">
+                            <div class="card card-style mb-3 mx-0">
+                                <div class="content pb-0">
+                                    <div class="d-flex">
+                                        <div>
+                                            <span
+                                                class="icon gradient-orange me-2 color-white shadow-bg shadow-bg-xs rounded-m">
+                                                <i class="bi bi-currency-bitcoin font-24"></i>
+                                            </span>
+                                        </div>
+                                        <div class="ps-1">
+                                            <h1 class="font-24 mb-n1">BTC</h1>
+                                            <h5 class="font-14 font-400 opacity-70 mb-n1">Bitcoin</h5>
+                                        </div>
+                                        <div class="ms-auto">
+                                            <span
+                                                class="color-green-dark rounded-l font-500 font-12 d-block text-end"><i
+                                                    class="bi bi-caret-up-fill pe-2"></i>Up by 4.3%</span>
+                                            <h1 class="mb-0 mt-n2">$245,250</h1>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="splide__slide splide__slide--clone" style="width: 340px;">
+                            <div class="card card-style mb-3 mx-0">
+                                <div class="content pb-0">
+                                    <div class="d-flex">
+                                        <div>
+                                            <span
+                                                class="icon gradient-dark me-2 color-white shadow-bg shadow-bg-xs rounded-m">
+                                                <i class="bi bi-gem font-24"></i>
+                                            </span>
+                                        </div>
+                                        <div class="ps-1">
+                                            <h1 class="font-24 mb-n1">ETH</h1>
+                                            <h5 class="font-14 font-400 opacity-70 mb-n1">Ethereum</h5>
+                                        </div>
+                                        <div class="ms-auto text-end">
+                                            <span class="color-red-dark rounded-l font-500 font-12 d-block text-end"><i
+                                                    class="bi bi-caret-down-fill pe-2"></i>Down 1.24%</span>
+                                            <h1 class="mb-0 mt-n2">$135,315</h1>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <ul class="splide__pagination">
+                    <li><button class="splide__pagination__page" type="button" aria-controls="single-slider-1-slide01"
+                            aria-label="Go to slide 1"></button></li>
+                    <li><button class="splide__pagination__page is-active" type="button"
+                            aria-controls="single-slider-1-slide02" aria-label="Go to slide 2"
+                            aria-current="true"></button></li>
+                    <li><button class="splide__pagination__page" type="button" aria-controls="single-slider-1-slide03"
+                            aria-label="Go to slide 3"></button></li>
+                </ul>
+            </div>
+
+            <div class="content my-0 px-1">
+                <div class="d-flex">
+                    <div class="align-self-center">
+                        <h3 class="font-16 mb-2">Crypto Stats</h3>
+                    </div>
+                    <div class="align-self-center ms-auto">
+                        <a href="{% url 'page_activity' %}" class="font-12 pt-1">View All</a>
+                    </div>
+                </div>
+            </div>
+            <div class="card card-style">
+                <div class="content my-2">
+                    <a href="#" class="d-flex">
+                        <div class="align-self-center w-25">
+                            <h4 class="pt-1 mb-n1 font-16">Bitcoin</h4>
+                            <h6 class="mb-0 opacity-50">BTC - Crypto</h6>
+                        </div>
+                        <div class="align-self-center m-auto" style="position: relative;">
+                            <div id="chart-btc" class="chart mt-n5 pt-4 ms-n3" style="min-height: 95px;">
+                                <div id="apexcharts30xfh3nfi"
+                                    class="apexcharts-canvas apexcharts30xfh3nfi apexcharts-theme-light"
+                                    style="width: 150px; height: 80px;"><svg id="SvgjsSvg2221" width="150" height="80"
+                                        xmlns="http://www.w3.org/2000/svg" version="1.1"
+                                        xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs"
+                                        class="apexcharts-svg apexcharts-zoomable" xmlns:data="ApexChartsNS"
+                                        transform="translate(0, 0)" style="background: transparent;">
+                                        <g id="SvgjsG2223" class="apexcharts-inner apexcharts-graphical"
+                                            transform="translate(22, 30)">
+                                            <defs id="SvgjsDefs2222">
+                                                <clipPath id="gridRectMask30xfh3nfi">
+                                                    <rect id="SvgjsRect2228" width="123" height="36" x="-2.5" y="-0.5"
+                                                        rx="0" ry="0" opacity="1" stroke-width="0" stroke="none"
+                                                        stroke-dasharray="0" fill="#fff"></rect>
+                                                </clipPath>
+                                                <clipPath id="gridRectMarkerMask30xfh3nfi">
+                                                    <rect id="SvgjsRect2229" width="122" height="39" x="-2" y="-2"
+                                                        rx="0" ry="0" opacity="1" stroke-width="0" stroke="none"
+                                                        stroke-dasharray="0" fill="#fff"></rect>
+                                                </clipPath>
+                                                <linearGradient id="SvgjsLinearGradient2234" x1="0" y1="0" x2="0"
+                                                    y2="1">
+                                                    <stop id="SvgjsStop2235" stop-opacity="0.65"
+                                                        stop-color="rgba(140,193,82,0.65)" offset="0"></stop>
+                                                    <stop id="SvgjsStop2236" stop-opacity="0.5"
+                                                        stop-color="rgba(198,224,169,0.5)" offset="1"></stop>
+                                                    <stop id="SvgjsStop2237" stop-opacity="0.5"
+                                                        stop-color="rgba(198,224,169,0.5)" offset="1"></stop>
+                                                </linearGradient>
+                                            </defs>
+                                            <line id="SvgjsLine2227" x1="0" y1="0" x2="0" y2="35" stroke="#b6b6b6"
+                                                stroke-dasharray="3" class="apexcharts-xcrosshairs" x="0" y="0"
+                                                width="1" height="35" fill="#b1b9c4" filter="none" fill-opacity="0.9"
+                                                stroke-width="1"></line>
+                                            <g id="SvgjsG2240" class="apexcharts-xaxis" transform="translate(0, 0)">
+                                                <g id="SvgjsG2241" class="apexcharts-xaxis-texts-g"
+                                                    transform="translate(0, -4)"></g>
+                                            </g>
+                                            <g id="SvgjsG2248" class="apexcharts-grid">
+                                                <g id="SvgjsG2249" class="apexcharts-gridlines-horizontal"
+                                                    style="display: none;">
+                                                    <line id="SvgjsLine2251" x1="0" y1="0" x2="118" y2="0"
+                                                        stroke="#e0e0e0" stroke-dasharray="0"
+                                                        class="apexcharts-gridline"></line>
+                                                    <line id="SvgjsLine2252" x1="0" y1="7" x2="118" y2="7"
+                                                        stroke="#e0e0e0" stroke-dasharray="0"
+                                                        class="apexcharts-gridline"></line>
+                                                    <line id="SvgjsLine2253" x1="0" y1="14" x2="118" y2="14"
+                                                        stroke="#e0e0e0" stroke-dasharray="0"
+                                                        class="apexcharts-gridline"></line>
+                                                    <line id="SvgjsLine2254" x1="0" y1="21" x2="118" y2="21"
+                                                        stroke="#e0e0e0" stroke-dasharray="0"
+                                                        class="apexcharts-gridline"></line>
+                                                    <line id="SvgjsLine2255" x1="0" y1="28" x2="118" y2="28"
+                                                        stroke="#e0e0e0" stroke-dasharray="0"
+                                                        class="apexcharts-gridline"></line>
+                                                    <line id="SvgjsLine2256" x1="0" y1="35" x2="118" y2="35"
+                                                        stroke="#e0e0e0" stroke-dasharray="0"
+                                                        class="apexcharts-gridline"></line>
+                                                </g>
+                                                <g id="SvgjsG2250" class="apexcharts-gridlines-vertical"
+                                                    style="display: none;"></g>
+                                                <line id="SvgjsLine2258" x1="0" y1="35" x2="118" y2="35"
+                                                    stroke="transparent" stroke-dasharray="0"></line>
+                                                <line id="SvgjsLine2257" x1="0" y1="1" x2="0" y2="35"
+                                                    stroke="transparent" stroke-dasharray="0"></line>
+                                            </g>
+                                            <g id="SvgjsG2230" class="apexcharts-area-series apexcharts-plot-series">
+                                                <g id="SvgjsG2231" class="apexcharts-series" seriesName="series1"
+                                                    data:longestSeries="true" rel="1" data:realIndex="0">
+                                                    <path id="SvgjsPath2238"
+                                                        d="M 0 35L 0 27.65C 13.766666666666664 27.65 25.566666666666663 21.7 39.33333333333333 21.7C 53.099999999999994 21.7 64.89999999999999 7.700000000000003 78.66666666666666 7.700000000000003C 92.43333333333332 7.700000000000003 104.23333333333332 14.350000000000001 117.99999999999999 14.350000000000001C 117.99999999999999 14.350000000000001 117.99999999999999 14.350000000000001 117.99999999999999 35M 117.99999999999999 14.350000000000001z"
+                                                        fill="url(#SvgjsLinearGradient2234)" fill-opacity="1"
+                                                        stroke-opacity="1" stroke-linecap="butt" stroke-width="0"
+                                                        stroke-dasharray="0" class="apexcharts-area" index="0"
+                                                        clip-path="url(#gridRectMask30xfh3nfi)"
+                                                        pathTo="M 0 35L 0 27.65C 13.766666666666664 27.65 25.566666666666663 21.7 39.33333333333333 21.7C 53.099999999999994 21.7 64.89999999999999 7.700000000000003 78.66666666666666 7.700000000000003C 92.43333333333332 7.700000000000003 104.23333333333332 14.350000000000001 117.99999999999999 14.350000000000001C 117.99999999999999 14.350000000000001 117.99999999999999 14.350000000000001 117.99999999999999 35M 117.99999999999999 14.350000000000001z"
+                                                        pathFrom="M -1 42L -1 42L 39.33333333333333 42L 78.66666666666666 42L 117.99999999999999 42">
+                                                    </path>
+                                                    <path id="SvgjsPath2239"
+                                                        d="M 0 27.65C 13.766666666666664 27.65 25.566666666666663 21.7 39.33333333333333 21.7C 53.099999999999994 21.7 64.89999999999999 7.700000000000003 78.66666666666666 7.700000000000003C 92.43333333333332 7.700000000000003 104.23333333333332 14.350000000000001 117.99999999999999 14.350000000000001"
+                                                        fill="none" fill-opacity="1" stroke="#8cc152" stroke-opacity="1"
+                                                        stroke-linecap="butt" stroke-width="1" stroke-dasharray="0"
+                                                        class="apexcharts-area" index="0"
+                                                        clip-path="url(#gridRectMask30xfh3nfi)"
+                                                        pathTo="M 0 27.65C 13.766666666666664 27.65 25.566666666666663 21.7 39.33333333333333 21.7C 53.099999999999994 21.7 64.89999999999999 7.700000000000003 78.66666666666666 7.700000000000003C 92.43333333333332 7.700000000000003 104.23333333333332 14.350000000000001 117.99999999999999 14.350000000000001"
+                                                        pathFrom="M -1 42L -1 42L 39.33333333333333 42L 78.66666666666666 42L 117.99999999999999 42">
+                                                    </path>
+                                                    <g id="SvgjsG2232" class="apexcharts-series-markers-wrap"
+                                                        data:realIndex="0"></g>
+                                                </g>
+                                                <g id="SvgjsG2233" class="apexcharts-datalabels" data:realIndex="0"></g>
+                                            </g>
+                                            <line id="SvgjsLine2259" x1="0" y1="0" x2="118" y2="0" stroke="#b6b6b6"
+                                                stroke-dasharray="0" stroke-width="1" class="apexcharts-ycrosshairs">
+                                            </line>
+                                            <line id="SvgjsLine2260" x1="0" y1="0" x2="118" y2="0" stroke-dasharray="0"
+                                                stroke-width="0" class="apexcharts-ycrosshairs-hidden"></line>
+                                            <g id="SvgjsG2261" class="apexcharts-yaxis-annotations"></g>
+                                            <g id="SvgjsG2262" class="apexcharts-xaxis-annotations"></g>
+                                            <g id="SvgjsG2263" class="apexcharts-point-annotations"></g>
+                                            <rect id="SvgjsRect2264" width="0" height="0" x="0" y="0" rx="0" ry="0"
+                                                opacity="1" stroke-width="0" stroke="none" stroke-dasharray="0"
+                                                fill="#fefefe" class="apexcharts-zoom-rect"></rect>
+                                            <rect id="SvgjsRect2265" width="0" height="0" x="0" y="0" rx="0" ry="0"
+                                                opacity="1" stroke-width="0" stroke="none" stroke-dasharray="0"
+                                                fill="#fefefe" class="apexcharts-selection-rect"></rect>
+                                        </g>
+                                        <rect id="SvgjsRect2226" width="0" height="0" x="0" y="0" rx="0" ry="0"
+                                            opacity="1" stroke-width="0" stroke="none" stroke-dasharray="0"
+                                            fill="#fefefe"></rect>
+                                        <g id="SvgjsG2246" class="apexcharts-yaxis" rel="0"
+                                            transform="translate(-8, 0)">
+                                            <g id="SvgjsG2247" class="apexcharts-yaxis-texts-g"></g>
+                                        </g>
+                                        <g id="SvgjsG2224" class="apexcharts-annotations"></g>
+                                    </svg>
+                                    <div class="apexcharts-legend" style="max-height: 40px;"></div>
+                                </div>
+                            </div>
+                            <div class="resize-triggers">
+                                <div class="expand-trigger">
+                                    <div style="width: 135px; height: 57px;"></div>
+                                </div>
+                                <div class="contract-trigger"></div>
+                            </div>
+                        </div>
+                        <div class="ms-auto">
+                            <h4 class="mb-n1 pt-2">$53,513.313</h4>
+                            <h6 class="mb-0 color-green-dark text-end">+1.583%</h6>
+                        </div>
+                    </a>
+                </div>
+                <div class="content my-2">
+                    <a href="#" class="d-flex">
+                        <div class="align-self-center w-25">
+                            <h4 class="pt-1 mb-n1 font-16">Ethereum</h4>
+                            <h6 class="mb-0 opacity-50">ETH - Crypto</h6>
+                        </div>
+                        <div class="align-self-center m-auto" style="position: relative;">
+                            <div id="chart-eth" class="chart mt-n5 pt-4 ms-n3" style="min-height: 95px;">
+                                <div id="apexchartsfkdt6orq"
+                                    class="apexcharts-canvas apexchartsfkdt6orq apexcharts-theme-light"
+                                    style="width: 150px; height: 80px;"><svg id="SvgjsSvg2266" width="150" height="80"
+                                        xmlns="http://www.w3.org/2000/svg" version="1.1"
+                                        xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs"
+                                        class="apexcharts-svg apexcharts-zoomable" xmlns:data="ApexChartsNS"
+                                        transform="translate(0, 0)" style="background: transparent;">
+                                        <g id="SvgjsG2268" class="apexcharts-inner apexcharts-graphical"
+                                            transform="translate(22, 30)">
+                                            <defs id="SvgjsDefs2267">
+                                                <clipPath id="gridRectMaskfkdt6orq">
+                                                    <rect id="SvgjsRect2273" width="123" height="36" x="-2.5" y="-0.5"
+                                                        rx="0" ry="0" opacity="1" stroke-width="0" stroke="none"
+                                                        stroke-dasharray="0" fill="#fff"></rect>
+                                                </clipPath>
+                                                <clipPath id="gridRectMarkerMaskfkdt6orq">
+                                                    <rect id="SvgjsRect2274" width="122" height="39" x="-2" y="-2"
+                                                        rx="0" ry="0" opacity="1" stroke-width="0" stroke="none"
+                                                        stroke-dasharray="0" fill="#fff"></rect>
+                                                </clipPath>
+                                                <linearGradient id="SvgjsLinearGradient2279" x1="0" y1="0" x2="0"
+                                                    y2="1">
+                                                    <stop id="SvgjsStop2280" stop-opacity="0.65"
+                                                        stop-color="rgba(191,38,60,0.65)" offset="0"></stop>
+                                                    <stop id="SvgjsStop2281" stop-opacity="0.5"
+                                                        stop-color="rgba(223,147,158,0.5)" offset="1"></stop>
+                                                    <stop id="SvgjsStop2282" stop-opacity="0.5"
+                                                        stop-color="rgba(223,147,158,0.5)" offset="1"></stop>
+                                                </linearGradient>
+                                            </defs>
+                                            <line id="SvgjsLine2272" x1="0" y1="0" x2="0" y2="35" stroke="#b6b6b6"
+                                                stroke-dasharray="3" class="apexcharts-xcrosshairs" x="0" y="0"
+                                                width="1" height="35" fill="#b1b9c4" filter="none" fill-opacity="0.9"
+                                                stroke-width="1"></line>
+                                            <g id="SvgjsG2285" class="apexcharts-xaxis" transform="translate(0, 0)">
+                                                <g id="SvgjsG2286" class="apexcharts-xaxis-texts-g"
+                                                    transform="translate(0, -4)"></g>
+                                            </g>
+                                            <g id="SvgjsG2293" class="apexcharts-grid">
+                                                <g id="SvgjsG2294" class="apexcharts-gridlines-horizontal"
+                                                    style="display: none;">
+                                                    <line id="SvgjsLine2296" x1="0" y1="0" x2="118" y2="0"
+                                                        stroke="#e0e0e0" stroke-dasharray="0"
+                                                        class="apexcharts-gridline"></line>
+                                                    <line id="SvgjsLine2297" x1="0" y1="8.75" x2="118" y2="8.75"
+                                                        stroke="#e0e0e0" stroke-dasharray="0"
+                                                        class="apexcharts-gridline"></line>
+                                                    <line id="SvgjsLine2298" x1="0" y1="17.5" x2="118" y2="17.5"
+                                                        stroke="#e0e0e0" stroke-dasharray="0"
+                                                        class="apexcharts-gridline"></line>
+                                                    <line id="SvgjsLine2299" x1="0" y1="26.25" x2="118" y2="26.25"
+                                                        stroke="#e0e0e0" stroke-dasharray="0"
+                                                        class="apexcharts-gridline"></line>
+                                                    <line id="SvgjsLine2300" x1="0" y1="35" x2="118" y2="35"
+                                                        stroke="#e0e0e0" stroke-dasharray="0"
+                                                        class="apexcharts-gridline"></line>
+                                                </g>
+                                                <g id="SvgjsG2295" class="apexcharts-gridlines-vertical"
+                                                    style="display: none;"></g>
+                                                <line id="SvgjsLine2302" x1="0" y1="35" x2="118" y2="35"
+                                                    stroke="transparent" stroke-dasharray="0"></line>
+                                                <line id="SvgjsLine2301" x1="0" y1="1" x2="0" y2="35"
+                                                    stroke="transparent" stroke-dasharray="0"></line>
+                                            </g>
+                                            <g id="SvgjsG2275" class="apexcharts-area-series apexcharts-plot-series">
+                                                <g id="SvgjsG2276" class="apexcharts-series" seriesName="series1"
+                                                    data:longestSeries="true" rel="1" data:realIndex="0">
+                                                    <path id="SvgjsPath2283"
+                                                        d="M 0 35L 0 17.5C 13.766666666666664 17.5 25.566666666666663 8.75 39.33333333333333 8.75C 53.099999999999994 8.75 64.89999999999999 17.5 78.66666666666666 17.5C 92.43333333333332 17.5 104.23333333333332 26.25 117.99999999999999 26.25C 117.99999999999999 26.25 117.99999999999999 26.25 117.99999999999999 35M 117.99999999999999 26.25z"
+                                                        fill="url(#SvgjsLinearGradient2279)" fill-opacity="1"
+                                                        stroke-opacity="1" stroke-linecap="butt" stroke-width="0"
+                                                        stroke-dasharray="0" class="apexcharts-area" index="0"
+                                                        clip-path="url(#gridRectMaskfkdt6orq)"
+                                                        pathTo="M 0 35L 0 17.5C 13.766666666666664 17.5 25.566666666666663 8.75 39.33333333333333 8.75C 53.099999999999994 8.75 64.89999999999999 17.5 78.66666666666666 17.5C 92.43333333333332 17.5 104.23333333333332 26.25 117.99999999999999 26.25C 117.99999999999999 26.25 117.99999999999999 26.25 117.99999999999999 35M 117.99999999999999 26.25z"
+                                                        pathFrom="M -1 822.5L -1 822.5L 39.33333333333333 822.5L 78.66666666666666 822.5L 117.99999999999999 822.5">
+                                                    </path>
+                                                    <path id="SvgjsPath2284"
+                                                        d="M 0 17.5C 13.766666666666664 17.5 25.566666666666663 8.75 39.33333333333333 8.75C 53.099999999999994 8.75 64.89999999999999 17.5 78.66666666666666 17.5C 92.43333333333332 17.5 104.23333333333332 26.25 117.99999999999999 26.25"
+                                                        fill="none" fill-opacity="1" stroke="#bf263c" stroke-opacity="1"
+                                                        stroke-linecap="butt" stroke-width="1" stroke-dasharray="0"
+                                                        class="apexcharts-area" index="0"
+                                                        clip-path="url(#gridRectMaskfkdt6orq)"
+                                                        pathTo="M 0 17.5C 13.766666666666664 17.5 25.566666666666663 8.75 39.33333333333333 8.75C 53.099999999999994 8.75 64.89999999999999 17.5 78.66666666666666 17.5C 92.43333333333332 17.5 104.23333333333332 26.25 117.99999999999999 26.25"
+                                                        pathFrom="M -1 822.5L -1 822.5L 39.33333333333333 822.5L 78.66666666666666 822.5L 117.99999999999999 822.5">
+                                                    </path>
+                                                    <g id="SvgjsG2277" class="apexcharts-series-markers-wrap"
+                                                        data:realIndex="0"></g>
+                                                </g>
+                                                <g id="SvgjsG2278" class="apexcharts-datalabels" data:realIndex="0"></g>
+                                            </g>
+                                            <line id="SvgjsLine2303" x1="0" y1="0" x2="118" y2="0" stroke="#b6b6b6"
+                                                stroke-dasharray="0" stroke-width="1" class="apexcharts-ycrosshairs">
+                                            </line>
+                                            <line id="SvgjsLine2304" x1="0" y1="0" x2="118" y2="0" stroke-dasharray="0"
+                                                stroke-width="0" class="apexcharts-ycrosshairs-hidden"></line>
+                                            <g id="SvgjsG2305" class="apexcharts-yaxis-annotations"></g>
+                                            <g id="SvgjsG2306" class="apexcharts-xaxis-annotations"></g>
+                                            <g id="SvgjsG2307" class="apexcharts-point-annotations"></g>
+                                            <rect id="SvgjsRect2308" width="0" height="0" x="0" y="0" rx="0" ry="0"
+                                                opacity="1" stroke-width="0" stroke="none" stroke-dasharray="0"
+                                                fill="#fefefe" class="apexcharts-zoom-rect"></rect>
+                                            <rect id="SvgjsRect2309" width="0" height="0" x="0" y="0" rx="0" ry="0"
+                                                opacity="1" stroke-width="0" stroke="none" stroke-dasharray="0"
+                                                fill="#fefefe" class="apexcharts-selection-rect"></rect>
+                                        </g>
+                                        <rect id="SvgjsRect2271" width="0" height="0" x="0" y="0" rx="0" ry="0"
+                                            opacity="1" stroke-width="0" stroke="none" stroke-dasharray="0"
+                                            fill="#fefefe"></rect>
+                                        <g id="SvgjsG2291" class="apexcharts-yaxis" rel="0"
+                                            transform="translate(-8, 0)">
+                                            <g id="SvgjsG2292" class="apexcharts-yaxis-texts-g"></g>
+                                        </g>
+                                        <g id="SvgjsG2269" class="apexcharts-annotations"></g>
+                                    </svg>
+                                    <div class="apexcharts-legend" style="max-height: 40px;"></div>
+                                </div>
+                            </div>
+                            <div class="resize-triggers">
+                                <div class="expand-trigger">
+                                    <div style="width: 135px; height: 57px;"></div>
+                                </div>
+                                <div class="contract-trigger"></div>
+                            </div>
+                        </div>
+                        <div class="ms-auto">
+                            <h4 class="mb-n1 pt-2">$2,531.512</h4>
+                            <h6 class="mb-0 color-red-dark text-end">-1.583%</h6>
+                        </div>
+                    </a>
+                </div>
+                <div class="content my-2">
+                    <a href="#" class="d-flex">
+                        <div class="align-self-center w-25">
+                            <h4 class="pt-1 mb-n1 font-16">Shib</h4>
+                            <h6 class="mb-0 opacity-50">Shiba - Crypto</h6>
+                        </div>
+                        <div class="align-self-center m-auto" style="position: relative;">
+                            <div id="chart-eur" class="chart mt-n5 pt-4 ms-n3" style="min-height: 95px;">
+                                <div id="apexcharts1g3bgzok"
+                                    class="apexcharts-canvas apexcharts1g3bgzok apexcharts-theme-light"
+                                    style="width: 150px; height: 80px;"><svg id="SvgjsSvg2310" width="150" height="80"
+                                        xmlns="http://www.w3.org/2000/svg" version="1.1"
+                                        xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs"
+                                        class="apexcharts-svg apexcharts-zoomable" xmlns:data="ApexChartsNS"
+                                        transform="translate(0, 0)" style="background: transparent;">
+                                        <g id="SvgjsG2312" class="apexcharts-inner apexcharts-graphical"
+                                            transform="translate(22, 30)">
+                                            <defs id="SvgjsDefs2311">
+                                                <clipPath id="gridRectMask1g3bgzok">
+                                                    <rect id="SvgjsRect2317" width="123" height="36" x="-2.5" y="-0.5"
+                                                        rx="0" ry="0" opacity="1" stroke-width="0" stroke="none"
+                                                        stroke-dasharray="0" fill="#fff"></rect>
+                                                </clipPath>
+                                                <clipPath id="gridRectMarkerMask1g3bgzok">
+                                                    <rect id="SvgjsRect2318" width="122" height="39" x="-2" y="-2"
+                                                        rx="0" ry="0" opacity="1" stroke-width="0" stroke="none"
+                                                        stroke-dasharray="0" fill="#fff"></rect>
+                                                </clipPath>
+                                                <linearGradient id="SvgjsLinearGradient2323" x1="0" y1="0" x2="0"
+                                                    y2="1">
+                                                    <stop id="SvgjsStop2324" stop-opacity="0.65"
+                                                        stop-color="rgba(93,156,236,0.65)" offset="0"></stop>
+                                                    <stop id="SvgjsStop2325" stop-opacity="0.5"
+                                                        stop-color="rgba(174,206,246,0.5)" offset="1"></stop>
+                                                    <stop id="SvgjsStop2326" stop-opacity="0.5"
+                                                        stop-color="rgba(174,206,246,0.5)" offset="1"></stop>
+                                                </linearGradient>
+                                            </defs>
+                                            <line id="SvgjsLine2316" x1="0" y1="0" x2="0" y2="35" stroke="#b6b6b6"
+                                                stroke-dasharray="3" class="apexcharts-xcrosshairs" x="0" y="0"
+                                                width="1" height="35" fill="#b1b9c4" filter="none" fill-opacity="0.9"
+                                                stroke-width="1"></line>
+                                            <g id="SvgjsG2329" class="apexcharts-xaxis" transform="translate(0, 0)">
+                                                <g id="SvgjsG2330" class="apexcharts-xaxis-texts-g"
+                                                    transform="translate(0, -4)"></g>
+                                            </g>
+                                            <g id="SvgjsG2337" class="apexcharts-grid">
+                                                <g id="SvgjsG2338" class="apexcharts-gridlines-horizontal"
+                                                    style="display: none;">
+                                                    <line id="SvgjsLine2340" x1="0" y1="0" x2="118" y2="0"
+                                                        stroke="#e0e0e0" stroke-dasharray="0"
+                                                        class="apexcharts-gridline"></line>
+                                                    <line id="SvgjsLine2341" x1="0" y1="5.833333333333333" x2="118"
+                                                        y2="5.833333333333333" stroke="#e0e0e0" stroke-dasharray="0"
+                                                        class="apexcharts-gridline"></line>
+                                                    <line id="SvgjsLine2342" x1="0" y1="11.666666666666666" x2="118"
+                                                        y2="11.666666666666666" stroke="#e0e0e0" stroke-dasharray="0"
+                                                        class="apexcharts-gridline"></line>
+                                                    <line id="SvgjsLine2343" x1="0" y1="17.5" x2="118" y2="17.5"
+                                                        stroke="#e0e0e0" stroke-dasharray="0"
+                                                        class="apexcharts-gridline"></line>
+                                                    <line id="SvgjsLine2344" x1="0" y1="23.333333333333332" x2="118"
+                                                        y2="23.333333333333332" stroke="#e0e0e0" stroke-dasharray="0"
+                                                        class="apexcharts-gridline"></line>
+                                                    <line id="SvgjsLine2345" x1="0" y1="29.166666666666664" x2="118"
+                                                        y2="29.166666666666664" stroke="#e0e0e0" stroke-dasharray="0"
+                                                        class="apexcharts-gridline"></line>
+                                                    <line id="SvgjsLine2346" x1="0" y1="35" x2="118" y2="35"
+                                                        stroke="#e0e0e0" stroke-dasharray="0"
+                                                        class="apexcharts-gridline"></line>
+                                                </g>
+                                                <g id="SvgjsG2339" class="apexcharts-gridlines-vertical"
+                                                    style="display: none;"></g>
+                                                <line id="SvgjsLine2348" x1="0" y1="35" x2="118" y2="35"
+                                                    stroke="transparent" stroke-dasharray="0"></line>
+                                                <line id="SvgjsLine2347" x1="0" y1="1" x2="0" y2="35"
+                                                    stroke="transparent" stroke-dasharray="0"></line>
+                                            </g>
+                                            <g id="SvgjsG2319" class="apexcharts-area-series apexcharts-plot-series">
+                                                <g id="SvgjsG2320" class="apexcharts-series" seriesName="series1"
+                                                    data:longestSeries="true" rel="1" data:realIndex="0">
+                                                    <path id="SvgjsPath2327"
+                                                        d="M 0 35L 0 4.666666666666671C 13.766666666666664 4.666666666666671 25.566666666666663 29.16666666666667 39.33333333333333 29.16666666666667C 53.099999999999994 29.16666666666667 64.89999999999999 17.5 78.66666666666666 17.5C 92.43333333333332 17.5 104.23333333333332 17.5 117.99999999999999 17.5C 117.99999999999999 17.5 117.99999999999999 17.5 117.99999999999999 35M 117.99999999999999 17.5z"
+                                                        fill="url(#SvgjsLinearGradient2323)" fill-opacity="1"
+                                                        stroke-opacity="1" stroke-linecap="butt" stroke-width="0"
+                                                        stroke-dasharray="0" class="apexcharts-area" index="0"
+                                                        clip-path="url(#gridRectMask1g3bgzok)"
+                                                        pathTo="M 0 35L 0 4.666666666666671C 13.766666666666664 4.666666666666671 25.566666666666663 29.16666666666667 39.33333333333333 29.16666666666667C 53.099999999999994 29.16666666666667 64.89999999999999 17.5 78.66666666666666 17.5C 92.43333333333332 17.5 104.23333333333332 17.5 117.99999999999999 17.5C 117.99999999999999 17.5 117.99999999999999 17.5 117.99999999999999 35M 117.99999999999999 17.5z"
+                                                        pathFrom="M -1 116.66666666666667L -1 116.66666666666667L 39.33333333333333 116.66666666666667L 78.66666666666666 116.66666666666667L 117.99999999999999 116.66666666666667">
+                                                    </path>
+                                                    <path id="SvgjsPath2328"
+                                                        d="M 0 4.666666666666671C 13.766666666666664 4.666666666666671 25.566666666666663 29.16666666666667 39.33333333333333 29.16666666666667C 53.099999999999994 29.16666666666667 64.89999999999999 17.5 78.66666666666666 17.5C 92.43333333333332 17.5 104.23333333333332 17.5 117.99999999999999 17.5"
+                                                        fill="none" fill-opacity="1" stroke="#5d9cec" stroke-opacity="1"
+                                                        stroke-linecap="butt" stroke-width="1" stroke-dasharray="0"
+                                                        class="apexcharts-area" index="0"
+                                                        clip-path="url(#gridRectMask1g3bgzok)"
+                                                        pathTo="M 0 4.666666666666671C 13.766666666666664 4.666666666666671 25.566666666666663 29.16666666666667 39.33333333333333 29.16666666666667C 53.099999999999994 29.16666666666667 64.89999999999999 17.5 78.66666666666666 17.5C 92.43333333333332 17.5 104.23333333333332 17.5 117.99999999999999 17.5"
+                                                        pathFrom="M -1 116.66666666666667L -1 116.66666666666667L 39.33333333333333 116.66666666666667L 78.66666666666666 116.66666666666667L 117.99999999999999 116.66666666666667">
+                                                    </path>
+                                                    <g id="SvgjsG2321" class="apexcharts-series-markers-wrap"
+                                                        data:realIndex="0"></g>
+                                                </g>
+                                                <g id="SvgjsG2322" class="apexcharts-datalabels" data:realIndex="0"></g>
+                                            </g>
+                                            <line id="SvgjsLine2349" x1="0" y1="0" x2="118" y2="0" stroke="#b6b6b6"
+                                                stroke-dasharray="0" stroke-width="1" class="apexcharts-ycrosshairs">
+                                            </line>
+                                            <line id="SvgjsLine2350" x1="0" y1="0" x2="118" y2="0" stroke-dasharray="0"
+                                                stroke-width="0" class="apexcharts-ycrosshairs-hidden"></line>
+                                            <g id="SvgjsG2351" class="apexcharts-yaxis-annotations"></g>
+                                            <g id="SvgjsG2352" class="apexcharts-xaxis-annotations"></g>
+                                            <g id="SvgjsG2353" class="apexcharts-point-annotations"></g>
+                                            <rect id="SvgjsRect2354" width="0" height="0" x="0" y="0" rx="0" ry="0"
+                                                opacity="1" stroke-width="0" stroke="none" stroke-dasharray="0"
+                                                fill="#fefefe" class="apexcharts-zoom-rect"></rect>
+                                            <rect id="SvgjsRect2355" width="0" height="0" x="0" y="0" rx="0" ry="0"
+                                                opacity="1" stroke-width="0" stroke="none" stroke-dasharray="0"
+                                                fill="#fefefe" class="apexcharts-selection-rect"></rect>
+                                        </g>
+                                        <rect id="SvgjsRect2315" width="0" height="0" x="0" y="0" rx="0" ry="0"
+                                            opacity="1" stroke-width="0" stroke="none" stroke-dasharray="0"
+                                            fill="#fefefe"></rect>
+                                        <g id="SvgjsG2335" class="apexcharts-yaxis" rel="0"
+                                            transform="translate(-8, 0)">
+                                            <g id="SvgjsG2336" class="apexcharts-yaxis-texts-g"></g>
+                                        </g>
+                                        <g id="SvgjsG2313" class="apexcharts-annotations"></g>
+                                    </svg>
+                                    <div class="apexcharts-legend" style="max-height: 40px;"></div>
+                                </div>
+                            </div>
+                            <div class="resize-triggers">
+                                <div class="expand-trigger">
+                                    <div style="width: 135px; height: 57px;"></div>
+                                </div>
+                                <div class="contract-trigger"></div>
+                            </div>
+                        </div>
+                        <div class="ms-auto">
+                            <h4 class="mb-n1 pt-2">$0,000213</h4>
+                            <h6 class="mb-0 color-blue-dark text-end">0.00%</h6>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <a href="{% url 'page_crypto_report' %}" class="btn btn-full gradient-blue mx-3 rounded-s btn-m">View your
+                Reports</a>
+            <div class="divider mx-3 my-4"></div>
+            <p class="font-12 color-theme opacity-50 mx-3 text-center line-height-s">Tap Get Started in the Footer Bar
+                for Quick Actions</p>
+        </div>
+
+
+        <div id="menu-get-started" class="offcanvas offcanvas-bottom offcanvas-detached rounded-m"
+            style="display: block;">
+            <div class="d-flex mx-3 mt-2 py-1">
+                <div class="align-self-center">
+                    <h1 class="mb-0">Get Started</h1>
+                </div>
+                <div class="align-self-center ms-auto">
+                    <a href="#" class="py-3 ps-4 shadow-0 me-n2" data-bs-dismiss="offcanvas">
+                        <i class="bi bi-x color-red-dark font-26"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="content mb-4">
+                <a href="#" class="d-flex mb-4" data-bs-toggle="offcanvas" data-bs-target="#menu-buy">
+                    <div class="align-self-center">
+                        <span class="icon icon-l gradient-green me-2 color-white shadow-bg shadow-bg-xs rounded-m">
+                            <i class="bi bi-arrow-90deg-up font-16"></i>
+                        </span>
+                    </div>
+                    <div class="align-self-center ps-2">
+                        <h4 class="mb-0 mt-1 font-20">Buy</h4>
+                        <p class="mb-0">Buy using Local Currency</p>
+                    </div>
+                </a>
+                <a href="#" class="d-flex mb-4" data-bs-toggle="offcanvas" data-bs-target="#menu-sell">
+                    <div class="align-self-center">
+                        <span class="icon icon-l gradient-red me-2 color-white shadow-bg shadow-bg-xs rounded-m">
+                            <i class="bi bi-arrow-90deg-down font-16"></i>
+                        </span>
+                    </div>
+                    <div class="align-self-center ps-2">
+                        <h4 class="mb-0 mt-1 font-20">Sell</h4>
+                        <p class="mb-0">Sell to your Local Currency</p>
+                    </div>
+                </a>
+                <a href="#" class="d-flex" data-bs-toggle="offcanvas" data-bs-target="#menu-exchange">
+                    <div class="align-self-center">
+                        <span class="icon icon-l gradient-blue me-2 color-white shadow-bg shadow-bg-xs rounded-m">
+                            <i class="bi bi-arrow-left-right font-16"></i>
+                        </span>
+                    </div>
+                    <div class="align-self-center ps-2">
+                        <h4 class="mb-0 mt-1 font-20">Convert</h4>
+                        <p class="mb-0">Fast conversion between Coins</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <div id="menu-sell" class="offcanvas offcanvas-bottom offcanvas-detached rounded-m" style="display: block;">
+            <div class="d-flex mx-3 mt-3 py-1">
+                <div class="align-self-center">
+                    <h1 class="mb-0">Sell your Coin</h1>
+                </div>
+                <div class="align-self-center ms-auto">
+                    <a href="#" class="ps-4 shadow-0 me-n2" data-bs-dismiss="offcanvas">
+                        <i class="bi bi-x color-red-dark font-26 line-height-xl"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="divider divider-margins mt-3"></div>
+            <div class="content mt-0">
+                <div class="row mt-n3">
+                    <div class="col-5">
+                        <div class="form-custom form-label form-border">
+                            <select class="form-select color-blue-dark exchange-select rounded-xs border-0" id="cura">
+                                <option value="0" selected="">USD</option>
+                                <option value="1">EUR</option>
+                                <option value="2">BTC</option>
+                                <option value="3">ETH</option>
+                            </select>
+                        </div>
+                        <div class="form-custom form-label form-border">
+                            <div class="form-custom form-label">
+                                <input type="number" class="form-control exchange-value border-0 rounded-xs" id="val1a"
+                                    placeholder="50.00">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <h5 class="exchange-arrow"><i class="bi bi-arrow-right font-20 ms-n1"></i></h5>
+                    </div>
+                    <div class="col-5">
+                        <div class="form-custom form-label form-border">
+                            <select class="form-select color-blue-dark exchange-select rounded-xs border-0" id="curb">
+                                <option value="0" selected="">EUR</option>
+                                <option value="1">USD</option>
+                                <option value="2">BTC</option>
+                                <option value="3">ETH</option>
+                            </select>
+                        </div>
+                        <div class="form-custom form-label form-border">
+                            <div class="form-custom form-label">
+                                <input type="number" class="form-control exchange-value border-0 rounded-xs" id="val2a"
+                                    placeholder="43.35">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="divider mt-3"></div>
+                <div class="form-custom form-label form-icon">
+                    <i class="bi bi-wallet2 font-14"></i>
+                    <select class="form-select rounded-xs" id="c6a" aria-label="Floating label select example">
+                        <option selected="">Main Account</option>
+                        <option value="1">Savings Account</option>
+                        <option value="2">Company Account</option>
+                    </select>
+                    <label for="c6" class="form-label-always-active color-highlight font-11">Choose Account to
+                        Deposit</label>
+                </div>
+                <div class="divider mt-4"></div>
+            </div>
+            <a href="#" data-bs-toggle="offcanvas" data-bs-target="#menu-get-started"
+                class="mx-3 btn btn-full gradient-blue shadow-bg shadow-bg-s mb-4">Sell and Add to Account</a>
+        </div>
+
+        <div id="menu-buy" class="offcanvas offcanvas-bottom offcanvas-detached rounded-m" style="display: block;">
+            <div class="d-flex mx-3 mt-3 py-1">
+                <div class="align-self-center">
+                    <h1 class="mb-0">Buy Crypto</h1>
+                </div>
+                <div class="align-self-center ms-auto">
+                    <a href="#" class="ps-4 shadow-0 me-n2" data-bs-dismiss="offcanvas">
+                        <i class="bi bi-x color-red-dark font-26 line-height-xl"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="divider divider-margins mt-3"></div>
+            <div class="content mt-0">
+                <div class="form-custom form-label form-icon">
+                    <i class="bi bi-wallet2 font-14"></i>
+                    <select class="form-select rounded-xs" id="c6a" aria-label="Floating label select example">
+                        <option selected="">Main Account</option>
+                        <option value="1">Savings Account</option>
+                        <option value="2">Company Account</option>
+                    </select>
+                    <label for="c6" class="form-label-always-active color-highlight font-11">Choose Payment
+                        Account</label>
+                </div>
+                <div class="divider mt-4"></div>
+                <div class="row mt-n3">
+                    <div class="col-5">
+                        <div class="form-custom form-label form-border">
+                            <select class="form-select color-blue-dark exchange-select rounded-xs border-0" id="cura">
+                                <option value="0" selected="">USD</option>
+                                <option value="1">EUR</option>
+                                <option value="2">BTC</option>
+                                <option value="3">ETH</option>
+                            </select>
+                        </div>
+                        <div class="form-custom form-label form-border">
+                            <div class="form-custom form-label">
+                                <input type="number" class="form-control exchange-value border-0 rounded-xs" id="val1a"
+                                    placeholder="50.00">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <h5 class="exchange-arrow"><i class="bi bi-arrow-right font-20 ms-n1"></i></h5>
+                    </div>
+                    <div class="col-5">
+                        <div class="form-custom form-label form-border">
+                            <select class="form-select color-blue-dark exchange-select rounded-xs border-0" id="curb">
+                                <option value="0" selected="">EUR</option>
+                                <option value="1">USD</option>
+                                <option value="2">BTC</option>
+                                <option value="3">ETH</option>
+                            </select>
+                        </div>
+                        <div class="form-custom form-label form-border">
+                            <div class="form-custom form-label">
+                                <input type="number" class="form-control exchange-value border-0 rounded-xs" id="val2a"
+                                    placeholder="43.35">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <a href="#" data-bs-toggle="offcanvas" data-bs-target="#menu-get-started"
+                class="mx-3 btn btn-full gradient-green shadow-bg shadow-bg-s mb-4">Buy and Add to Account</a>
+        </div>
+
+        <div id="menu-exchange" class="offcanvas offcanvas-bottom offcanvas-detached rounded-m" style="display: block;">
+            <div class="d-flex mx-3 mt-3 py-1">
+                <div class="align-self-center">
+                    <h1 class="mb-0">Convert Coin</h1>
+                </div>
+                <div class="align-self-center ms-auto">
+                    <a href="#" class="ps-4 shadow-0 me-n2" data-bs-dismiss="offcanvas">
+                        <i class="bi bi-x color-red-dark font-26 line-height-xl"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="divider divider-margins mt-3"></div>
+            <div class="content mt-0">
+                <div class="row mt-n3">
+                    <div class="col-5">
+                        <div class="form-custom form-label form-border">
+                            <select class="form-select color-blue-dark exchange-select rounded-xs border-0" id="cura">
+                                <option value="0" selected="">USD</option>
+                                <option value="1">EUR</option>
+                                <option value="2">BTC</option>
+                                <option value="3">ETH</option>
+                            </select>
+                        </div>
+                        <div class="form-custom form-label form-border">
+                            <div class="form-custom form-label">
+                                <input type="number" class="form-control exchange-value border-0 rounded-xs" id="val1a"
+                                    placeholder="50.00">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <h5 class="exchange-arrow"><i class="bi bi-arrow-left-right"></i></h5>
+                    </div>
+                    <div class="col-5">
+                        <div class="form-custom form-label form-border">
+                            <select class="form-select color-blue-dark exchange-select rounded-xs border-0" id="curb">
+                                <option value="0" selected="">EUR</option>
+                                <option value="1">USD</option>
+                                <option value="2">BTC</option>
+                                <option value="3">ETH</option>
+                            </select>
+                        </div>
+                        <div class="form-custom form-label form-border">
+                            <div class="form-custom form-label">
+                                <input type="number" class="form-control exchange-value border-0 rounded-xs" id="val2a"
+                                    placeholder="43.35">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <a href="#" data-bs-toggle="offcanvas" data-bs-target="#menu-get-started"
+                class="mx-3 btn btn-full gradient-red shadow-bg shadow-bg-s mb-4">Convert and Add to Account</a>
+        </div>
+
+        <div id="menu-sidebar" data-menu-active="nav-welcome" data-menu-load= "{% url 'menu_sidebar' %}"
+            class="offcanvas offcanvas-start offcanvas-detached rounded-m" style="display: block;">
+            <!-- menu-size will be the dimension of your menu. If you set it to smaller than your content it will scroll-->
+            <div class="menu-size" style="width:230px;">
+                <!-- Menu Title-->
+                <div class="pt-3">
+                    <div class="page_title sidebar-title d-flex">
+                        <div class="align-self-center me-auto">
+                            <p class="color-highlight">Welcome Back</p>
+                            <h1>MOPD</h1>
+                        </div>
+                        <div class="align-self-center ms-auto">
+                            <a href="#" data-bs-toggle="dropdown"
+                                class="icon gradient-blue shadow-bg shadow-bg-s rounded-m">
+                                <img src="{% static 'mobile/images/pictures/25s.jpg' %}" width="45" class="rounded-m" alt="img">
+                            </a>
+                            <!-- Menu Title Dropdown Menu-->
+                            <div class="dropdown-menu">
+                                <div class="card card-style shadow-m mt-1 me-1">
+                                    <div
+                                        class="list-group list-custom list-group-s list-group-flush rounded-xs px-3 py-1">
+                                        <a href="{% url 'page_wallet' %}" class="list-group-item">
+                                            <i
+                                                class="has-bg gradient-green shadow-bg shadow-bg-xs color-white rounded-xs bi bi-credit-card"></i>
+                                            <strong class="font-13">Wallet</strong>
+                                        </a>
+                                        <a href="{% url 'page_activity' %}" class="list-group-item">
+                                            <i
+                                                class="has-bg gradient-blue shadow-bg shadow-bg-xs color-white rounded-xs bi bi-graph-up"></i>
+                                            <strong class="font-13">Activity</strong>
+                                        </a>
+                                        <a href="{% url 'page_profile' %}" class="list-group-item">
+                                            <i
+                                                class="has-bg gradient-yellow shadow-bg shadow-bg-xs color-white rounded-xs bi bi-person-circle"></i>
+                                            <strong class="font-13">Account</strong>
+                                        </a>
+                                        <a href="{% url 'page_signin_1' %}" class="list-group-item">
+                                            <i
+                                                class="has-bg gradient-red shadow-bg shadow-bg-xs color-white rounded-xs bi bi-power"></i>
+                                            <strong class="font-13">Log Out</strong>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="divider divider-margins mb-3 opacity-50"></div>
+
+                    <!-- Main Menu List-->
+                    <div class="list-group list-custom list-menu-large">
+                        <a href="{% url 'index_waves' %}" id="nav-welcome" class="list-group-item list-group-item-active">
+                            <i class="bi bg-red-dark shadow-bg shadow-bg-xs bi-heart-fill"></i>
+                            <div>Welcome</div>
+                            <i class="bi bi-chevron-right"></i>
+                        </a>
+                        <a href="{% url 'pages' %}" id="nav-pages" class="list-group-item">
+                            <i class="bi bg-green-dark shadow-bg shadow-bg-xs bi-star-fill"></i>
+                            <div>Page Packs</div>
+                            <i class="bi bi-chevron-right"></i>
+                        </a>
+                        <a href="#" id="nav-homes" data-submenu="sub1" class="list-group-item">
+                            <i class="bi bg-blue-dark shadow-bg shadow-bg-xs bi-house-fill"></i>
+                            <div>Home Styles</div>
+                            <i class="bi bi-plus font-18"></i>
+                        </a>
+                        <div class="list-submenu" id="sub1">
+                            <a href="{% url 'index_waves' %}" id="nav-waves" class="list-group-item">
+                                <div class="ps-4">Waves</div>
+                                <i class="bi bi-chevron-right"></i>
+                            </a>
+                            <a href="{% url 'Mobile_index' %}" id="nav-classic" class="list-group-item">
+                                <div class="ps-4">Classic</div>
+                                <i class="bi bi-chevron-right"></i>
+                            </a>
+                        </div>
+                        <a href="{% url 'components' %}" id="nav-comps" class="list-group-item">
+                            <i class="bi bg-brown-dark shadow-bg shadow-bg-xs bi-gear-wide-connected"></i>
+                            <div>Components</div>
+                            <i class="bi bi-chevron-right"></i>
+                        </a>
+                        <a data-bs-toggle="offcanvas" data-bs-target="#menu-highlights" href="#"
+                            class="list-group-item">
+                            <i class="bi bg-magenta-dark shadow-bg shadow-bg-xs bi-droplet"></i>
+                            <div>Color Theme</div>
+                            <i class="bi bi-chevron-right"></i>
+                        </a>
+
+                        <a href="#" class="list-group-item" data-toggle-theme="" data-trigger-switch="switch-1">
+                            <i class="bi bg-yellow-dark shadow-bg shadow-bg-xs bi-lightbulb-fill"></i>
+                            <div>Dark Mode</div>
+                            <div class="form-switch ios-switch switch-green switch-s me-2">
+                                <input type="checkbox" data-toggle-theme="" class="ios-input" id="switch-1">
+                                <label class="custom-control-label" for="switch-1"></label>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="divider divider-margins mb-3 opacity-50"></div>
+
+                    <!-- Quick Actions Icons-->
+                    <div class="content pt-1">
+                        <div class="d-flex text-center">
+                            <div class="me-auto">
+                                <a href="{% url 'page_payment_transfer' %}"
+                                    class="icon icon-s rounded-s gradient-red shadow-bg shadow-bg-xs"><i
+                                        class="font-16 color-white bi bi-arrow-up"></i></a>
+                                <h6 class="font-11 font-400 opacity-70 mb-n1 pt-2">Transfer</h6>
+                            </div>
+                            <div class="m-auto">
+                                <a href="{% url 'page_payment_request' %}"
+                                    class="icon icon-s rounded-s gradient-green shadow-bg shadow-bg-xs"><i
+                                        class="font-16 color-white bi bi-arrow-down"></i></a>
+                                <h6 class="font-11 font-400 opacity-70 mb-n1 pt-2">Request</h6>
+                            </div>
+                            <div class="ms-auto">
+                                <a href="{% url 'page_payment_exchange' %}"
+                                    class="icon icon-s rounded-s gradient-blue shadow-bg shadow-bg-xs"><i
+                                        class="font-16 color-white bi bi-arrow-left-right"></i></a>
+                                <h6 class="font-11 font-400 opacity-70 mb-n1 pt-2">Exchange</h6>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="divider divider-margins opacity-50"></div>
+
+                    <!-- Useful Links-->
+                    <h6 class="opacity-40 px-3 mt-n2 mb-0">Useful Links</h6>
+                    <div class="list-group list-custom list-menu-small">
+                        <a href="tel:+1 234 567 8091" class="list-group-item default-link">
+                            <i class="bi bi-arrow-up-circle-fill opacity-20 font-16"></i>
+                            <div>Support</div>
+                            <i class="bi bi-chevron-right"></i>
+                        </a>
+                        <a href="{%  url 'page_profile' %}" class="list-group-item">
+                            <i class="bi bi-person-circle opacity-20 font-16"></i>
+                            <div>Account</div>
+                            <i class="bi bi-chevron-right"></i>
+                        </a>
+                        <a href="{%  url 'page_signin_1' %}" class="list-group-item">
+                            <i class="bi bi-bar-chart-fill opacity-20 font-16"></i>
+                            <div>Log Out</div>
+                            <i class="bi bi-chevron-right"></i>
+                        </a>
+                    </div>
+
+                    <div class="divider divider-margins opacity-50"></div>
+                    <!-- Menu Copyright -->
+                    <p class="px-3 font-9 opacity-30 color-theme mt-n3">Copyright <span
+                            class="copyright-year">2024</span>. Made with <i
+                            class="bi bi-heart-fill color-red-dark px-1"></i> by MOPD</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="menu-highlights" data-menu-load="{% url 'menu_highlights' %}"
+            class="offcanvas offcanvas-bottom offcanvas-detached rounded-m" style="display: block;">
+            <!-- menu-size will be the dimension of your menu. If you set it to smaller than your content it will scroll-->
+            <div class="menu-size" style="height:380px;">
+                <div class="d-flex mx-3 mt-3 py-1">
+                    <div class="align-self-center">
+                        <h1 class="mb-0">Color your <span class="color-highlight">PayApp</span></h1>
+                    </div>
+                    <div class="align-self-center ms-auto">
+                        <a href="#" class="py-3 ps-4 shadow-0 me-n2" data-bs-dismiss="offcanvas">
+                            <i class="bi bi-x color-red-dark font-26"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="content mt-n1 pb-2">
+                    <p class="mb-3">
+                        Tap to change the color accent of PayApp
+                    </p>
+                    <div class="divider mb-4"></div>
+                    <div class="d-flex text-center">
+                        <div class="m-auto">
+                            <a href="#" data-change-highlight="red"
+                                class="icon gradient-red shadow-bg shadow-bg-xs rounded-s"></a>
+                            <h5 class="font-14 mt-n1">Red</h5>
+                        </div>
+                        <div class="m-auto">
+                            <a href="#" data-change-highlight="green"
+                                class="icon gradient-green shadow-bg shadow-bg-xs rounded-s"></a>
+                            <h5 class="font-14 mt-n1">Green</h5>
+                        </div>
+                        <div class="m-auto">
+                            <a href="#" data-change-highlight="blue"
+                                class="icon gradient-blue shadow-bg shadow-bg-xs rounded-s"></a>
+                            <h5 class="font-14 mt-n1">Blue</h5>
+                        </div>
+                        <div class="m-auto">
+                            <a href="#" data-change-highlight="mint"
+                                class="icon gradient-mint shadow-bg shadow-bg-xs rounded-s"></a>
+                            <h5 class="font-14 mt-n1">Mint</h5>
+                        </div>
+                    </div>
+                    <div class="pt-3"></div>
+                    <div class="d-flex text-center">
+                        <div class="m-auto">
+                            <a href="#" data-change-highlight="orange"
+                                class="icon gradient-orange shadow-bg shadow-bg-xs rounded-s"></a>
+                            <h5 class="font-14 mt-n1">Orange</h5>
+                        </div>
+                        <div class="m-auto">
+                            <a href="#" data-change-highlight="yellow"
+                                class="icon gradient-yellow shadow-bg shadow-bg-xs rounded-s"></a>
+                            <h5 class="font-14 mt-n1">Yellow</h5>
+                        </div>
+                        <div class="m-auto">
+                            <a href="#" data-change-highlight="magenta"
+                                class="icon gradient-magenta shadow-bg shadow-bg-xs rounded-s"></a>
+                            <h5 class="font-14 mt-n1">Magenta</h5>
+                        </div>
+                        <div class="m-auto">
+                            <a href="#" data-change-highlight="brown"
+                                class="icon gradient-brown shadow-bg shadow-bg-xs rounded-s"></a>
+                            <h5 class="font-14 mt-n1">Brown</h5>
+                        </div>
+                    </div>
+                </div>
+                <a href="#" data-bs-dismiss="offcanvas"
+                    class="mx-3 btn btn-full gradient-highlight shadow-bg shadow-bg-s">Awesome</a>
+            </div>
+        </div>
+
+        <div id="menu-notifications" data-menu-load="{% url 'menu_notifications' %}"
+            class="offcanvas offcanvas-top offcanvas-detached rounded-m" style="display: block;">
+            <!-- menu-size will be the dimension of your menu. If you set it to smaller than your content it will scroll-->
+            <div class="menu-size" style="height:365px;">
+                <div class="d-flex mx-3 mt-3 py-1">
+                    <div class="align-self-center">
+                        <h1 class="mb-0">Notifications</h1>
+                    </div>
+                    <div class="align-self-center ms-auto">
+                        <a href="#" class="py-3 ps-4 shadow-0 me-n2" data-bs-dismiss="offcanvas">
+                            <i class="bi bi-x color-red-dark font-26"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="content pb-2">
+                    <a href="{% url 'page_activity' %}" class="d-flex py-1">
+                        <div class="align-self-center">
+                            <span class="icon rounded-s me-2 gradient-orange shadow-bg shadow-bg-xs"><i
+                                    class="bi bi-google color-white"></i></span>
+                        </div>
+                        <div class="align-self-center ps-1">
+                            <h5 class="pt-1 mb-n1">Google Ads</h5>
+                            <p class="mb-0 font-11 opacity-70">14th March 03:14 AM</p>
+                        </div>
+                        <div class="align-self-center ms-auto text-end">
+                            <h4 class="pt-1 mb-n1 color-red-dark">$150.55</h4>
+                            <p class="mb-0 font-11">Bill Payment</p>
+                        </div>
+                    </a>
+                    <div class="divider my-2 opacity-50"></div>
+                    <a href="{% url 'page_activity' %}" class="d-flex py-1">
+                        <div class="align-self-center">
+                            <span class="icon rounded-s me-2 gradient-green shadow-bg shadow-bg-xs"><i
+                                    class="bi bi-caret-up-fill color-white"></i></span>
+                        </div>
+                        <div class="align-self-center ps-1">
+                            <h5 class="pt-1 mb-n1">Bitcoin</h5>
+                            <p class="mb-0 font-11 opacity-70">14th March, 10:25 AM</p>
+                        </div>
+                        <div class="align-self-center ms-auto text-end">
+                            <h4 class="pt-1 mb-n1 color-blue-dark">+0.315%</h4>
+                            <p class="mb-0 font-11">Stock Update</p>
+                        </div>
+                    </a>
+                    <div class="divider my-2 opacity-50"></div>
+                    <a href="{% url 'page_activity' %}" class="d-flex py-1">
+                        <div class="align-self-center">
+                            <span class="icon rounded-s me-2 gradient-yellow shadow-bg shadow-bg-xs"><i
+                                    class="bi bi-pie-chart-fill color-white"></i></span>
+                        </div>
+                        <div class="align-self-center ps-1">
+                            <h5 class="pt-1 mb-n1">Dividends</h5>
+                            <p class="mb-0 font-11 opacity-70">13th March 11:31 AM</p>
+                        </div>
+                        <div class="align-self-center ms-auto text-end">
+                            <span class="btn btn-xxs bg-green-dark shadow-bg shadow-bg-xs">Details</span>
+                        </div>
+                    </a>
+                </div>
+                <a href="{% url 'page_activity' %}" class="mx-3 btn btn-full gradient-highlight shadow-bg shadow-bg-s">View All
+                    Notifications</a>
+            </div>
+        </div>
+    </div>
+
+    {% include 'mobile-Dashbord/include/script.html'%}
+
+</html>

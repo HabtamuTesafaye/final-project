@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>DPMEs</title>
+    {% include 'user-admin/include/head.html'%}
+</head>
+
+<body class="hold-transition sidebar-mini layout-fixed">
+      <!--Delete Location Modal Start-->
+  <div class="modal fade " id="userRegistration" tabindex="-1" aria-labelledby="userRegistrationLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="userRegistrationLabel">
+          Deletion Form
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <h2>Are you sure you want to delete {{source.title_ENG}}/{{source.title_AMH}} ? </h2>      
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <a  href="{% url 'user-source-delete' source.pk %}" type="submit" class="btn btn-primary">Yes</a>
+      </div>
+    </div>
+  </div>
+</div>
+<!--Delete Location Modal End-->
+    {% include 'user-admin/include/navbar.html'%}
+    {% include 'user-admin/include/sidebar.html' %}
+
+    <!--Body Start-->
+    <div class="content-wrapper">
+        <!-- TItle Start-->
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1 class="m-0">Source Detail</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Title End-->
+
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-9">
+                        <form method="post">
+                            {% csrf_token %}
+
+                            <div class="mb-3">
+                                <label for="id_source" class="col-form-label">Name English: {% for err in form.title_ENG.errors%}<small
+                                    class="text-danger">{{err}}</small> {% endfor %}</label>
+                                {{form.title_ENG}}
+                              </div>
+                              <div class="mb-3">
+                                <label for="id_source" class="col-form-label">Name Amharic: {% for err in form.title_AMH.errors%}<small
+                                    class="text-danger">{{err}}</small> {% endfor %}</label>
+                                {{form.title_AMH}}
+                              </div>
+
+                            <div class="text-start mt-2">
+                                <button type="submit" class="btn btn-primary mb-2" >
+                                    Save Changes
+                                </button>
+                                <a  class="btn btn-warning mb-2" href="{% url 'user-admin-source'%}">Cancel Changes</a>
+                                <button type="button" class="btn btn-danger mb-2" data-bs-toggle="modal" data-bs-target="#userRegistration"
+                                data-bs-whatever="@mdo">
+                                Delete Source
+                              </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <!--Body End-->
+
+    {% include 'user-admin/include/footer.html'%}
+    <aside class="control-sidebar control-sidebar-dark"></aside>
+</body>
+
+<!--Chart -->
+<script src="/assets/plugins/jquery-ui/jquery-ui.min.js"></script>
+<script src="/assets/plugins/chart.js/Chart.min.js"></script>
+<script src="/assets/plugins/jquery-knob/jquery.knob.min.js"></script>
+<script src="/assets/plugins/moment/moment.min.js"></script>
+<script src="/assets/plugins/daterangepicker/daterangepicker.js"></script>
+<script src="/assets/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+<script src="/assets/plugins/summernote/summernote-bs4.min.js"></script>
+<script src="/assets/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+
+{% include 'user-admin/include/footer_js.html'%}
+
+</html>
