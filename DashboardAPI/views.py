@@ -846,7 +846,7 @@ def get_data_from_website_info(query):
 def query_gemini_api(text):
     """Query Gemini API to format text into a user-friendly statement."""
     try:
-        api_key = 'AIzaSyAZGQ-XFZhLXnVBZ-72jH1hD8laIgM2j_c'  # Replace with your actual API key
+        api_key = 'aPI-KEY'  # Replace with your actual API key
         url = f'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key={api_key}'
         headers = {'Content-Type': 'application/json'}
         data_to_send = {
