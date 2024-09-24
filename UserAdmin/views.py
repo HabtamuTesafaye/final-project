@@ -1969,7 +1969,7 @@ def generate_report(request):
     return JsonResponse(response_data)  # Return JSON response with both topic and user counts and AI insights
 
 def generate_ai_insights(data):
-    api_key = 'AIzaSyAZGQ-XFZhLXnVBZ-72jH1hD8laIgM2j_c'  # Use environment variable for API key
+    api_key = 'A'  # Use environment variable for API key
     if not api_key:
         return "API key not found."
 
