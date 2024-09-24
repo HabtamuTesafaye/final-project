@@ -174,15 +174,15 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587  # TLS port for Gmail
 EMAIL_HOST_USER = 'beteltesfu15@gmail.com'
-EMAIL_HOST_PASSWORD = 'rfwnocfedtsunpyd' # Replace with your actual Gmail password
+EMAIL_HOST_PASSWORD = '' # Replace with your actual Gmail password
 EMAIL_USE_TLS = True  # Correct for port 587
 EMAIL_USE_SSL = False  # Only one of TLS/SSL should be True
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 #itdx avkv bkab armz  
 TELEGRAM_APP_API_ID = '27306345'
-TELEGRAM_APP_API_HASH = '2e140b6adb1aa4aaa03fdbb9aa6a343e'
-BOT_TOKEN = '7005304926:AAFZKj_rIetG7WRZDu6GRzQhV-LQplxdOAg'
+TELEGRAM_APP_API_HASH = ''
+BOT_TOKEN = ''
 CHAT_ID = '688326285'
 BOT_URL = "http://api.telegram.org/bot%s/"%BOT_TOKEN
 
