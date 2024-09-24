@@ -377,7 +377,7 @@ function updateFilterSelection(reset = false) {
 
 function getTranslation(word) {
   console.log("The word is:", word);
-  const apiKey = 'AIzaSyAZGQ-XFZhLXnVBZ-72jH1hD8laIgM2j_c'; // Replace with your actual API key
+  const apiKey = ''; // Replace with your actual API key
   const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${apiKey}`;
   const descriptionElement = document.getElementById('description');
   document.getElementById("languageSelector").style.display = 'none'
