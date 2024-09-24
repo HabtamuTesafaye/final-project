@@ -1,6 +1,6 @@
 # # bot.py
-# # token("7005304926:AAFZKj_rIetG7WRZDu6GRzQhV-LQplxdOAg").build()
-BOT_TOKEN = '7005304926:AAFZKj_rIetG7WRZDu6GRzQhV-LQplxdOAg'
+# # token("").build()
+BOT_TOKEN = 'BOT-KEY'
 
 import asyncio
 import time
