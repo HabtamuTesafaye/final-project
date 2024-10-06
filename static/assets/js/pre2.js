@@ -80,7 +80,6 @@ document.addEventListener('DOMContentLoaded', function () {
                     await new Promise(resolve => setTimeout(resolve, 2000));
                 } else {
                     // Hide loading indicator and show chart container
-                    loading.style.display = 'none';
                     loading2.style.display = 'none';
                     container.style.display = 'block';
                     setButtonsState(false); 
